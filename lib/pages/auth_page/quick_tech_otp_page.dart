@@ -56,7 +56,7 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
                   // OTP Input Fields
                   Image.asset(
                     "assets/images/otp.png",
-                  ),
+                  ).animate().fade(delay: 80.ms),
                   20.heightBox,
                   "Submit Your Otp To Verify The Phone Number"
                       .tr
@@ -64,7 +64,9 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
                       .align(TextAlign.center)
                       .semiBold
                       .xl
-                      .make(),
+                      .make()
+                      .animate()
+                      .fade(delay: 120.ms),
                   10.heightBox,
                   'We Will Send A 6 Digit Verification Code To Your Phone Number'
                       .tr
@@ -73,7 +75,9 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
                       .semiBold
                       .sm
                       .black
-                      .make(),
+                      .make()
+                      .animate()
+                      .fade(delay: 160.ms),
                   widget.number.text.semiBold.black.make(),
                   20.heightBox,
                   Row(
@@ -113,7 +117,7 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
                             isDense: true,
                           ),
                         ),
-                      );
+                      ).animate().fade(delay: (index * 80).ms);
                     }),
                   ),
                   20.heightBox,
@@ -129,7 +133,7 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
                           .semiBold
                           .make()
                     ],
-                  ),
+                  ).animate().fade(delay: 200.ms),
               
                   30.heightBox,
                   customButton(
@@ -139,7 +143,7 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
                           },
                           title: 'Submit OTP',
                           color: mainColor,
-                          txtColor: white)
+                          txtColor: white).animate().fade(delay: 210.ms)
                       .w(context.screenWidth),
                   10.heightBox,
                   if (otpController.remainingTime.value == 00)

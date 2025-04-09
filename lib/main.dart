@@ -18,8 +18,8 @@ class MyApp extends StatelessWidget {
       transitionDuration: Duration(milliseconds: 400),
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-            iconTheme: IconThemeData(size: 30, color: Colors.white),
-            backgroundColor: mainColor),
+            iconTheme: IconThemeData(size: 30, color: Colors.black),
+            backgroundColor:  Colors.transparent,),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),

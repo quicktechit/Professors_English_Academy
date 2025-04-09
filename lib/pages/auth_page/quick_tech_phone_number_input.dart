@@ -1,4 +1,5 @@
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/pages/auth_page/quick_tech_login_page.dart';
 import 'package:professors_english_academy/pages/auth_page/quick_tech_otp_page.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 import 'package:professors_english_academy/widgets/quicktech_custom_text_field.dart';
@@ -53,7 +54,9 @@ class _QuickTechPhoneNumberInputState extends State<QuickTechPhoneNumberInput> {
               customButtonWithIcon(
                       title: 'Start With Google',
                       txtColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(()=>QuickTechLoginPage());
+                      },
                       backgroundColor: secondColor,
                       icons: "assets/images/google.png")
                   .w(context.screenWidth)

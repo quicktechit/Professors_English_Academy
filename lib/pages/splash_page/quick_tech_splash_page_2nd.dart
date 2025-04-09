@@ -30,14 +30,13 @@ class _QuickTechSplashPage2ndState extends State<QuickTechSplashPage2nd> {
       }
     });
 
-    // Start the timer to change the page every second
     _startAutomaticPageChange();
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _timer.cancel(); // Cancel the timer when the screen is disposed
+    _timer.cancel();
     super.dispose();
   }
 
