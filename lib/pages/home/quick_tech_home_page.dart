@@ -1,5 +1,6 @@
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/pages/all%20course%20list%20page/quick_tech_trending_course.dart';
+import 'package:professors_english_academy/pages/course_details/quick_tech_custom_course_details.dart';
 import 'package:professors_english_academy/widgets/appar/quick_tech_custom_appbar.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_course_list.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_row_design.dart';
@@ -29,6 +30,7 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
           children: [
             20.heightBox,
             VxSwiper(
+
               items: items.map((image) {
                 return VxBox(
                   child: Image.asset(
@@ -39,7 +41,9 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
                     .roundedSM
                     .margin(EdgeInsets.symmetric(horizontal: 5))
                     .clip(Clip.antiAlias) // Optional: small shadow
-                    .make();
+                    .make().onTap((){
+                      Get.to(()=>QuickTechCustomCourseDetails());
+                });
               }).toList(),
               height: 180,
               viewportFraction: 1.0,
@@ -62,7 +66,9 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
                 itemCount: 10,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return customCourseList(context);
+                  return customCourseList(context).onTap((){
+                    Get.to(()=>QuickTechCustomCourseDetails());
+                  });
                 }).h(295)
           ],
         ).pSymmetric(h: dynamicSize),

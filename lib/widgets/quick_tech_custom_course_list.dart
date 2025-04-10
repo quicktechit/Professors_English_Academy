@@ -20,11 +20,11 @@ Widget customCourseList(BuildContext context) {
       Row(
         children: [
 
-          "Class ".text.semiBold.lg.make(),
+          "Class ".text.semiBold.lg.gray400.make(),
           "50".text.semiBold.lg.color(mainColor).make(),
           Spacer(),
 
-          "Student ".text.semiBold.lg.make(),
+          "Student ".text.semiBold.lg.gray400.make(),
           "50".text.semiBold.lg.color(mainColor).make(),
         ],
       ).pSymmetric(h: 10),
@@ -32,11 +32,11 @@ Widget customCourseList(BuildContext context) {
       Row(
         children: [
 
-          "Nots ".text.semiBold.lg.make(),
+          "Nots ".text.semiBold.lg.gray400.make(),
           "50".text.semiBold.lg.color(mainColor).make(),
           Spacer(),
 
-          "Exams ".text.semiBold.lg.make(),
+          "Exams ".text.semiBold.lg.gray400.make(),
           "50".text.semiBold.lg.color(mainColor).make(),
         ],
       ).pSymmetric(h: 10),
@@ -45,8 +45,8 @@ Widget customCourseList(BuildContext context) {
         children: [
           Icon(
             CupertinoIcons.star,
-            color: mainColor,
-            size: 16,
+            color: Colors.orange,
+            size: 17,
           ),
           5.widthBox,
           "4.5 (10)".text.semiBold.color(mainColor).xl.make(),

@@ -1,4 +1,5 @@
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/pages/course_details/quick_tech_custom_course_details.dart';
 
 import '../../widgets/quick_tech_custom_course_list.dart';
 
@@ -24,7 +25,9 @@ class _QuickTechTrendingCourseState extends State<QuickTechTrendingCourse> {
             shrinkWrap: true,
               itemCount: 10,
               itemBuilder: (context,index){
-            return customCourseListHori(context);
+            return customCourseListHori(context).onTap((){
+              Get.to(()=>QuickTechCustomCourseDetails());
+            });
           }),
         )
       ],),
