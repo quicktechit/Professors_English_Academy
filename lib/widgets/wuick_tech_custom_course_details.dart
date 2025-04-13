@@ -120,7 +120,8 @@ Widget customFaq(BuildContext context) {
           .pOnly(left: 20),
       20.heightBox,
       ExpansionTile(
-        title: "How do I book a tour?".text.lg.semiBold.make(),
+        iconColor: Colors.black,
+        title: "How do I book a tour?".text.lg.semiBold.black.make(),
         tilePadding: EdgeInsets.symmetric(horizontal: 20),
         collapsedBackgroundColor: Vx.gray100,
         backgroundColor: Vx.gray200,
@@ -133,7 +134,8 @@ Widget customFaq(BuildContext context) {
         ],
       ).pSymmetric(h: 20),
       ExpansionTile(
-        title: "What is the cancellation policy?".text.lg.semiBold.make(),
+        iconColor: Colors.black,
+        title: "What is the cancellation policy?".text.lg.semiBold.black.make(),
         tilePadding: EdgeInsets.symmetric(horizontal: 20),
         collapsedBackgroundColor: Vx.gray100,
         backgroundColor: Vx.gray200,
@@ -146,7 +148,8 @@ Widget customFaq(BuildContext context) {
         ],
       ).pSymmetric(h: 20),
       ExpansionTile(
-        title: "How do I contact the tour guide?".text.lg.semiBold.make(),
+        iconColor: Colors.black,
+        title: "How do I contact the tour guide?".text.lg.semiBold.black.make(),
         tilePadding: EdgeInsets.symmetric(horizontal: 20),
         collapsedBackgroundColor: Vx.gray100,
         backgroundColor: Vx.gray200,
@@ -159,7 +162,8 @@ Widget customFaq(BuildContext context) {
         ],
       ).pSymmetric(h: 20),
       ExpansionTile(
-        title: "What if I have a technical issue?".text.lg.semiBold.make(),
+        iconColor: Colors.black,
+        title: "What if I have a technical issue?".text.lg.black.semiBold.make(),
         tilePadding: EdgeInsets.symmetric(horizontal: 20),
         collapsedBackgroundColor: Vx.gray100,
         backgroundColor: Vx.gray200,
@@ -241,11 +245,7 @@ Widget customReview(BuildContext context) {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        reviews[index]['reviewerName'],
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
+                      "${ reviews[index]['reviewerName']}".text.black.xl.semiBold.make(),
                       Spacer(),
                       Icon(Icons.star, size: 19, color: Colors.amber),
                       8.heightBox,
@@ -350,100 +350,100 @@ Widget customContent(BuildContext context) {
       },
     ],
   };
-  return Column(
-    children: [
-      ExpansionTile(
-        title: "Syllabus".text.semiBold.black.make(),
-        children: [
-          ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return Row(
-                children: [
-                  // Image
-                  SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Image.network(
-                      items[index]['image']!,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Icon(Icons.error);
+  return Obx(
+    () => Column(
+      children: [
+        ExpansionTile(
+          iconColor: Colors.black,
+          title: "Syllabus".text.semiBold.black.make(),
+          children: [
+            ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return Row(
+                  children: [
+                    // Image
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Image.network(
+                        items[index]['image']!,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Icon(
+                            Icons.error,
+                            color: Colors.black,
+                          );
+                        },
+                      ),
+                    ),
+                    16.widthBox, // Space between image and title
+                    // Title
+                    Expanded(
+                        child:
+                            items[index]['title']!.text.semiBold.black.make()),
+                  ],
+                );
+              },
+            ),
+          ],
+        ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
+        10.heightBox,
+        Column(
+          children: subjects.entries.map((subject) {
+            return ExpansionTile(
+              childrenPadding: EdgeInsets.symmetric(horizontal: 10),
+              title:subject.key.text.semiBold.black.make(),
+              subtitle: 'Tap to see papers'.text.semiBold.black.make(),
+              children: subject.value.map((category) {
+                return ExpansionTile(
+                  childrenPadding: EdgeInsets.symmetric(horizontal: 10),
+                  title: '${category['category']}'.text.semiBold.black.make(),
+                  subtitle:'Tap to see sections'.text.semiBold.black.make(),
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: (category['items'] as List).length,
+                      itemBuilder: (context, index) {
+                        final item = category['items'][index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              // Image
+                              SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: Image.network(
+                                  item['image'],
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Icon(Icons.error,color: Colors.black,);
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 16),
+                              // Title
+                              Expanded(
+                                child: "${item['title']}".text.semiBold.black.make(),
+                              ),
+                            ],
+                          ),
+                        );
                       },
                     ),
-                  ),
-                  SizedBox(width: 16), // Space between image and title
-                  // Title
-                  Expanded(
-                    child: Text(
-                      items[index]['title']!,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ],
-      ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
-      10.heightBox,
-      Column(
-        children: subjects.entries.map((subject) {
-          return ExpansionTile(
-            childrenPadding: EdgeInsets.symmetric(horizontal: 10),
-            title: Text(subject.key),
-            subtitle: Text('Tap to see papers'),
-            children: subject.value.map((category) {
-              return ExpansionTile(
-                childrenPadding: EdgeInsets.symmetric(horizontal: 10),
-                title: Text(category['category']),
-                subtitle: Text('Tap to see sections'),
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: (category['items'] as List).length,
-                    itemBuilder: (context, index) {
-                      final item = category['items'][index];
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            // Image
-                            SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: Image.network(
-                                item['image'],
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Icon(Icons.error);
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            // Title
-                            Expanded(
-                              child: Text(
-                                item['title'],
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              );
-            }).toList(),
-          );
-        }).toList(),
-      ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
-      20.heightBox,
-    ],
-  ).pSymmetric(h: dynamicSize);
+                  ],
+                );
+              }).toList(),
+            );
+          }).toList(),
+        ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
+        20.heightBox,
+      ],
+    ).pSymmetric(h: dynamicSize),
+  );
 }

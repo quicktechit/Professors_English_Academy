@@ -10,7 +10,7 @@ Widget customInstructorDetails(BuildContext context) {
       ).box.roundedFull.clip(Clip.antiAlias).make(),
       Column(
         children: [
-          "Demo Instructor".text.semiBold.make(),
+          "Demo Instructor".text.semiBold.black.make(),
           "Admin & CEO"
               .text
               .semiBold
@@ -22,7 +22,7 @@ Widget customInstructorDetails(BuildContext context) {
               .roundedSM
               .make(),
           5.heightBox,
-          "Professors English Academy".text.overflow(TextOverflow.ellipsis).make()
+          "Professors English Academy".text.black.overflow(TextOverflow.ellipsis).make()
         ],
       )
     ],

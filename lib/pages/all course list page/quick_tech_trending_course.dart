@@ -22,12 +22,13 @@ class _QuickTechTrendingCourseState extends State<QuickTechTrendingCourse> {
       body: Column(children: [
         Flexible(
           child: ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 10),
             shrinkWrap: true,
               itemCount: 10,
               itemBuilder: (context,index){
             return customCourseListHori(context).onTap((){
               Get.to(()=>QuickTechCustomCourseDetails());
-            });
+            }).animate().fadeIn(delay: (index*150).ms);
           }),
         )
       ],),

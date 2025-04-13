@@ -13,3 +13,25 @@ const liteOrange2=Color.fromRGBO(253, 237, 212,1);
 
 const dynamicSize=17.0;
 const appName="Professors English Academy";
+const appversion = '0.10.10';
+
+const imageList = [
+  'assets/images/bangla.jpg',
+  'assets/images/bcs.png',
+  'assets/images/english.jpg',
+  'assets/images/math.webp'
+];
+const profileList = [
+  'Name',
+  'Phone Number',
+  'School/College/University',
+  'Course',
+  'Batch'
+];
+var information = [
+  'Nasir khan',
+  '01641634899',
+  'Daffodil International University',
+  'Bsc',
+  '52',
+];

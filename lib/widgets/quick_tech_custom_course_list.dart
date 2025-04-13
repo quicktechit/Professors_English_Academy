@@ -8,7 +8,7 @@ Widget customCourseList(BuildContext context) {
       Image.asset("assets/images/banner2.jpg", fit: BoxFit.cover, height: 155),
       3.heightBox,
       "Demo Course TitleDemo Course Title"
-          .text
+          .text.black
           .lineHeight(1.2)
           .semiBold
           .maxLines(2)
@@ -66,7 +66,7 @@ Widget customCourseListHori(BuildContext context) {
       Image.asset("assets/images/banner2.jpg", fit: BoxFit.cover,).w(context.screenWidth).h(150),
       3.heightBox,
       "Demo Course TitleDemo Course Title"
-          .text
+          .text.black
           .lineHeight(1.2)
           .semiBold
           .maxLines(2)
@@ -78,11 +78,11 @@ Widget customCourseListHori(BuildContext context) {
       Row(
         children: [
 
-          "Class ".text.semiBold.lg.make(),
+          "Class ".text.semiBold.lg.gray400.make(),
           "50".text.semiBold.lg.color(mainColor).make(),
           Spacer(),
 
-          "Student ".text.semiBold.lg.make(),
+          "Student ".text.semiBold.lg.gray400.make(),
           "50".text.semiBold.lg.color(mainColor).make(),
         ],
       ).pSymmetric(h: 10),
@@ -90,11 +90,11 @@ Widget customCourseListHori(BuildContext context) {
       Row(
         children: [
 
-          "Nots ".text.semiBold.lg.make(),
+          "Nots ".text.semiBold.lg.gray400.make(),
           "50".text.semiBold.lg.color(mainColor).make(),
           Spacer(),
 
-          "Exams ".text.semiBold.lg.make(),
+          "Exams ".text.semiBold.lg.gray400.make(),
           "50".text.semiBold.lg.color(mainColor).make(),
         ],
       ).pSymmetric(h: 10),
@@ -114,5 +114,5 @@ Widget customCourseListHori(BuildContext context) {
       ).pSymmetric(h: 10),
       3.heightBox,
     ],
-  ).card.color(Colors.white).elevation(5).make().h(280);
+  ).card.color(Colors.white).elevation(5).make().h(275);
 }

@@ -11,3 +11,4 @@ export 'package:flutter_pdfview/flutter_pdfview.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:lottie/lottie.dart';
 export 'package:flutter_rating_bar/flutter_rating_bar.dart';
+export 'theme_service.dart';

@@ -11,7 +11,7 @@ class QuickTechDashboard extends StatefulWidget {
 class _QuickTechDashboardState extends State<QuickTechDashboard> {
   final DashboardController dashBoardController =
   Get.put(DashboardController());
-
+  final ThemeController themeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -23,7 +23,7 @@ class _QuickTechDashboardState extends State<QuickTechDashboard> {
           bottomNavigationBar:  Obx(
                 () => BottomNavigationBar(
                 backgroundColor: mainColor,
-                unselectedItemColor: Colors.black,
+                unselectedItemColor:themeController.isDarkMode.value?white: Colors.black,
                 selectedItemColor: mainColor,
                 currentIndex: dashBoardController.currentIndex.value,
                 onTap:dashBoardController. onItemTapped,

@@ -15,7 +15,6 @@ class _QuickTechLoginPageState extends State<QuickTechLoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(backgroundColor: Colors.transparent,),
       body: Column(crossAxisAlignment:
         CrossAxisAlignment.start,
