@@ -16,10 +16,10 @@ const appName="Professors English Academy";
 const appversion = '0.10.10';
 
 const imageList = [
-  'assets/images/bangla.jpg',
-  'assets/images/bcs.png',
-  'assets/images/english.jpg',
-  'assets/images/math.webp'
+  'assets/images/1-6-03.png',
+  'assets/images/1-6-01.png',
+  'assets/images/1-6-05.png',
+  'assets/images/1-6-04.png'
 ];
 const profileList = [
   'Name',
