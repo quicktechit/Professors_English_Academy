@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.put(LoaderController());
     final ThemeController themeController = Get.put(ThemeController());
     return Obx(
       ()=> GetMaterialApp(

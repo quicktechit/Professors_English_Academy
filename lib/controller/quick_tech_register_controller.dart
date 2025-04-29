@@ -1,0 +1,138 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:http/http.dart' as http;
+import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/pages/home/quick_tech_dashboard.dart';
+
+import '../consts/api.dart';
+
+class RegisterController extends GetxController {
+  var name = TextEditingController();
+  var phone = TextEditingController();
+  var college = TextEditingController();
+  var email = TextEditingController();
+  var password = TextEditingController();
+  var confirmPassword = TextEditingController();
+
+  Future<void> createUser() async {
+    String? errorMessage;
+
+    if (name.text.isEmpty) {
+      errorMessage = 'Please enter your name';
+    } else if (phone.text.isEmpty) {
+      errorMessage = 'Please enter your phone number';
+    } else if (college.text.isEmpty) {
+      errorMessage = 'Please enter your college name';
+    } else if (email.text.isEmpty) {
+      errorMessage = 'Please enter your email';
+    } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        .hasMatch(email.text)) {
+      errorMessage = 'Please enter a valid email address';
+    } else if (password.text.isEmpty) {
+      errorMessage = 'Please enter a password';
+    } else if (password.text.length < 8) {
+      errorMessage = 'Password must be at least 8 characters long';
+    } else if (confirmPassword.text.isEmpty) {
+      errorMessage = 'Please confirm your password';
+    } else if (confirmPassword.text != password.text) {
+      errorMessage = 'Passwords do not match';
+    }
+    if (errorMessage != null) {
+      Get.snackbar(
+        'Validation Error',
+        errorMessage,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        duration: Duration(seconds: 3),
+      );
+      return;
+    }
+    LoaderController.to.showLoader();
+    final url = Uri.parse(Api.register);
+
+    Map<String, String> userData = {
+      'name': name.text,
+      'phone': phone.text,
+      'email': email.text,
+      'password': password.text,
+      'password_confirmation': confirmPassword.text,
+      'institution': college.text
+      // 'batch': '2025',
+      // 'course': 'Computer Science',
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(userData),
+      );
+      log(userData.toString());
+      if (response.statusCode == 200) {
+        LoaderController.to.hideLoader();
+        print('User created successfully: ${response.body}');
+        Get.snackbar("Success", "Registration Success");
+      } else if (response.statusCode == 422) {
+        LoaderController.to.hideLoader();
+        Get.snackbar("Warning", "User Already Exist");
+      } else {
+        LoaderController.to.hideLoader();
+        print('Failed to create user: ${response.statusCode}');
+        Get.snackbar("Error", "Error Creating Account");
+      }
+    } catch (e) {
+      LoaderController.to.hideLoader();
+      print('Error: $e');
+    }
+  }
+
+  Future<void> login() async {
+
+     if (phone.text.isEmpty) {
+       Get.snackbar(
+         'Validation Error',
+         "Phone Number Required",
+         snackPosition: SnackPosition.TOP,
+         backgroundColor: Colors.red,
+         colorText: Colors.white,
+         duration: Duration(seconds: 3),
+       );
+    }
+      if (password.text.isEmpty) {
+        Get.snackbar(
+          'Validation Error',
+          "Password Required",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          duration: Duration(seconds: 3),
+        );
+     }
+
+    final url = Uri.parse(Api.login);
+    LoaderController.to.showLoader();
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'phone': phone.text,
+        'password': password.text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      LoaderController.to.hideLoader();
+      print('Login successful');
+      print('Response: ${response.body}');
+      Get.offAll(() => QuickTechDashboard());
+    } else {
+      LoaderController.to.hideLoader();
+      print('Login failed with status: ${response.statusCode}');
+      print('Error: ${response.body}');
+    }
+  }
+}

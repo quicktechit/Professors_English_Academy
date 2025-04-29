@@ -139,7 +139,6 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
                   customButton(
                           onPressed: () {
                             otpController.verifyOtp();
-                            Get.to(()=>QuickTechCompleteRegister());
                           },
                           title: 'Submit OTP',
                           color: mainColor,

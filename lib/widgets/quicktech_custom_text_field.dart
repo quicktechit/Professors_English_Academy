@@ -5,7 +5,7 @@ Widget customTextField(
       controller,
       required String hint,
       required bool isSuffix,
-      suIcon,
+      suIcon,keyboard,
       required bool isVisible,
       suppixtap}) {
   return TextField(
@@ -13,7 +13,7 @@ Widget customTextField(
     // style:  GoogleFonts.basic(
     //   color: mainColor,
     // ),
-    controller: controller,
+    controller: controller,keyboardType: keyboard??TextInputType.text,
     decoration: InputDecoration(
         contentPadding:EdgeInsets.only(left:15,top: 10,bottom: 10 ),
         enabledBorder: OutlineInputBorder(
