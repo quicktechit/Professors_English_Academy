@@ -1,6 +1,4 @@
 import 'package:professors_english_academy/consts/consts.dart';
-import 'package:professors_english_academy/pages/home/quick_tech_dashboard.dart';
-
 import '../../controller/quick_tech_register_controller.dart';
 import '../../widgets/quick_tech_custom_button.dart';
 import '../../widgets/quicktech_custom_text_field.dart';

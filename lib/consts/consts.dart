@@ -7,6 +7,8 @@ export 'package:google_fonts/google_fonts.dart';
 export 'package:get_storage/get_storage.dart';
 export 'package:image_picker/image_picker.dart';
 export 'color.dart';
+export 'custom_loader.dart';
+export 'api.dart';
 export 'package:flutter_pdfview/flutter_pdfview.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:lottie/lottie.dart';

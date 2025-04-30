@@ -1,6 +1,9 @@
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/pages/exam%20page/quick_tech_exam_page.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_question_list_design.dart';
+
+import '../../controller/quick_tech_practice_controller.dart';
+
 class QuickTechPracticeQuestionListPage extends StatefulWidget {
   const QuickTechPracticeQuestionListPage({super.key});
 
@@ -11,6 +14,7 @@ class QuickTechPracticeQuestionListPage extends StatefulWidget {
 
 class _QuickTechPracticeQuestionListPageState
     extends State<QuickTechPracticeQuestionListPage> {
+  final PracticeController practiceController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,15 +23,22 @@ class _QuickTechPracticeQuestionListPageState
       ),
       body: ListView(
         children: [
+          10.heightBox,
           ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: dynamicSize),
               shrinkWrap: true,
-              itemCount: 10,
+              itemCount: practiceController.question.value.data?.length,
+              physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context ,index){
-            return customQuestionList(context).onTap((){
-              Get.to(()=>QuickTechExamPage());
+                var item = practiceController.question.value.data?[index];
+                return customQuestionList(context, item?.name, item?.timer,
+                        item?.questions?.length.toString())
+                    .onTap(() {
+                      practiceController.singleExam.value=item!;
+                      Get.to(()=>QuickTechExamPage(pdfs: item.pdf.toString(),));
             }).animate().fadeIn(delay: (index*100).ms);
-          })
+              }),
+          10.heightBox,
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/controller/quick_tech_home_controller.dart';
 import 'package:professors_english_academy/pages/all%20course%20list%20page/quick_tech_trending_course.dart';
 import 'package:professors_english_academy/pages/category/quick_tech_single_subject_category.dart';
 import 'package:professors_english_academy/pages/course_details/quick_tech_custom_course_details.dart';
@@ -7,9 +8,8 @@ import 'package:professors_english_academy/widgets/quick_tech_custom_course_list
 import 'package:professors_english_academy/widgets/quick_tech_custom_row_design.dart';
 
 import '../../controller/quick_tech_dashboard_controller.dart';
+import '../../controller/quick_tech_practice_controller.dart';
 import '../../widgets/custom_category_card_design.dart';
-import '../Practice/quick_tech_practice_qustion_list_page.dart';
-import '../all course list page/quick_tech_category_course_list_page.dart';
 import '../practice/quick_tech_single_practice_category.dart';
 
 class QuickTechHomePage extends StatefulWidget {
@@ -20,6 +20,10 @@ class QuickTechHomePage extends StatefulWidget {
 }
 
 class _QuickTechHomePageState extends State<QuickTechHomePage> {
+  final HomeController homeController = Get.find();
+  final PracticeController practiceController = Get.put(PracticeController());
+
+
   final List<String> items = [
     "assets/images/banner3 (1).jpg",
     "assets/images/banner1.jpg",
@@ -101,8 +105,9 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
               itemCount: 4,
               // 4 items per grid
               itemBuilder: (context, gridIndex) {
-                return customCard(context,gridIndex).onTap(() {
-                  Get.to(() => QuickTechSingleSubjectCategory());
+                return customCard2(context, gridIndex)
+                    .onTap(() {
+                      Get.to(() => QuickTechSingleSubjectCategory());
                 }).animate().fadeIn(delay: (gridIndex*100).ms);
               },
             )
@@ -117,34 +122,43 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
               dashboardController.currentIndex.value = 2;
             }),
             10.heightBox,
-            GridView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              physics: NeverScrollableScrollPhysics(),
-              // Disable GridView scrolling
-              shrinkWrap: true,
-              // Fit content
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // 2 columns
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 10.0,
-                childAspectRatio: 1.0, // Square items
-              ),
-              itemCount: 4,
-              // 4 items per grid
-              itemBuilder: (context, gridIndex) {
-                return customCard(context,gridIndex)
-                    .onTap(() {
-                  Get.to(() => QuickTechSinglePracticeCategory());
-                })
-                    .animate()
-                    .fadeIn(delay: (gridIndex * 150).ms);
-              },
-            ) .box
-                .padding(EdgeInsets.symmetric(horizontal: 5,vertical: 10))
-                .cyan100
-                .margin(EdgeInsets.symmetric(vertical: 10))
-                .rounded
-                .make(),
+            Obx(
+                ()=> GridView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                physics: NeverScrollableScrollPhysics(),
+                // Disable GridView scrolling
+                shrinkWrap: true,
+                // Fit content
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // 2 columns
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 10.0,
+                  childAspectRatio: 1.0, // Square items
+                ),
+                itemCount: homeController.practice.value.data!.length >= 4
+                    ? 4
+                    : homeController.practice.value.data?.length,
+                // 4 items per grid
+                itemBuilder: (context, gridIndex) {
+                  var item = homeController.practice.value.data?[gridIndex];
+                  return customCard(context, "${item?.image}",
+                          "${item?.subcategories?.length}")
+                      .onTap(() {
+                        Get.to(() => QuickTechSinglePracticeCategory(
+                              subjectName: "${item?.name}",
+                              subcategories: item?.subcategories?.toList() ?? [],
+                            ));
+                      })
+                      .animate()
+                      .fadeIn(delay: (gridIndex * 150).ms);
+                },
+              ) .box
+                  .padding(EdgeInsets.symmetric(horizontal: 5,vertical: 10))
+                  .cyan100
+                  .margin(EdgeInsets.symmetric(vertical: 10))
+                  .rounded
+                  .make(),
+            ),
             10.heightBox,
           ],
         ).pSymmetric(h: dynamicSize),

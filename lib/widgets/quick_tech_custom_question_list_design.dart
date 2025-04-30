@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:professors_english_academy/consts/consts.dart';
 
-Widget customQuestionList(BuildContext context) {
+Widget customQuestionList(BuildContext context,name,time,question) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      "Question title".text.semiBold.xl.make(),
+      "$name".text.semiBold.xl.make(),
       10.heightBox,
       Row(
         mainAxisSize: MainAxisSize.min,
@@ -16,7 +16,7 @@ Widget customQuestionList(BuildContext context) {
             size: 19,
           ),
           5.widthBox,
-          "4 Hour".text.semiBold.make(),
+          "$time Minute".text.semiBold.make(),
           12.widthBox,
           "||".text.xl2.gray400.make(),
           12.widthBox,
@@ -26,7 +26,7 @@ Widget customQuestionList(BuildContext context) {
             size: 19,
           ),
           5.widthBox,
-          "4 Question".text.semiBold.make(),
+          "$question Question".text.semiBold.make(),
         ],
       )
     ],

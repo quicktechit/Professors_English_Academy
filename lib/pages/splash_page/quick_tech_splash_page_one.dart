@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/pages/home/quick_tech_dashboard.dart';
 import 'package:professors_english_academy/pages/splash_page/quick_tech_splash_page_2nd.dart';
+
+import '../../controller/quick_tech_home_controller.dart';
 
 class QuickTechSplashPageOne extends StatefulWidget {
   const QuickTechSplashPageOne({super.key});
@@ -11,15 +14,24 @@ class QuickTechSplashPageOne extends StatefulWidget {
 }
 
 class _QuickTechSplashPageOneState extends State<QuickTechSplashPageOne> {
+  final box = GetStorage();
   @override
   void initState() {
     super.initState();
     _navigateToHome();
   }
 
+  final HomeController homeController = Get.put(HomeController());
   void _navigateToHome() {
     Timer(const Duration(seconds: 3), () {
-      Get.offAll(()=>const QuickTechSplashPage2nd(),transition: Transition.fadeIn,duration: 500.ms);
+      if (box.read("token").toString().isNotEmpty) {
+        homeController.fetchPracticeCategory().then((v) {
+          Get.offAll(() => QuickTechDashboard());
+        });
+      } else {
+        Get.offAll(() => const QuickTechSplashPage2nd(),
+            transition: Transition.fadeIn, duration: 500.ms);
+      }
     });
   }
   @override

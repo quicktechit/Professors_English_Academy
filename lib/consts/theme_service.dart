@@ -50,15 +50,3 @@ class ThemeController extends GetxController {
 }
 
 
-class LoaderController extends GetxController {
-  static LoaderController get to => Get.find();
-  var isLoading = false.obs;
-
-  void showLoader() {
-    isLoading.value = true;
-  }
-
-  void hideLoader() {
-    isLoading.value = false;
-  }
-}

@@ -1,5 +1,6 @@
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 import '../../consts/consts.dart';
+import '../../controller/quick_tech_practice_controller.dart';
 
 class QuickTechResultScreen extends StatefulWidget {
   const QuickTechResultScreen({super.key});
@@ -9,6 +10,7 @@ class QuickTechResultScreen extends StatefulWidget {
 }
 
 class _QuickTechResultScreenState extends State<QuickTechResultScreen> {
+  final PracticeController practiceController=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +36,7 @@ class _QuickTechResultScreenState extends State<QuickTechResultScreen> {
                     .textStyle(GoogleFonts.kufam())
                     .size(22)
                     .make(),
-                "25/30"
+                "${practiceController.lastResult.value?.formattedScore}"
                     .text
                     .white
                     .textStyle(GoogleFonts.kufam())

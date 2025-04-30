@@ -33,7 +33,7 @@ class _QuickTechSingleSubjectCategoryState extends State<QuickTechSingleSubjectC
             itemCount: 4,
             // 4 items per grid
             itemBuilder: (context, gridIndex) {
-              return customCard(context,gridIndex)
+              return customCard(context,"https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg","20")
                   .onTap((){
                 Get.to(() => QuickTechCategoryCourseListPage());
               }).animate().fadeIn(delay: (gridIndex*100).ms);

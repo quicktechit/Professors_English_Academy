@@ -6,6 +6,7 @@ import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/pages/home/quick_tech_dashboard.dart';
 
 import '../consts/api.dart';
+import '../consts/custom_loader.dart';
 
 class RegisterController extends GetxController {
   var name = TextEditingController();
@@ -14,7 +15,7 @@ class RegisterController extends GetxController {
   var email = TextEditingController();
   var password = TextEditingController();
   var confirmPassword = TextEditingController();
-
+  final box = GetStorage();
   Future<void> createUser() async {
     String? errorMessage;
 
@@ -39,6 +40,7 @@ class RegisterController extends GetxController {
       errorMessage = 'Passwords do not match';
     }
     if (errorMessage != null) {
+
       Get.snackbar(
         'Validation Error',
         errorMessage,
@@ -49,7 +51,7 @@ class RegisterController extends GetxController {
       );
       return;
     }
-    LoaderController.to.showLoader();
+    LoaderService.to.showLoader();
     final url = Uri.parse(Api.register);
 
     Map<String, String> userData = {
@@ -73,19 +75,19 @@ class RegisterController extends GetxController {
       );
       log(userData.toString());
       if (response.statusCode == 200) {
-        LoaderController.to.hideLoader();
+        LoaderService.to.hideLoader();
         print('User created successfully: ${response.body}');
         Get.snackbar("Success", "Registration Success");
       } else if (response.statusCode == 422) {
-        LoaderController.to.hideLoader();
+        LoaderService.to.hideLoader();
         Get.snackbar("Warning", "User Already Exist");
       } else {
-        LoaderController.to.hideLoader();
+        LoaderService.to.hideLoader();
         print('Failed to create user: ${response.statusCode}');
         Get.snackbar("Error", "Error Creating Account");
       }
     } catch (e) {
-      LoaderController.to.hideLoader();
+      LoaderService.to.hideLoader();
       print('Error: $e');
     }
   }
@@ -114,7 +116,7 @@ class RegisterController extends GetxController {
      }
 
     final url = Uri.parse(Api.login);
-    LoaderController.to.showLoader();
+     LoaderService.to.showLoader();
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -125,12 +127,15 @@ class RegisterController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      LoaderController.to.hideLoader();
+      LoaderService.to.hideLoader();
       print('Login successful');
       print('Response: ${response.body}');
+      var data=jsonDecode(response.body);
+      box.write("token", data["token"].toString());
+      log(box.read("token"));
       Get.offAll(() => QuickTechDashboard());
     } else {
-      LoaderController.to.hideLoader();
+      LoaderService.to.hideLoader();
       print('Login failed with status: ${response.statusCode}');
       print('Error: ${response.body}');
     }

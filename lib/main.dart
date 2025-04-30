@@ -2,8 +2,12 @@ import 'package:professors_english_academy/consts/consts.dart';
 
 import 'package:professors_english_academy/pages/splash_page/quick_tech_splash_page_one.dart';
 
+import 'consts/custom_loader.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(LoaderController());
+  Get.put(LoaderService());
   await GetStorage.init();
   runApp(const MyApp());
 }
@@ -14,7 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Get.put(LoaderController());
+
     final ThemeController themeController = Get.put(ThemeController());
     return Obx(
       ()=> GetMaterialApp(

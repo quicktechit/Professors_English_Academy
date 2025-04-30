@@ -3,10 +3,13 @@ import 'package:professors_english_academy/pages/reasult%20page/quick_tech_resul
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 
 import '../../controller/quick_tech_pdf_controller.dart';
+import '../../controller/quick_tech_practice_controller.dart';
 import '../../controller/quick_tech_qustion_controller.dart';
 
 class QuickTechExamPage extends StatefulWidget {
-  const QuickTechExamPage({super.key});
+  final String pdfs;
+
+  const QuickTechExamPage({super.key, required this.pdfs});
 
   @override
   State<QuickTechExamPage> createState() => _QuickTechExamPageState();
@@ -14,12 +17,18 @@ class QuickTechExamPage extends StatefulWidget {
 
 class _QuickTechExamPageState extends State<QuickTechExamPage> {
   final PdfController pdfController = Get.put(PdfController());
-  final QuestionController questionController = Get.put(QuestionController());
+  final PracticeController practiceController = Get.find();
+  final ExamController examController = Get.put(ExamController());
 
   @override
   void initState() {
     // TODO: implement initState
-    pdfController.loadPdf("https://icseindia.org/document/sample.pdf");
+    pdfController.loadPdf(widget.pdfs != ""
+        ? Api.baseUrl + widget.pdfs
+        : "https://icseindia.org/document/sample.pdf");
+
+    examController.timeInSeconds.value=int.parse(practiceController.singleExam.value.timer.toString())*60;
+
     super.initState();
   }
   Future<bool> showExitConfirmationDialog() async {
@@ -34,10 +43,9 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
       buttonColor: Colors.blue,
       barrierDismissible: false,
       onCancel: () {
-
-        Get.back(result: false);
-      },
-      onConfirm: () {
+            // Get.back(result: false);
+          },
+          onConfirm: () {
 
         Get.back(result: true);
       },
@@ -61,7 +69,7 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
           actions: [
             "Remain Time: ".text.sm.make(),
             Obx(() {
-              return questionController.formattedTime.text.sm.semiBold.make();
+              return examController.formattedTime.text.sm.semiBold.make();
             }),
             5.widthBox
           ],
@@ -72,10 +80,12 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
               5.heightBox,
               Obx(() {
                 if (pdfController.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator())
+                      .h(context.screenHeight / 1.9);
                 }
                 if (pdfController.filePath.value.isEmpty) {
-                  return const Center(child: Text('Failed to load PDF.'));
+                  return const Center(child: Text('Failed to load PDF.'))
+                      .h(context.screenHeight / 1.9);
                 }
                 return PDFView(
                   filePath: pdfController.filePath.value,
@@ -92,9 +102,12 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                 child: Obx(() {
                   return ListView.builder(
                     padding: const EdgeInsets.all(8.0),
-                    itemCount: questionController.questions.length,
+                    itemCount:
+                        practiceController.singleExam.value.questions?.length,
                     itemBuilder: (context, index) {
-                      final question = questionController.questions[index];
+                      final question =
+                          practiceController.singleExam.value.questions?[index];
+                      final options = question?.options ?? [];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -102,54 +115,34 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                           children: [
                             // Display question number (e.g., Q1)
                             Text(
-                              'Q${question.id}',
+                              'Q${question?.id}',
                               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            // Options organized in two rows: [A, B] and [C, D]
                             Obx(
-                              ()=> Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  RadioListTile<String>(
-                                    title: Text('A'),
-                                    value: 'A',
-                                    groupValue: question.selectedOption.value,
+                                  () => GridView.count(
+                                crossAxisCount: 2,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                childAspectRatio: 3.0,
+                                mainAxisSpacing: 8.0,
+                                crossAxisSpacing: 8.0,
+                                children: List.generate(options.length, (optionIndex) {
+                                  final option = options[optionIndex];
+                                  final optionLabel = String.fromCharCode(65 + optionIndex);
+                                  final selectedOption = practiceController.selectedAnswers[question?.id]?.value['option'] ?? '';
+
+                                  return RadioListTile<String>(
+                                    title: Text('$optionLabel. ${option.option ?? ''}'),
+                                    value: option.option ?? '',
+                                    groupValue: selectedOption,
                                     onChanged: (value) {
-                                      questionController.setSelectedOption(question.id, value!);
+                                      if (value != null && option.id != null) {
+                                        practiceController.updateAnswer(question!.id!, value, option.id!);
+                                      }
                                     },
-                                  ).w(100),
-                                  RadioListTile<String>(
-                                    title: Text('B'),
-                                    value: 'B',
-                                    groupValue: question.selectedOption.value,
-                                    onChanged: (value) {
-                                      questionController.setSelectedOption(question.id, value!);
-                                    },
-                                  ).w(100),
-                                ],
-                              ),
-                            ),
-                            Obx(
-                              ()=> Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  RadioListTile<String>(
-                                    title: Text('C'),
-                                    value: 'C',
-                                    groupValue: question.selectedOption.value,
-                                    onChanged: (value) {
-                                      questionController.setSelectedOption(question.id, value!);
-                                    },
-                                  ).w(100),
-                                  RadioListTile<String>(
-                                    title: Text('D'),
-                                    value: 'D',
-                                    groupValue: question.selectedOption.value,
-                                    onChanged: (value) {
-                                      questionController.setSelectedOption(question.id, value!);
-                                    },
-                                  ).w(100),
-                                ],
+                                    contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  );
+                                }),
                               ),
                             ),
                           ],
@@ -179,7 +172,8 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                           },
                           onConfirm: () {
                             Get.back();
-                            Get.to(()=>QuickTechResultScreen());
+                            practiceController.submitAnswers(practiceController.singleExam.value.id.toString());
+
                           },
                         );
 

@@ -76,7 +76,7 @@ Widget customRoutine(BuildContext context) {
       customButton(
               title: "Today's Exam",
               onPressed: () {
-                Get.to(() => QuickTechExamPage());
+                Get.to(() => QuickTechExamPage(pdfs: '',));
               },
               color: secondColor,
               txtColor: white)
@@ -350,8 +350,7 @@ Widget customContent(BuildContext context) {
       },
     ],
   };
-  return Obx(
-    () => Column(
+  return Column(
       children: [
         ExpansionTile(
           iconColor: Colors.black,
@@ -444,6 +443,6 @@ Widget customContent(BuildContext context) {
         ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
         20.heightBox,
       ],
-    ).pSymmetric(h: dynamicSize),
-  );
+    ).pSymmetric(h: dynamicSize);
+
 }

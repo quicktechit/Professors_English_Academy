@@ -1,22 +1,27 @@
+import 'package:professors_english_academy/model/pactrice_category_model.dart';
 import 'package:professors_english_academy/pages/Practice/quick_tech_practice_qustion_list_page.dart';
 
 import '../../consts/consts.dart';
+import '../../controller/quick_tech_practice_controller.dart';
 import '../../widgets/custom_category_card_design.dart';
 import '../all course list page/quick_tech_category_course_list_page.dart';
 
 class QuickTechSinglePracticeCategory extends StatefulWidget {
-  const QuickTechSinglePracticeCategory({super.key});
+ final String subjectName;
+ final List <Subcategories> subcategories;
+  const QuickTechSinglePracticeCategory({super.key, required this.subjectName, required this.subcategories});
 
   @override
   State<QuickTechSinglePracticeCategory> createState() => _QuickTechSinglePracticeCategory();
 }
 
 class _QuickTechSinglePracticeCategory extends State<QuickTechSinglePracticeCategory> {
+  final PracticeController practiceController=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true,
-      title: "Subject Name".text.semiBold.make(),
+      title: widget.subjectName.text.semiBold.make(),
       ),
       body: ListView(
         children: [
@@ -32,12 +37,13 @@ class _QuickTechSinglePracticeCategory extends State<QuickTechSinglePracticeCate
               mainAxisSpacing: 10.0,
               childAspectRatio: 1.0, // Square items
             ),
-            itemCount: 4,
+            itemCount: widget.subcategories.length,
             // 4 items per grid
             itemBuilder: (context, gridIndex) {
-              return customCard(context,gridIndex)
+              var item=widget.subcategories[gridIndex];
+              return customCard(context,"${item.image}","20",)
                   .onTap((){
-                Get.to(() => QuickTechPracticeQuestionListPage());
+                practiceController.fetchPracticeSubQuestion(item.id.toString());
               }).animate().fadeIn(delay: (gridIndex*100).ms);
             },
           ),
