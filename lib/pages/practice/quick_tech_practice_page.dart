@@ -1,5 +1,8 @@
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/pages/Practice/quick_tech_practice_qustion_list_page.dart';
+import 'package:professors_english_academy/pages/practice/quick_tech_single_practice_category.dart';
+import '../../controller/quick_tech_home_controller.dart';
+import '../../controller/quick_tech_practice_controller.dart';
 import '../../widgets/custom_category_card_design.dart';
 import '../../widgets/quick_tech_custom_row_design.dart';
 
@@ -11,11 +14,8 @@ class QuickTechPracticePage extends StatefulWidget {
 }
 
 class _QuickTechPracticePageState extends State<QuickTechPracticePage> {
-  final List<String> title = [
-    "Bangla",
-    "English",
-    "Math",
-  ];
+  final HomeController homeController = Get.find();
+  final PracticeController practiceController= Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +30,21 @@ class _QuickTechPracticePageState extends State<QuickTechPracticePage> {
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: 3,
+            itemCount: homeController.practice.value.data!.length >= 4
+                ? 4
+                : homeController.practice.value.data?.length,
             itemBuilder: (context, index) {
+              var item = homeController.practice.value.data?[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   10.heightBox,
-                  customRow(context, title[index], "", () {}).p8(),
+                  customRow(context, "${item?.name}", "See All", () {
+                    Get.to(() => QuickTechSinglePracticeCategory(
+                      subjectName: "${item?.name}",
+                      subcategories: item?.subcategories?.toList() ?? [],
+                    ));
+                  }).p8(),
                   15.heightBox,
                   // GridView inside Column
                   GridView.builder(
@@ -51,11 +59,14 @@ class _QuickTechPracticePageState extends State<QuickTechPracticePage> {
                       mainAxisSpacing: 10.0,
                       childAspectRatio: 1.0, // Square items
                     ),
-                    itemCount: 4,
+                    itemCount: item!.subcategories!.length >= 4
+                        ? 4
+                        : item.subcategories?.length,
                     // 4 items per grid
                     itemBuilder: (context, gridIndex) {
-                      return customCard(context,"https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg","20").onTap(() {
-                        Get.to(() => QuickTechPracticeQuestionListPage());
+                      var data=item.subcategories?[index];
+                      return customCard(context,"${data?.image}","20").onTap(() {
+                        practiceController.fetchPracticeSubQuestion(item.id.toString());
                       }).animate().fadeIn(delay: (gridIndex*150).ms);
                     },
                   ),
