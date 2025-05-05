@@ -1,6 +1,5 @@
 import 'package:professors_english_academy/consts/consts.dart';
-import 'package:professors_english_academy/controller/quick_tech_otp_controller.dart';
-import 'package:professors_english_academy/controller/quick_tech_register_controller.dart';
+import 'package:professors_english_academy/controller/quick_tech_auth_controller.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 import 'package:professors_english_academy/widgets/quicktech_custom_text_field.dart';
 
@@ -14,13 +13,6 @@ class QuickTechCompleteRegister extends StatefulWidget {
 }
 
 class _QuickTechCompleteRegisterState extends State<QuickTechCompleteRegister> {
-  String? _selectedItem = 'Option 1';
-  final List<String> _dropdownItems = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'Option 4',
-  ];
 @override
   void initState() {
     // TODO: implement initState
@@ -28,7 +20,7 @@ class _QuickTechCompleteRegisterState extends State<QuickTechCompleteRegister> {
    registerController.phone.text=widget.phone;
   }
 
-  final RegisterController registerController=Get.find();
+  final AuthController registerController=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

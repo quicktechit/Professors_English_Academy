@@ -1,6 +1,8 @@
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/pages/category/quick_tech_single_subject_category.dart';
 
+import '../../controller/quick_tech_home_controller.dart';
+import '../../controller/quick_tech_subcategory_controller.dart';
 import '../../widgets/custom_category_card_design.dart';
 import '../../widgets/quick_tech_custom_row_design.dart';
 import '../all course list page/quick_tech_category_course_list_page.dart';
@@ -13,11 +15,9 @@ class QuickTechCategoryPage extends StatefulWidget {
 }
 
 class _QuickTechCategoryPageState extends State<QuickTechCategoryPage> {
-  final List<String> title = [
-    "Bangla",
-    "English",
-    "Math",
-  ];
+  final HomeController homeController = Get.find();
+  final SubCategoryController subCategoryController =
+  Get.put(SubCategoryController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,14 +32,17 @@ class _QuickTechCategoryPageState extends State<QuickTechCategoryPage> {
             padding: EdgeInsets.symmetric(horizontal: dynamicSize),
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: 3,
+            itemCount: homeController.category.value.data!.length >= 4
+                ? 4
+                : homeController.category.value.data?.length,
             itemBuilder: (context, index) {
+              var item = homeController.category.value.data?[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   10.heightBox,
-                  customRow(context, title[index], "See All", () {
-                    Get.to(() => QuickTechSingleSubjectCategory());
+                  customRow(context, "${item?.name}", "See All", () {
+                    Get.to(() => QuickTechSingleSubjectCategory(subjectName: '', subcategories: [],));
                   }).p8(),
                   15.heightBox,
                   // GridView inside Column
@@ -53,10 +56,19 @@ class _QuickTechCategoryPageState extends State<QuickTechCategoryPage> {
                       mainAxisSpacing: 10.0,
                       childAspectRatio: 1.0, // Square items
                     ),
-                    itemCount: 4, // 4 items per grid
+                    itemCount: item!.subcategories!.length >= 4
+                        ? 4
+                        : item.subcategories?.length,
                     itemBuilder: (context, gridIndex) {
-                      return customCard(context,"https://images.pexels.com/photos/206359/pexels-photo-206359.jpeg","20").onTap((){
-                        Get.to(() => QuickTechCategoryCourseListPage());
+                      var data=item.subcategories?[gridIndex];
+                      return customCard(context,"${data?.image}","${data?.coursesCount.toString()}").onTap((){
+                        subCategoryController
+                            .fetchSubCategory("${data?.id.toString()}")
+                            .then((V) {
+                          Get.to(() => QuickTechCategoryCourseListPage(
+                            subjectName: "${data?.name.toString()}",
+                          ));
+                        });
                       }).animate().fadeIn(delay: (gridIndex*150).ms);
                     },
                   ),

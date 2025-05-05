@@ -1,4 +1,3 @@
-import 'package:professors_english_academy/pages/auth_page/quick_tech_complete_register.dart';
 
 import '../../consts/consts.dart';
 import '../../controller/quick_tech_otp_controller.dart';

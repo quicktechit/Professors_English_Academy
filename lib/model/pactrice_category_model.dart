@@ -61,12 +61,13 @@ class Subcategories {
   final String? name;
   final String? image;
   final int? categoryId;
+  final int? quizCount;
   final String? createdAt;
   final String? updatedAt;
 
   Subcategories({
     this.id,
-    this.name,
+    this.name,this.quizCount,
     this.image,
     this.categoryId,
     this.createdAt,
@@ -78,6 +79,7 @@ class Subcategories {
         name = json['name'] as String?,
         image = json['image'] as String?,
         categoryId = json['category_id'] as int?,
+        quizCount = json['quiz_count'] as int?,
         createdAt = json['created_at'] as String?,
         updatedAt = json['updated_at'] as String?;
 
@@ -85,6 +87,7 @@ class Subcategories {
     'id' : id,
     'name' : name,
     'image' : image,
+    'quiz_count' : quizCount,
     'category_id' : categoryId,
     'created_at' : createdAt,
     'updated_at' : updatedAt

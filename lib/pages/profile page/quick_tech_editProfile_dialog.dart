@@ -12,13 +12,6 @@ Widget editDialog(
     tx,
     required BuildContext context,
     controller}) {
-  var selectedItem = 'Option 1'.obs;
-  final List<String> dropdownItems = [
-    'Option 1',
-    'Option 2',
-    'Option 3',
-    'Option 4',
-  ].obs;
   return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -26,7 +19,7 @@ Widget editDialog(
       elevation: 5,
       child: SizedBox(
         width: context.screenWidth,
-        height: context.screenHeight / 1.4,
+        height: context.screenHeight / 2,
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Column(
@@ -109,106 +102,106 @@ Widget editDialog(
                 hint: 'School/College/University',
                 isVisible: true,
               ).animate().fadeIn().move(
-                  begin: const Offset(0, 90),
+                  begin: const Offset(0, 60),
                   end: const Offset(0, 0),
                   delay: 140.ms,
                   duration: 380.ms),
-              10.heightBox,
-              "Select Your Course".text.semiBold.make().animate().fadeIn().move(
-                  begin: const Offset(0, 60),
-                  end: const Offset(0, 0),
-                  delay: 160.ms,
-                  duration: 380.ms),
-              5.heightBox,
-              Obx(
-                ()=> DropdownButton<String>(
-                  value: selectedItem.value,
-                  hint: const Text('Select an option'),
-                  // Shown when no value is selected
-                  icon: const Icon(Icons.arrow_drop_down),
-                  // Dropdown arrow icon
-                  elevation: 16,
-                  // Shadow elevation
-                  isExpanded: true,
-                  style: const TextStyle(
-                    color: mainColor,
-                    fontSize: 16,
-                  ),
-                  underline: SizedBox.shrink(),
-                  onChanged: (String? newValue) {
-
-                      selectedItem.value = newValue.toString();
-
-                  },
-                  items: dropdownItems
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                )
-                    .box
-                    .rounded
-                    .border(color: Colors.black)
-                    .padding(EdgeInsets.symmetric(horizontal: 10))
-                    .make()
-                    .animate()
-                    .fadeIn()
-                    .move(
-                        begin: const Offset(0, 60),
-                        end: const Offset(0, 0),
-                        delay: 160.ms,
-                        duration: 380.ms),
-              ),
-              15.heightBox,
-              "Batch".text.semiBold.make().animate().fadeIn().move(
-                  begin: const Offset(0, 50),
-                  end: const Offset(0, 0),
-                  delay: 180.ms,
-                  duration: 380.ms),
-              5.heightBox,
-              Obx(
-                ()=> DropdownButton<String>(
-                  value: selectedItem.value,
-                  hint: const Text('Select an option'),
-                  // Shown when no value is selected
-                  icon: const Icon(Icons.arrow_drop_down),
-                  // Dropdown arrow icon
-                  elevation: 16,
-                  // Shadow elevation
-                  isExpanded: true,
-                  style: const TextStyle(
-                    color: mainColor,
-                    fontSize: 16,
-                  ),
-                  underline: SizedBox.shrink(),
-                  onChanged: (String? newValue) {
-
-                      selectedItem.value = newValue.toString();
-
-                  },
-                  items: dropdownItems
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                )
-                    .box
-                    .rounded
-                    .border(color: Colors.black)
-                    .padding(EdgeInsets.symmetric(horizontal: 10))
-                    .make()
-                    .animate()
-                    .fadeIn()
-                    .move(
-                        begin: const Offset(0, 50),
-                        end: const Offset(0, 0),
-                        delay: 180.ms,
-                        duration: 380.ms),
-              ),
+              // 10.heightBox,
+              // "Select Your Course".text.semiBold.make().animate().fadeIn().move(
+              //     begin: const Offset(0, 60),
+              //     end: const Offset(0, 0),
+              //     delay: 160.ms,
+              //     duration: 380.ms),
+              // 5.heightBox,
+              // Obx(
+              //   ()=> DropdownButton<String>(
+              //     value: selectedItem.value,
+              //     hint: const Text('Select an option'),
+              //     // Shown when no value is selected
+              //     icon: const Icon(Icons.arrow_drop_down),
+              //     // Dropdown arrow icon
+              //     elevation: 16,
+              //     // Shadow elevation
+              //     isExpanded: true,
+              //     style: const TextStyle(
+              //       color: mainColor,
+              //       fontSize: 16,
+              //     ),
+              //     underline: SizedBox.shrink(),
+              //     onChanged: (String? newValue) {
+              //
+              //         selectedItem.value = newValue.toString();
+              //
+              //     },
+              //     items: dropdownItems
+              //         .map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //   )
+              //       .box
+              //       .rounded
+              //       .border(color: Colors.black)
+              //       .padding(EdgeInsets.symmetric(horizontal: 10))
+              //       .make()
+              //       .animate()
+              //       .fadeIn()
+              //       .move(
+              //           begin: const Offset(0, 60),
+              //           end: const Offset(0, 0),
+              //           delay: 160.ms,
+              //           duration: 380.ms),
+              // ),
+              // 15.heightBox,
+              // "Batch".text.semiBold.make().animate().fadeIn().move(
+              //     begin: const Offset(0, 50),
+              //     end: const Offset(0, 0),
+              //     delay: 180.ms,
+              //     duration: 380.ms),
+              // 5.heightBox,
+              // Obx(
+              //   ()=> DropdownButton<String>(
+              //     value: selectedItem.value,
+              //     hint: const Text('Select an option'),
+              //     // Shown when no value is selected
+              //     icon: const Icon(Icons.arrow_drop_down),
+              //     // Dropdown arrow icon
+              //     elevation: 16,
+              //     // Shadow elevation
+              //     isExpanded: true,
+              //     style: const TextStyle(
+              //       color: mainColor,
+              //       fontSize: 16,
+              //     ),
+              //     underline: SizedBox.shrink(),
+              //     onChanged: (String? newValue) {
+              //
+              //         selectedItem.value = newValue.toString();
+              //
+              //     },
+              //     items: dropdownItems
+              //         .map<DropdownMenuItem<String>>((String value) {
+              //       return DropdownMenuItem<String>(
+              //         value: value,
+              //         child: Text(value),
+              //       );
+              //     }).toList(),
+              //   )
+              //       .box
+              //       .rounded
+              //       .border(color: Colors.black)
+              //       .padding(EdgeInsets.symmetric(horizontal: 10))
+              //       .make()
+              //       .animate()
+              //       .fadeIn()
+              //       .move(
+              //           begin: const Offset(0, 50),
+              //           end: const Offset(0, 0),
+              //           delay: 180.ms,
+              //           duration: 380.ms),
+              // ),
               15.heightBox,
               customButton(
                       title: "Update",
@@ -218,9 +211,9 @@ Widget editDialog(
                   .w(context.screenWidth).animate()
                   .fadeIn()
                   .move(
-                  begin: const Offset(0, 50),
+                  begin: const Offset(0, 30),
                   end: const Offset(0, 0),
-                  delay: 190.ms,
+                  delay: 160.ms,
                   duration: 380.ms),
             ],
           ),

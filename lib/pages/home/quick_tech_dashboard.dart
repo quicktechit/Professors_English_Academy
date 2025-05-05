@@ -1,3 +1,5 @@
+import 'package:professors_english_academy/controller/quick_tech_profile_controller.dart';
+
 import '../../consts/consts.dart';
 import '../../controller/quick_tech_dashboard_controller.dart';
 
@@ -11,6 +13,7 @@ class QuickTechDashboard extends StatefulWidget {
 class _QuickTechDashboardState extends State<QuickTechDashboard> {
   final DashboardController dashBoardController =
   Get.put(DashboardController());
+  final ProfileController profileController=Get.put(ProfileController());
   final ThemeController themeController = Get.find();
   @override
   Widget build(BuildContext context) {

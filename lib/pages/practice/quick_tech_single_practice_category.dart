@@ -4,7 +4,6 @@ import 'package:professors_english_academy/pages/Practice/quick_tech_practice_qu
 import '../../consts/consts.dart';
 import '../../controller/quick_tech_practice_controller.dart';
 import '../../widgets/custom_category_card_design.dart';
-import '../all course list page/quick_tech_category_course_list_page.dart';
 
 class QuickTechSinglePracticeCategory extends StatefulWidget {
  final String subjectName;
@@ -41,9 +40,11 @@ class _QuickTechSinglePracticeCategory extends State<QuickTechSinglePracticeCate
             // 4 items per grid
             itemBuilder: (context, gridIndex) {
               var item=widget.subcategories[gridIndex];
-              return customCard(context,"${item.image}","20",)
+              return customCard(context,"${item.image}","${item.quizCount}",)
                   .onTap((){
-                practiceController.fetchPracticeSubQuestion(item.id.toString());
+                practiceController.fetchPracticeSubQuestion(item.id.toString()).then((v) {
+                  Get.to(() => QuickTechPracticeQuestionListPage(subjectName: "{data.name.toString()}",));
+                });
               }).animate().fadeIn(delay: (gridIndex*100).ms);
             },
           ),

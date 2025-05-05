@@ -1,11 +1,10 @@
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/controller/quick_tech_auth_controller.dart';
 import 'package:professors_english_academy/controller/quick_tech_otp_controller.dart';
 import 'package:professors_english_academy/pages/auth_page/quick_tech_login_page.dart';
 import 'package:professors_english_academy/pages/auth_page/quick_tech_otp_page.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 import 'package:professors_english_academy/widgets/quicktech_custom_text_field.dart';
-
-import '../../controller/quick_tech_register_controller.dart';
 
 class QuickTechPhoneNumberInput extends StatefulWidget {
   const QuickTechPhoneNumberInput({super.key});
@@ -18,7 +17,7 @@ class QuickTechPhoneNumberInput extends StatefulWidget {
 class _QuickTechPhoneNumberInputState extends State<QuickTechPhoneNumberInput> {
 
   final OtpController otpController=Get.put(OtpController());
-  final RegisterController registerController=Get.put(RegisterController());
+  final AuthController registerController=Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

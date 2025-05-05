@@ -72,16 +72,7 @@ Widget customRoutine(BuildContext context) {
               txtColor: white)
           .w(context.screenWidth)
           .pSymmetric(h: dynamicSize),
-      15.heightBox,
-      customButton(
-              title: "Today's Exam",
-              onPressed: () {
-                Get.to(() => QuickTechExamPage(pdfs: '',));
-              },
-              color: secondColor,
-              txtColor: white)
-          .w(context.screenWidth)
-          .pSymmetric(h: dynamicSize),
+
       30.heightBox,
       customContractUS(context)
     ],

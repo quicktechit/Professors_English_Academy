@@ -5,7 +5,8 @@ import 'package:professors_english_academy/widgets/quick_tech_custom_question_li
 import '../../controller/quick_tech_practice_controller.dart';
 
 class QuickTechPracticeQuestionListPage extends StatefulWidget {
-  const QuickTechPracticeQuestionListPage({super.key});
+  final String subjectName;
+  const QuickTechPracticeQuestionListPage({super.key, required this.subjectName});
 
   @override
   State<QuickTechPracticeQuestionListPage> createState() =>

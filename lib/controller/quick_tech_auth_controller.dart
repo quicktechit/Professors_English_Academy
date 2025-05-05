@@ -1,14 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:http/http.dart' as http;
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/pages/home/quick_tech_dashboard.dart';
 
-import '../consts/api.dart';
-import '../consts/custom_loader.dart';
-
-class RegisterController extends GetxController {
+class AuthController extends GetxController {
   var name = TextEditingController();
   var phone = TextEditingController();
   var college = TextEditingController();

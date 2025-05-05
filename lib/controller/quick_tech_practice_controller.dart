@@ -7,7 +7,6 @@ import 'package:professors_english_academy/model/practice_question_model.dart';
 import 'package:professors_english_academy/pages/reasult%20page/quick_tech_result_screen.dart';
 
 import '../model/quick_tech_reasult_model.dart';
-import '../pages/Practice/quick_tech_practice_qustion_list_page.dart';
 
 class PracticeController extends GetxController {
   var question = PracticeQuestionModel().obs;
@@ -25,7 +24,8 @@ class PracticeController extends GetxController {
   Future<void> fetchPracticeSubQuestion(String id) async {
     final url = Uri.parse("${Api.practiceSubcategory}$id");
     LoaderService.to.showLoader();
-
+    log(url.toString());
+    question.value=PracticeQuestionModel();
     try {
       final response = await http.get(url);
 
@@ -33,12 +33,13 @@ class PracticeController extends GetxController {
         LoaderService.to.hideLoader();
         final data = json.decode(response.body);
         question.value = PracticeQuestionModel.fromJson(data);
-        Get.to(() => QuickTechPracticeQuestionListPage());
+
         log('Data fetched successfully: $data');
       } else {
         LoaderService.to.hideLoader();
         log('Failed to load data. Status code: ${response.statusCode}');
       }
+      question.refresh();
     } catch (e) {
       LoaderService.to.hideLoader();
       log('Error occurred: $e');

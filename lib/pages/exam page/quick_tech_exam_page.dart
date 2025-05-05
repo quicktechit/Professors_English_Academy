@@ -1,5 +1,4 @@
 import 'package:professors_english_academy/consts/consts.dart';
-import 'package:professors_english_academy/pages/reasult%20page/quick_tech_result_screen.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 
 import '../../controller/quick_tech_pdf_controller.dart';

@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart'as http;
-import 'package:professors_english_academy/consts/api.dart';
 import 'package:professors_english_academy/pages/auth_page/quick_tech_complete_register.dart';
 import '../consts/consts.dart';
-import '../pages/auth_page/quick_tech_otp_page.dart';
 
 
 class OtpController extends GetxController {

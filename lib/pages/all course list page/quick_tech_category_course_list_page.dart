@@ -1,37 +1,61 @@
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/controller/quick_tech_subcategory_controller.dart';
 
 import '../../widgets/quick_tech_custom_course_list.dart';
 import '../course_details/quick_tech_custom_course_details.dart';
 
 class QuickTechCategoryCourseListPage extends StatefulWidget {
-  const QuickTechCategoryCourseListPage({super.key});
+  final String subjectName;
+
+  const QuickTechCategoryCourseListPage({super.key, required this.subjectName});
 
   @override
   State<QuickTechCategoryCourseListPage> createState() => _QuickTechCategoryCourseListPageState();
 }
 
 class _QuickTechCategoryCourseListPageState extends State<QuickTechCategoryCourseListPage> {
+  final SubCategoryController subCategoryController =
+      Get.put(SubCategoryController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: "Course title".text.semiBold.make(),
+        title: widget.subjectName.text.semiBold.make(),
       ),
-      body: Column(
-        children: [
-          Flexible(
-            child: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-                shrinkWrap: true,
-                itemCount: 10,
-                itemBuilder: (context,index){
-                  return customCourseListHori(context).onTap((){
-                    Get.to(()=>QuickTechCustomCourseDetails());
-                  }).animate().fadeIn(delay: (index*150).ms);
-                }),
-          )
-        ],
-      ),
+      body: Obx(() {
+        var dataList = subCategoryController.subCategory.value.data;
+
+        if (dataList == null || dataList.isEmpty) {
+          return Center(
+            child: "NO Course Found".text.semiBold.black.make(),
+          );
+        } else {
+          return ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            shrinkWrap: true,
+            itemCount: dataList.length,
+            itemBuilder: (context, index) {
+              var data = dataList[index];
+
+              return customCourseListHistory(
+                  context: context,
+                  image: "${data.thumbnilImage}",
+                  title: '${data.name}',
+                  student: '',
+                  exam: '',
+                  clas: '',
+                  rating: '${data.reviewAvgRating ?? 0} (${data.reviewCount})',
+                  price: '${data.price}')
+                  .onTap(() {
+                Get.to(() => QuickTechCustomCourseDetails());
+              })
+                  .animate()
+                  .fadeIn(delay: (index * 150).ms);
+            },
+          );
+        }
+      }),
     );
   }
+
 }

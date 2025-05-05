@@ -1,6 +1,7 @@
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/pages/Practice/quick_tech_practice_qustion_list_page.dart';
 import 'package:professors_english_academy/pages/practice/quick_tech_single_practice_category.dart';
+
 import '../../controller/quick_tech_home_controller.dart';
 import '../../controller/quick_tech_practice_controller.dart';
 import '../../widgets/custom_category_card_design.dart';
@@ -65,9 +66,13 @@ class _QuickTechPracticePageState extends State<QuickTechPracticePage> {
                     // 4 items per grid
                     itemBuilder: (context, gridIndex) {
                       var data=item.subcategories?[index];
-                      return customCard(context,"${data?.image}","20").onTap(() {
-                        practiceController.fetchPracticeSubQuestion(item.id.toString());
-                      }).animate().fadeIn(delay: (gridIndex*150).ms);
+                      return customCard(context,"${data?.image}","${data?.quizCount.toString()}").onTap(() {
+                            practiceController
+                                .fetchPracticeSubQuestion(item.id.toString())
+                                .then((v) {
+                              Get.to(() => QuickTechPracticeQuestionListPage(subjectName: "{data.name.toString()}",));
+                            });
+                          }).animate().fadeIn(delay: (gridIndex*150).ms);
                     },
                   ),
                   10.heightBox,

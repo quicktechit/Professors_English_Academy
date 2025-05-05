@@ -38,8 +38,8 @@ class _QuickTechCustomCourseDetailsState
                     .make()
                     .pSymmetric(h: dynamicSize).animate().fadeIn(delay: 80.ms),
                 10.heightBox,
-                ListView(
-                  scrollDirection: Axis.horizontal,
+                Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     5.widthBox,
                     Column(
@@ -70,34 +70,6 @@ class _QuickTechCustomCourseDetailsState
                             EdgeInsets.symmetric(horizontal: 5, vertical: 5))
                         .p8
                         .make().animate().fadeIn(delay: 100.ms),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/images/notebook.png",
-                          height: 50,
-                        ),
-                        5.heightBox,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            "Note".text.gray600.size(14).make(),
-                            5.widthBox,
-                            "1000".text.black.semiBold.size(16).make(),
-                          ],
-                        ),
-                      ],
-                    )
-                        .box
-                        .shadowSm
-                        .roundedSM
-                        .white
-                        .width(95)
-                        .margin(
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 5))
-                        .p8
-                        .make().animate().fadeIn(delay: 120.ms),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
