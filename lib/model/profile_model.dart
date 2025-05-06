@@ -1,5 +1,5 @@
 class ProfileModel {
-  final User? user;
+  final Users? user;
   final List<EnrolledCourses>? enrolledCourses;
 
   ProfileModel({
@@ -8,7 +8,7 @@ class ProfileModel {
   });
 
   ProfileModel.fromJson(Map<String, dynamic> json)
-      : user = (json['user'] as Map<String,dynamic>?) != null ? User.fromJson(json['user'] as Map<String,dynamic>) : null,
+      : user = (json['user'] as Map<String,dynamic>?) != null ? Users.fromJson(json['user'] as Map<String,dynamic>) : null,
         enrolledCourses = (json['enrolled_courses'] as List?)?.map((dynamic e) => EnrolledCourses.fromJson(e as Map<String,dynamic>)).toList();
 
   Map<String, dynamic> toJson() => {
@@ -17,7 +17,7 @@ class ProfileModel {
   };
 }
 
-class User {
+class Users {
   final int? id;
   final String? name;
   final int? maxDevice;
@@ -39,7 +39,7 @@ class User {
   final String? createdAt;
   final String? updatedAt;
 
-  User({
+  Users({
     this.id,
     this.name,
     this.maxDevice,
@@ -62,7 +62,7 @@ class User {
     this.updatedAt,
   });
 
-  User.fromJson(Map<String, dynamic> json)
+  Users.fromJson(Map<String, dynamic> json)
       : id = json['id'] as int?,
         name = json['name'] as String?,
         maxDevice = json['max_device'] as int?,

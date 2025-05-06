@@ -1,11 +1,8 @@
 import 'package:professors_english_academy/consts/consts.dart';
-
 import 'package:professors_english_academy/pages/splash_page/quick_tech_splash_page_one.dart';
-
-import 'consts/custom_loader.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   Get.put(LoaderController());
   Get.put(LoaderService());
   await GetStorage.init();

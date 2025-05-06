@@ -1,3 +1,4 @@
+import 'package:professors_english_academy/controller/quick_tech_profile_controller.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 import 'package:professors_english_academy/widgets/quicktech_custom_text_field.dart';
 
@@ -11,7 +12,8 @@ Widget editDialog(
     gy,
     tx,
     required BuildContext context,
-    controller}) {
+    }) {
+  final ProfileController profileController = Get.find();
   return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -19,7 +21,7 @@ Widget editDialog(
       elevation: 5,
       child: SizedBox(
         width: context.screenWidth,
-        height: context.screenHeight / 2,
+        height: context.screenHeight / 1.7,
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Column(
@@ -45,19 +47,19 @@ Widget editDialog(
                   .size(14)
                   .fontWeight(FontWeight.w500)
                   .make().animate().fadeIn().move(
-                  begin: const Offset(0, 150),
-                  end: const Offset(0, 0),
-                  delay: 100.ms,
+                      begin: const Offset(0, 140),
+                      end: const Offset(0, 0),
+                      delay: 100.ms,
                   duration: 380.ms),
               5.heightBox,
               customTextField(
-                controller: controller,
+                controller: profileController.name,
                 isSuffix: false,
                 icon: Icons.person_outline_rounded,
                 hint: 'Name',
                 isVisible: true,
               ).animate().fadeIn().move(
-                  begin: const Offset(0, 150),
+                  begin: const Offset(0, 130),
                   end: const Offset(0, 0),
                   delay: 100.ms,
                   duration: 380.ms),
@@ -68,19 +70,47 @@ Widget editDialog(
                   .size(14)
                   .fontWeight(FontWeight.w500)
                   .make().animate().fadeIn().move(
-                  begin: const Offset(0, 130),
-                  end: const Offset(0, 0),
-                  delay: 120.ms,
+                      begin: const Offset(0, 120),
+                      end: const Offset(0, 0),
+                      delay: 120.ms,
                   duration: 380.ms),
               5.heightBox,
               customTextField(
-                controller: controller,
+                readOnly: true,
+                controller: profileController.phone,
                 isSuffix: false,
                 icon: Icons.phone_outlined,
                 hint: 'Number',
                 isVisible: true,
               ).animate().fadeIn().move(
-                  begin: const Offset(0, 130),
+                  begin: const Offset(0, 100),
+                  end: const Offset(0, 0),
+                  delay: 120.ms,
+                  duration: 380.ms),
+              10.heightBox,
+              'Your Email'
+                  .text
+                  .color(gry)
+                  .size(14)
+                  .fontWeight(FontWeight.w500)
+                  .make()
+                  .animate()
+                  .fadeIn()
+                  .move(
+                      begin: const Offset(0, 80),
+                      end: const Offset(0, 0),
+                      delay: 120.ms,
+                      duration: 380.ms),
+              5.heightBox,
+              customTextField(
+                readOnly: true,
+                controller: profileController.email,
+                isSuffix: false,
+                icon: Icons.phone_outlined,
+                hint: 'Email',
+                isVisible: true,
+              ).animate().fadeIn().move(
+                  begin: const Offset(0, 60),
                   end: const Offset(0, 0),
                   delay: 120.ms,
                   duration: 380.ms),
@@ -91,18 +121,18 @@ Widget editDialog(
                   .size(14)
                   .fontWeight(FontWeight.w500)
                   .make().animate().fadeIn().move(
-                  begin: const Offset(0, 90),
-                  end: const Offset(0, 0),
-                  delay: 140.ms,
+                      begin: const Offset(0, 50),
+                      end: const Offset(0, 0),
+                      delay: 140.ms,
                   duration: 380.ms),
               customTextField(
-                controller: controller,
+                controller: profileController.institution,
                 isSuffix: true,
                 icon: Icons.school_outlined,
                 hint: 'School/College/University',
                 isVisible: true,
               ).animate().fadeIn().move(
-                  begin: const Offset(0, 60),
+                  begin: const Offset(0, 40),
                   end: const Offset(0, 0),
                   delay: 140.ms,
                   duration: 380.ms),
@@ -205,15 +235,17 @@ Widget editDialog(
               15.heightBox,
               customButton(
                       title: "Update",
-                      onPressed: () {},
+                      onPressed: () {
+                        profileController.updateProfile();
+                      },
                       color: mainColor,
                       txtColor: white)
                   .w(context.screenWidth).animate()
                   .fadeIn()
                   .move(
-                  begin: const Offset(0, 30),
-                  end: const Offset(0, 0),
-                  delay: 160.ms,
+                      begin: const Offset(0, 20),
+                      end: const Offset(0, 0),
+                      delay: 160.ms,
                   duration: 380.ms),
             ],
           ),

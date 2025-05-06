@@ -9,7 +9,7 @@ const orange=Colors.orange;
 const white=Colors.white;
 const liteOrange=Color.fromRGBO(255, 255, 255, 1.0);
 const liteOrange2=Color.fromRGBO(253, 237, 212,1);
-
+const Color deepGreen = Color.fromRGBO(8, 110, 19, 1.0);
 
 const dynamicSize=17.0;
 const appName="Professors English Academy";

@@ -42,7 +42,10 @@ class _QuickTechCategoryPageState extends State<QuickTechCategoryPage> {
                 children: [
                   10.heightBox,
                   customRow(context, "${item?.name}", "See All", () {
-                    Get.to(() => QuickTechSingleSubjectCategory(subjectName: '', subcategories: [],));
+                    Get.to(() => QuickTechSingleSubjectCategory(
+                          subjectName: "${item?.name}",
+                          subcategories: item?.subcategories?.toList() ?? [],
+                        ));
                   }).p8(),
                   15.heightBox,
                   // GridView inside Column

@@ -8,6 +8,7 @@ import 'package:professors_english_academy/widgets/appar/quick_tech_custom_appba
 import 'package:professors_english_academy/widgets/quick_tech_custom_course_list.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_row_design.dart';
 
+import '../../controller/quick_tech_course_details_controller.dart';
 import '../../controller/quick_tech_dashboard_controller.dart';
 import '../../controller/quick_tech_practice_controller.dart';
 import '../../widgets/custom_category_card_design.dart';
@@ -22,6 +23,7 @@ class QuickTechHomePage extends StatefulWidget {
 
 class _QuickTechHomePageState extends State<QuickTechHomePage> {
   final HomeController homeController = Get.find();
+  final CourseDetailsController courseDetailsController = Get.find();
   final PracticeController practiceController = Get.put(PracticeController());
 
   final ProfileController profileController = Get.find();
@@ -71,7 +73,7 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
                             .clip(Clip.antiAlias) // Optional: small shadow
                             .make()
                             .onTap(() {
-                          Get.to(() => QuickTechCustomCourseDetails());
+                         courseDetailsController.fetchCourseDetails(image.courseId.toString());
                         });
                       }).toList(),
                       height: 180,
@@ -113,7 +115,7 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
                             exam: '',
                             clas: '',
                             rating: '${data?.reviewAvgRating??0} (${data?.reviewCount})',
-                            price: '')
+                            price: '${data?.price}')
                         .onTap(() {
                           Get.to(()=>QuickTechCustomCourseDetails());
                     }).animate().fadeIn(delay: (index*100).ms);

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:professors_english_academy/controller/quick_tech_auth_controller.dart';
 import 'package:professors_english_academy/pages/auth_page/quick_tech_phone_number_input.dart';
 
 import '../../../consts/consts.dart';
@@ -15,6 +16,7 @@ class QuickTechSplashPage2nd extends StatefulWidget {
 
 class _QuickTechSplashPage2ndState extends State<QuickTechSplashPage2nd> {
   final PageController _controller = PageController();
+  final AuthController authController=Get.put(AuthController());
   int _currentPage = 0;
   late Timer _timer;
 
@@ -155,7 +157,9 @@ class _QuickTechSplashPage2ndState extends State<QuickTechSplashPage2nd> {
               customButtonWithIcon(
                   title: 'Start With Google',
                   txtColor: Colors.white,
-                  onPressed: () {},
+                  onPressed: () {
+                    authController.signInWithGoogle();
+                  },
                   backgroundColor: mainColor,icons: "assets/images/google.png").w(context.screenWidth - 50),
               10.heightBox,
               customButton(

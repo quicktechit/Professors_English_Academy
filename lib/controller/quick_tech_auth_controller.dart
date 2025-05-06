@@ -1,7 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/pages/auth_page/quick_tech_complete_register.dart';
+import 'package:professors_english_academy/pages/auth_page/quick_tech_login_page.dart';
 import 'package:professors_english_academy/pages/home/quick_tech_dashboard.dart';
 
 class AuthController extends GetxController {
@@ -12,6 +17,37 @@ class AuthController extends GetxController {
   var password = TextEditingController();
   var confirmPassword = TextEditingController();
   final box = GetStorage();
+
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) return;
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final user = userCredential.user;
+      if (user != null) {
+        name.text = user.displayName ?? '';
+        email.text = user.email ?? '';
+
+        Get.offAll(
+            () => QuickTechCompleteRegister(phone: user.phoneNumber ?? ''));
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+      log(e.toString(), name: "Error");
+    }
+  }
+
   Future<void> createUser() async {
     String? errorMessage;
 
@@ -74,6 +110,7 @@ class AuthController extends GetxController {
         LoaderService.to.hideLoader();
         print('User created successfully: ${response.body}');
         Get.snackbar("Success", "Registration Success");
+        Get.offAll(QuickTechLoginPage());
       } else if (response.statusCode == 422) {
         LoaderService.to.hideLoader();
         Get.snackbar("Warning", "User Already Exist");
@@ -134,6 +171,7 @@ class AuthController extends GetxController {
       LoaderService.to.hideLoader();
       print('Login failed with status: ${response.statusCode}');
       print('Error: ${response.body}');
+      Get.snackbar("Error", response.body);
     }
   }
 }

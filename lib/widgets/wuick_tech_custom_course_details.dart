@@ -1,73 +1,36 @@
+import 'package:flutter_html/flutter_html.dart';
 import 'package:professors_english_academy/consts/consts.dart';
-import 'package:professors_english_academy/pages/exam%20page/quick_tech_exam_page.dart';
+import 'package:professors_english_academy/controller/quick_tech_pdf_controller.dart';
+import 'package:professors_english_academy/model/course_details_model.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_contract_us.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_instructor_details.dart';
-
-Widget customCourseDesc(BuildContext context) {
+import 'package:intl/intl.dart';
+Widget customCourseDesc(
+    BuildContext context, String details, Instructor? instructor) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      "About This Course".text.semiBold.xl2.make(),
-      15.heightBox,
-      '''
-    🖤 Course Title: "Sadness & Style: An Introduction to Emo Aesthetics"
-Course Code: EMO-101
-Credits: 3 (or 0, because what even is the point?)
-Offered: Fall Semester, when the leaves die and so do our dreams
-
-Course Description:
-Welcome to the beautifully broken world of emo — a place where eyeliner is armor, lyrics are scripture, and heartbreak is a muse. This course offers an immersive dive into the evolution, culture, fashion, and emotional resonance of the emo subculture, from its roots in 80s hardcore and 90s screamo, to the mainstream tear-streaked glory of the early 2000s.
-
-Through lectures, music analysis, moodboard creation, and writing exercises fueled by late-night sadness, students will explore the aesthetic and philosophical foundations of emo as both an art form and a way of life. Together, we’ll dissect song lyrics like sacred texts, critique album covers like fine art, and examine how pain can be transformed into beauty, noise, and eyeliner.
-
-Topics Include:
-
-The History of Crying Loudly: Emo's Origins and Evolution
-
-Sad But Make It Fashion: Visual Identity and Scene Culture
-
-The Anatomy of a Breakdown: Lyrical Analysis of Iconic Tracks
-
-Zines, Blogs, and Burned CDs: DIY Culture and Emotional Archiving
-
-The Gender Politics of Pain: Emo’s Masculinity, Femininity & Queerness
-
-Emo Revival & Internet Nostalgia: Is MySpace a state of mind?
-
-Final Project:
-Students will create a mixed-media piece (playlist, photo series, written zine, or performance) exploring their own emotional narrative, to be presented in a dimly lit room with optional fog machine.
-
-Who Should Enroll:
-Anyone who’s ever cried to a Dashboard Confessional song, worn fingerless gloves unironically, or just wants to feel something again. No prior sobbing experience required.
-
-
-    '''
-          .text
-          .semiBold
-          .justify
-          .make(),
+      Html(data: details),
       15.heightBox,
       "Instructors".text.semiBold.xl2.make(),
       15.heightBox,
-      ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: 5,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return customInstructorDetails(context);
-          }).h(95),
+      customInstructorDetails(context, instructor?.image,
+          instructor?.profession, instructor?.institution, instructor?.name),
       20.heightBox,
     ],
   ).pSymmetric(h: dynamicSize);
 }
 
-Widget customRoutine(BuildContext context) {
+Widget customRoutine(BuildContext context, pdfLink) {
+  PdfController pdfController = Get.put(PdfController());
   return Column(
     children: [
       customButton(
               title: "Download Full Routine ⬇",
-              onPressed: () {},
+              onPressed: () {
+                pdfController.downloadToDownloadsFolder(context, pdfLink);
+              },
               color: mainColor,
               txtColor: white)
           .w(context.screenWidth)
@@ -174,37 +137,12 @@ Widget customFaq(BuildContext context) {
   );
 }
 
-Widget customReview(BuildContext context) {
-  final List<Map<String, dynamic>> reviews = [
-    {
-      'reviewerName': 'Alice',
-      'reviewText': 'Amazing course! Highly recommend.',
-      'rating': 5.0,
-      'date': DateTime.now().subtract(Duration(days: 1)),
-    },
-    {
-      'reviewerName': 'Bob',
-      'reviewText': 'Great experience, but could be better organized.',
-      'rating': 3.5,
-      'date': DateTime.now().subtract(Duration(days: 2)),
-    },
-    {
-      'reviewerName': 'Charlie',
-      'reviewText': 'The course was okay. Not as expected.',
-      'rating': 3.0,
-      'date': DateTime.now().subtract(Duration(days: 5)),
-    },
-    {
-      'reviewerName': 'David',
-      'reviewText': 'Incredible sights, but the schedule was tight.',
-      'rating': 4.5,
-      'date': DateTime.now().subtract(Duration(days: 3)),
-    },
-  ];
+Widget customReview(BuildContext context,List<Review>? review,avgReview) {
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      "Average Reading 4.5".text.semiBold.xl.make(),
+      "Average Reading $avgReview".text.semiBold.xl.make(),
       RatingBar.builder(
         initialRating: 5,
         itemSize: 15,
@@ -224,8 +162,9 @@ Widget customReview(BuildContext context) {
       ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: reviews.length,
+        itemCount: review?.length,
         itemBuilder: (context, index) {
+          var data=review?[index];
           return Card(
             color: Colors.white,
             elevation: 5,
@@ -236,23 +175,23 @@ Widget customReview(BuildContext context) {
                 children: [
                   Row(
                     children: [
-                      "${ reviews[index]['reviewerName']}".text.black.xl.semiBold.make(),
+                      "${ data?.student?.name}".text.black.xl.semiBold.make(),
                       Spacer(),
                       Icon(Icons.star, size: 19, color: Colors.amber),
                       8.heightBox,
                       Text(
-                        reviews[index]['rating'].toString(),
+                        "${data?.rating}".toString(),
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
                   5.heightBox,
                   Text(
-                    reviews[index]['reviewText'],
+                    "${data?.reviewText}",
                     style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                   SizedBox(height: 5),
-                  'Reviewed on: ${reviews[index]['date'].toLocal().toString().split(' ')[0]}'
+                  'Reviewed on: ${DateFormat('d MMMM y h:mm a').format(DateTime.parse(data!.createdAt.toString()).toUtc().toLocal())}'
                       .text
                       .semiBold
                       .sm

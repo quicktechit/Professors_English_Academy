@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:professors_english_academy/pages/leader%20board/quick_tech_leader_board.dart';
 import 'package:professors_english_academy/pages/profile%20page/quick_tech_profile_screen.dart';
 import '../consts/consts.dart';
 import '../pages/Practice/quick_tech_Practice_page.dart';
@@ -54,6 +55,10 @@ class DashboardController extends GetxController {
       label: 'Practice',
     ),
     const BottomNavigationBarItem(
+      icon: Icon(Icons.leaderboard_outlined),
+      label: 'LeaderBoard',
+    ),
+    const BottomNavigationBarItem(
       icon: Icon(Icons.person_outline),
       label: 'Profile',
     ),
@@ -62,6 +67,7 @@ class DashboardController extends GetxController {
     QuickTechHomePage(),
     QuickTechCategoryPage(),
     QuickTechPracticePage(),
+    QuickTechLeaderBoard(),
     QuickTechProfileScreen(),
   ];
 }

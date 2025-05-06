@@ -15,7 +15,6 @@ class QuickTechCompleteRegister extends StatefulWidget {
 class _QuickTechCompleteRegisterState extends State<QuickTechCompleteRegister> {
 @override
   void initState() {
-    // TODO: implement initState
     super.initState();
    registerController.phone.text=widget.phone;
   }

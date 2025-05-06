@@ -2,7 +2,7 @@ import 'package:professors_english_academy/consts/consts.dart';
 
 Widget customTextField(
     {icon,
-      controller,
+      controller,readOnly,
       required String hint,
       required bool isSuffix,
       suIcon,keyboard,
@@ -14,6 +14,7 @@ Widget customTextField(
     //   color: mainColor,
     // ),
     controller: controller,keyboardType: keyboard??TextInputType.text,
+    readOnly: readOnly??false,
     decoration: InputDecoration(
         contentPadding:EdgeInsets.only(left:15,top: 10,bottom: 10 ),
         enabledBorder: OutlineInputBorder(
