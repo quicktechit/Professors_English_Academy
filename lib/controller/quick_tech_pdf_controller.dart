@@ -1,8 +1,8 @@
-import 'dart:developer';
+import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import  'package:http/http.dart' as http;
-import 'dart:io';
+
 import '../consts/consts.dart';
 class PdfController extends GetxController{
   var isLoading = true.obs;
@@ -34,72 +34,87 @@ class PdfController extends GetxController{
       Directory? downloadsDir;
 
       if (Platform.isAndroid) {
-        downloadsDir = await getDownloadsDirectory();
-        downloadsDir ??= Directory('/storage/emulated/0/Download/English');
+        // Explicitly set the public Downloads directory
+        downloadsDir = Directory('/storage/emulated/0/Download');
+        if (!await downloadsDir.exists()) {
+          // Fallback to getDownloadsDirectory if the public folder doesn't exist
+          downloadsDir = await getDownloadsDirectory();
+          if (downloadsDir == null) {
+            Get.snackbar('Error', 'Downloads folder not found');
+            return;
+          }
+        }
       } else if (Platform.isIOS) {
         downloadsDir = await getDownloadsDirectory();
-      }
-
-      if (downloadsDir == null || !await downloadsDir.exists()) {
-        Get.snackbar('Error', 'Downloads folder not found');
-        return;
+        if (downloadsDir == null || !await downloadsDir.exists()) {
+          Get.snackbar('Error', 'Downloads folder not found');
+          return;
+        }
       }
 
       final response = await http.get(Uri.parse(Api.imageUrl+url));
 
       if (response.statusCode == 200) {
-        final file = File('${downloadsDir.path}/routine_${DateTime.now().millisecondsSinceEpoch}.pdf');
+        final fileName = 'routine_${DateTime.now().millisecondsSinceEpoch}.pdf';
+        final file = File('${downloadsDir?.path}/$fileName');
         await file.writeAsBytes(response.bodyBytes);
         Get.snackbar('Success', 'PDF downloaded to: ${file.path}');
-        log(file.path);
       } else {
         Get.snackbar('Error', 'Failed to download file: ${response.statusCode}');
       }
     } catch (e) {
       Get.snackbar('Error', 'Error during download: $e');
-      log(e.toString());
+      debugPrint('Download error: $e');
     }
   }
 
   Future<bool> _requestStoragePermission() async {
     if (Platform.isIOS) {
-      return true;
+      return true; // iOS doesn't require explicit storage permission for downloads
     }
 
-    final deviceInfo = DeviceInfoPlugin();
-    final androidInfo = await deviceInfo.androidInfo;
-    final sdkInt = androidInfo.version.sdkInt;
+    try {
+      final deviceInfo = DeviceInfoPlugin();
+      final androidInfo = await deviceInfo.androidInfo;
+      final sdkInt = androidInfo.version.sdkInt;
 
-    if (sdkInt >= 33) {
-      return true;
-    } else if (sdkInt >= 30) {
-      var status = await Permission.storage.status;
-      if (status.isGranted) {
+      if (sdkInt >= 33) {
+        // Android 13+ (API 33): No storage permission needed for public Downloads
         return true;
-      }
+      } else if (sdkInt >= 30) {
+        // Android 11-12 (API 30-32): Request MANAGE_EXTERNAL_STORAGE for public directories
+        var status = await Permission.manageExternalStorage.status;
+        if (status.isGranted) {
+          return true;
+        }
 
-      status = await Permission.storage.request();
-      if (status.isGranted) {
-        return true;
-      } else if (status.isPermanentlyDenied) {
-        await openAppSettings();
+        status = await Permission.manageExternalStorage.request();
+        if (status.isGranted) {
+          return true;
+        } else if (status.isPermanentlyDenied) {
+          await openAppSettings();
+          return false;
+        }
+        return false;
+      } else {
+        // Android 10 and below: Request storage permission
+        var status = await Permission.storage.status;
+        if (status.isGranted) {
+          return true;
+        }
+
+        status = await Permission.storage.request();
+        if (status.isGranted) {
+          return true;
+        } else if (status.isPermanentlyDenied) {
+          await openAppSettings();
+          return false;
+        }
         return false;
       }
-      return false;
-    } else {
-      // Android 10 and below: Use storage permission
-      var status = await Permission.storage.status;
-      if (status.isGranted) {
-        return true;
-      }
-
-      status = await Permission.storage.request();
-      if (status.isGranted) {
-        return true;
-      } else if (status.isPermanentlyDenied) {
-        await openAppSettings();
-        return false;
-      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to get device info: $e');
+      debugPrint('DeviceInfoPlugin error: $e');
       return false;
     }
   }
