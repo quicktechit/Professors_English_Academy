@@ -43,7 +43,7 @@ class _QuickTechSinglePracticeCategory extends State<QuickTechSinglePracticeCate
               return customCard(context,"${item.image}","${item.quizCount}",)
                   .onTap((){
                 practiceController.fetchPracticeSubQuestion(item.id.toString()).then((v) {
-                  Get.to(() => QuickTechPracticeQuestionListPage(subjectName: "{data.name.toString()}",));
+                  Get.to(() => QuickTechPracticeQuestionListPage(subjectName: item.name.toString(),));
                 });
               }).animate().fadeIn(delay: (gridIndex*100).ms);
             },

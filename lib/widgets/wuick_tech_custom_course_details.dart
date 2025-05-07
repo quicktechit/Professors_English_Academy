@@ -1,13 +1,21 @@
 import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/controller/quick_tech_pdf_controller.dart';
 import 'package:professors_english_academy/model/course_details_model.dart';
+import 'package:professors_english_academy/pages/videoplayer/quick_tech_youtube_video_player.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_contract_us.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_instructor_details.dart';
-import 'package:intl/intl.dart';
+
+import '../controller/quick_tech_practice_controller.dart';
+import '../pages/exam page/quick_tech_exam_page.dart';
+
 Widget customCourseDesc(
-    BuildContext context, String details, Instructor? instructor) {
+  BuildContext context,
+  String details,
+  Instructor? instructor,
+) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -29,7 +37,8 @@ Widget customRoutine(BuildContext context, pdfLink) {
       customButton(
               title: "Download Full Routine ⬇",
               onPressed: () {
-                pdfController.downloadToDownloadsFolder(context, pdfLink);
+                pdfController.downloadToDownloadsFolder(
+                    context, pdfLink, "Routine");
               },
               color: mainColor,
               txtColor: white)
@@ -42,7 +51,7 @@ Widget customRoutine(BuildContext context, pdfLink) {
   );
 }
 
-Widget customFaq(BuildContext context) {
+Widget customFaq(BuildContext context, List<Faqs>? faq) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -73,62 +82,23 @@ Widget customFaq(BuildContext context) {
           .make()
           .pOnly(left: 20),
       20.heightBox,
-      ExpansionTile(
-        iconColor: Colors.black,
-        title: "How do I book a tour?".text.lg.semiBold.black.make(),
-        tilePadding: EdgeInsets.symmetric(horizontal: 20),
-        collapsedBackgroundColor: Vx.gray100,
-        backgroundColor: Vx.gray200,
-        children: [
-          "You can book a tour by selecting a category from the home page, choosing your desired tour, and following the booking steps."
-              .text
-              .gray700
-              .make()
-              .p(16),
-        ],
-      ).pSymmetric(h: 20),
-      ExpansionTile(
-        iconColor: Colors.black,
-        title: "What is the cancellation policy?".text.lg.semiBold.black.make(),
-        tilePadding: EdgeInsets.symmetric(horizontal: 20),
-        collapsedBackgroundColor: Vx.gray100,
-        backgroundColor: Vx.gray200,
-        children: [
-          "Cancellations can be made up to 48 hours before the tour starts for a full refund. Please check tour details for specific policies."
-              .text
-              .gray700
-              .make()
-              .p(16),
-        ],
-      ).pSymmetric(h: 20),
-      ExpansionTile(
-        iconColor: Colors.black,
-        title: "How do I contact the tour guide?".text.lg.semiBold.black.make(),
-        tilePadding: EdgeInsets.symmetric(horizontal: 20),
-        collapsedBackgroundColor: Vx.gray100,
-        backgroundColor: Vx.gray200,
-        children: [
-          "Once your booking is confirmed, you'll receive the guide's contact details via email or in the app."
-              .text
-              .gray700
-              .make()
-              .p(16),
-        ],
-      ).pSymmetric(h: 20),
-      ExpansionTile(
-        iconColor: Colors.black,
-        title: "What if I have a technical issue?".text.lg.black.semiBold.make(),
-        tilePadding: EdgeInsets.symmetric(horizontal: 20),
-        collapsedBackgroundColor: Vx.gray100,
-        backgroundColor: Vx.gray200,
-        children: [
-          "Please reach out to our support team below, and we'll assist you promptly."
-              .text
-              .gray700
-              .make()
-              .p(16),
-        ],
-      ).pSymmetric(h: 20),
+      ListView.builder(
+          itemCount: faq?.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            var data = faq?[index];
+            return ExpansionTile(
+              iconColor: Colors.black,
+              title: "${data?.question}".text.lg.semiBold.black.make(),
+              tilePadding: EdgeInsets.symmetric(horizontal: 20),
+              collapsedBackgroundColor: Vx.gray100,
+              backgroundColor: Vx.gray200,
+              children: [
+                "${data?.answer}".text.gray700.make().p(16),
+              ],
+            ).pSymmetric(h: 20);
+          }),
+
       // Support Contact Section
       30.heightBox,
       customContractUS(context),
@@ -207,79 +177,10 @@ Widget customReview(BuildContext context,List<Review>? review,avgReview) {
   ).pSymmetric(h: dynamicSize);
 }
 
-Widget customContent(BuildContext context) {
-  final List<Map<String, String>> items = [
-    {
-      'title': 'Item 1',
-      'image': 'https://via.placeholder.com/50', // Replace with your image URL
-    },
-    {
-      'title': 'Item 2',
-      'image': 'https://via.placeholder.com/50',
-    },
-    {
-      'title': 'Item 3',
-      'image': 'https://via.placeholder.com/50',
-    },
-  ];
-  final Map<String, List<Map<String, dynamic>>> subjects = {
-    'Bangla': [
-      {
-        'category': 'Bangla 1st Paper',
-        'items': [
-          {
-            'title': 'Bangla 1st Paper - Part 1',
-            'image': 'https://via.placeholder.com/50',
-          },
-          {
-            'title': 'Bangla 1st Paper - Part 2',
-            'image': 'https://via.placeholder.com/50',
-          },
-        ],
-      },
-      {
-        'category': 'Bangla 2nd Paper',
-        'items': [
-          {
-            'title': 'Bangla 2nd Paper - Part 1',
-            'image': 'https://via.placeholder.com/50',
-          },
-          {
-            'title': 'Bangla 2nd Paper - Part 2',
-            'image': 'https://via.placeholder.com/50',
-          },
-        ],
-      },
-    ],
-    'English': [
-      {
-        'category': 'English 1st Paper',
-        'items': [
-          {
-            'title': 'English 1st Paper - Grammar',
-            'image': 'https://via.placeholder.com/50',
-          },
-          {
-            'title': 'English 1st Paper - Composition',
-            'image': 'https://via.placeholder.com/50',
-          },
-        ],
-      },
-      {
-        'category': 'English 2nd Paper',
-        'items': [
-          {
-            'title': 'English 2nd Paper - Literature',
-            'image': 'https://via.placeholder.com/50',
-          },
-          {
-            'title': 'English 2nd Paper - Writing Skills',
-            'image': 'https://via.placeholder.com/50',
-          },
-        ],
-      },
-    ],
-  };
+Widget customContent(
+    BuildContext context, List<String>? syllabus, List<Modules>? modules) {
+  PdfController pdfController = Get.put(PdfController());
+  final PracticeController practiceController = Get.put(PracticeController());
   return Column(
       children: [
         ExpansionTile(
@@ -290,82 +191,121 @@ Widget customContent(BuildContext context) {
               padding: EdgeInsets.symmetric(horizontal: 15),
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return Row(
-                  children: [
-                    // Image
-                    SizedBox(
+            itemCount: syllabus?.length,
+            itemBuilder: (context, index) {
+              return Row(
+                children: [
+                  // Image
+                  SizedBox(
                       width: 50,
                       height: 50,
-                      child: Image.network(
-                        items[index]['image']!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Icon(
-                            Icons.error,
-                            color: Colors.black,
-                          );
-                        },
-                      ),
-                    ),
-                    16.widthBox, // Space between image and title
-                    // Title
-                    Expanded(
-                        child:
-                            items[index]['title']!.text.semiBold.black.make()),
-                  ],
-                );
-              },
-            ),
-          ],
-        ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
-        10.heightBox,
+                      child: Icon(
+                        Icons.download,
+                        color: Colors.black,
+                      )),
+                  16.widthBox, // Space between image and title
+                  // Title
+                  Expanded(
+                      child:
+                          "Syllabus ${index + 1}".text.semiBold.black.make()),
+                ],
+              ).box.make().onTap(() {
+                pdfController.downloadToDownloadsFolder(
+                    context, "${syllabus?[index]}", 'Syllabus');
+              });
+            },
+          ),
+        ],
+      ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
+      10.heightBox,
         Column(
-          children: subjects.entries.map((subject) {
-            return ExpansionTile(
-              childrenPadding: EdgeInsets.symmetric(horizontal: 10),
-              title:subject.key.text.semiBold.black.make(),
-              subtitle: 'Tap to see papers'.text.semiBold.black.make(),
-              children: subject.value.map((category) {
-                return ExpansionTile(
-                  childrenPadding: EdgeInsets.symmetric(horizontal: 10),
-                  title: '${category['category']}'.text.semiBold.black.make(),
-                  subtitle:'Tap to see sections'.text.semiBold.black.make(),
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: (category['items'] as List).length,
-                      itemBuilder: (context, index) {
-                        final item = category['items'][index];
+        children: modules!.map((subject) {
+          return ExpansionTile(
+            childrenPadding: EdgeInsets.symmetric(horizontal: 10),
+            title: subject.name!.text.semiBold.black.make(),
+            subtitle: 'Tap to see papers'.text.semiBold.black.make(),
+            children: subject.lessons!.map((lessons) {
+              return ExpansionTile(
+                childrenPadding: EdgeInsets.symmetric(horizontal: 10),
+                title: '${lessons.name}'.text.semiBold.black.make(),
+                subtitle: 'Tap to see sections'.text.semiBold.black.make(),
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: lessons.videos?.length,
+                    itemBuilder: (context, index) {
+                      if (lessons.videos!.isEmpty) {
+                        return "No lessons Found".text.semiBold.make();
+                      } else {
+                        final item = lessons.videos?[index];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
                               // Image
                               SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: Image.network(
-                                  item['image'],
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Icon(Icons.error,color: Colors.black,);
-                                  },
-                                ),
-                              ),
+                                  width: 50,
+                                  height: 50,
+                                  child: Icon(
+                                    Icons.video_camera_back_outlined,
+                                    color: Colors.black,
+                                  )),
                               SizedBox(width: 16),
                               // Title
                               Expanded(
-                                child: "${item['title']}".text.semiBold.black.make(),
+                                child:
+                                    "${item?.name}".text.semiBold.black.make(),
                               ),
                             ],
-                          ),
+                          ).onTap(() {
+                            Get.to(() => QuickTechYoutubeVideoPlayer(
+                                  url: "${item?.link}",
+                                ));
+                          }),
                         );
-                      },
-                    ),
-                  ],
+                      }
+                    },
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: lessons.quizzes?.length,
+                    itemBuilder: (context, index) {
+                      if (lessons.quizzes!.isEmpty) {
+                        return "No lessons Found".text.semiBold.make();
+                      } else {
+                        final item = lessons.quizzes?[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              // Image
+                              SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: Icon(
+                                    Icons.quiz_outlined,
+                                    color: Colors.black,
+                                  )),
+                              SizedBox(width: 16),
+                              // Title
+                              Expanded(
+                                child:
+                                    "${item?.name}".text.semiBold.black.make(),
+                              ),
+                            ],
+                          ).box.make().onTap(() {
+                            // practiceController.singleExam.value=item.questions!;
+                            // Get.to(() => QuickTechExamPage(
+                            //       pdfs: "${item?.pdf.toString()}",
+                            //     ));
+                          }),
+                        );
+                      }
+                    },
+                  ),
+                ],
                 );
               }).toList(),
             );

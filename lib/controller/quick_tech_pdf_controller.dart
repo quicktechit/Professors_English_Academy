@@ -23,7 +23,7 @@ class PdfController extends GetxController{
 
 
 
-  Future<void> downloadToDownloadsFolder(BuildContext context, String url) async {
+  Future<void> downloadToDownloadsFolder(BuildContext context, String url,name) async {
     try {
       bool hasPermission = await _requestStoragePermission();
       if (!hasPermission && Platform.isAndroid) {
@@ -34,10 +34,8 @@ class PdfController extends GetxController{
       Directory? downloadsDir;
 
       if (Platform.isAndroid) {
-        // Explicitly set the public Downloads directory
         downloadsDir = Directory('/storage/emulated/0/Download');
         if (!await downloadsDir.exists()) {
-          // Fallback to getDownloadsDirectory if the public folder doesn't exist
           downloadsDir = await getDownloadsDirectory();
           if (downloadsDir == null) {
             Get.snackbar('Error', 'Downloads folder not found');
@@ -55,7 +53,7 @@ class PdfController extends GetxController{
       final response = await http.get(Uri.parse(Api.imageUrl+url));
 
       if (response.statusCode == 200) {
-        final fileName = 'routine_${DateTime.now().millisecondsSinceEpoch}.pdf';
+        final fileName = '$name-${DateTime.now().millisecondsSinceEpoch}.pdf';
         final file = File('${downloadsDir?.path}/$fileName');
         await file.writeAsBytes(response.bodyBytes);
         Get.snackbar('Success', 'PDF downloaded to: ${file.path}');
@@ -70,7 +68,7 @@ class PdfController extends GetxController{
 
   Future<bool> _requestStoragePermission() async {
     if (Platform.isIOS) {
-      return true; // iOS doesn't require explicit storage permission for downloads
+      return true;
     }
 
     try {

@@ -20,7 +20,7 @@ class _QuickTechPracticeQuestionListPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: "Subject Name".text.semiBold.make(),
+        title: widget.subjectName.text.semiBold.make(),
       ),
       body: ListView(
         children: [

@@ -1,5 +1,6 @@
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/controller/quick_tech_course_details_controller.dart';
+import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 
 import '../../widgets/wuick_tech_custom_course_details.dart';
 
@@ -58,8 +59,13 @@ class _QuickTechCustomCourseDetailsState
                             children: [
                               "Class".text.gray600.size(14).make(),
                               5.widthBox,
-                              "1000".text.black.semiBold.size(16).make(),
-                            ],
+                            "${data?.classCount}"
+                                .text
+                                .black
+                                .semiBold
+                                .size(16)
+                                .make(),
+                          ],
                           ),
                         ],
                       )
@@ -86,8 +92,13 @@ class _QuickTechCustomCourseDetailsState
                             children: [
                               "Exam".text.gray600.size(14).make(),
                               5.widthBox,
-                              "1000".text.black.semiBold.size(16).make(),
-                            ],
+                            "${data?.quizCount}"
+                                .text
+                                .black
+                                .semiBold
+                                .size(16)
+                                .make(),
+                          ],
                           ),
                         ],
                       )
@@ -110,8 +121,13 @@ class _QuickTechCustomCourseDetailsState
                           ),
                           3.heightBox,
                           "Student".text.gray600.size(14).make(),
-                          "10000".text.black.semiBold.size(16).make(),
-                        ],
+                        "${data?.enrolledCount}"
+                            .text
+                            .black
+                            .semiBold
+                            .size(16)
+                            .make(),
+                      ],
                       )
                           .box
                           .shadowSm
@@ -125,7 +141,13 @@ class _QuickTechCustomCourseDetailsState
                       5.widthBox,
                     ],
                   ).h(110),
-                  20.heightBox,
+                10.heightBox,
+                data?.buy!="Free"?
+                customButton(
+                    title: "Enroll Now",
+                    onPressed: () {},txtColor: white,
+                    color: mainColor).w(context.screenWidth-50).h(40).centered():"Free".text.xl2.semiBold.makeCentered(),
+                20.heightBox,
                   ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
@@ -261,13 +283,15 @@ class _QuickTechCustomCourseDetailsState
                       : courseDetailsController.selectedIndex.value == 1
                       ? customRoutine(context,"${data?.detailsFile}").animate().fadeIn(delay: 80.ms)
                       : courseDetailsController.selectedIndex.value == 2
-                      ? customContent(context).animate().fadeIn(delay: 80.ms)
+                      ? customContent(context,data?.syllabuslist,data?.modules).animate().fadeIn(delay: 80.ms)
                       : courseDetailsController.selectedIndex.value == 3
                       ? customReview(context,data?.review,data?.reviewAvgRating).animate().fadeIn(delay: 80.ms)
                       : courseDetailsController.selectedIndex.value ==
                       4
-                      ? customFaq(context).animate().fadeIn(delay: 80.ms)
-                      : SizedBox()
+                                    ? customFaq(context, data?.faqs)
+                                        .animate()
+                                        .fadeIn(delay: 80.ms)
+                                    : SizedBox()
                 ],
               );
             }

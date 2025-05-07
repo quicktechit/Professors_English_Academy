@@ -41,11 +41,11 @@ class _QuickTechCategoryCourseListPageState extends State<QuickTechCategoryCours
                   context: context,
                   image: "${data.thumbnilImage}",
                   title: '${data.name}',
-                  student: '',
-                  exam: '',
-                  clas: '',
+                  student: '${data.enrolledCount}',
+                  exam: '${data.quizCount}',
+                  clas: '${data.classCount}',
                   rating: '${data.reviewAvgRating ?? 0} (${data.reviewCount})',
-                  price: '${data.price}')
+                  price: data.buy=="Free"?"Free":'${data.price}')
                   .onTap(() {
                 Get.to(() => QuickTechCustomCourseDetails());
               })

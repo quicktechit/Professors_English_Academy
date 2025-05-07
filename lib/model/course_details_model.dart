@@ -21,7 +21,7 @@ class Data {
   final int? id;
   final int? instructorId;
   final int? categoryId;
-  final int? subcategoryId;
+  final dynamic subcategoryId;
   final dynamic childcategoryId;
   final dynamic childsubcategoryId;
   final int? enrolled;
@@ -39,6 +39,7 @@ class Data {
   final String? thumbnilImage;
   final String? details;
   final String? detailsFile;
+  final String? syllabusFile;
   final dynamic certificateImage;
   final dynamic certificateText;
   final dynamic zoomLink;
@@ -57,7 +58,11 @@ class Data {
   final String? createdAt;
   final String? updatedAt;
   final int? reviewCount;
+  final int? enrolledCount;
   final double? reviewAvgRating;
+  final int? quizCount;
+  final int? classCount;
+  final List<String>? syllabuslist;
   final Instructor? instructor;
   final List<Modules>? modules;
   final List<Faqs>? faqs;
@@ -85,6 +90,7 @@ class Data {
     this.thumbnilImage,
     this.details,
     this.detailsFile,
+    this.syllabusFile,
     this.certificateImage,
     this.certificateText,
     this.zoomLink,
@@ -103,7 +109,11 @@ class Data {
     this.createdAt,
     this.updatedAt,
     this.reviewCount,
+    this.enrolledCount,
     this.reviewAvgRating,
+    this.quizCount,
+    this.classCount,
+    this.syllabuslist,
     this.instructor,
     this.modules,
     this.faqs,
@@ -114,7 +124,7 @@ class Data {
       : id = json['id'] as int?,
         instructorId = json['instructor_id'] as int?,
         categoryId = json['category_id'] as int?,
-        subcategoryId = json['subcategory_id'] as int?,
+        subcategoryId = json['subcategory_id'],
         childcategoryId = json['childcategory_id'],
         childsubcategoryId = json['childsubcategory_id'],
         enrolled = json['enrolled'] as int?,
@@ -132,6 +142,7 @@ class Data {
         thumbnilImage = json['thumbnil_image'] as String?,
         details = json['details'] as String?,
         detailsFile = json['details_file'] as String?,
+        syllabusFile = json['syllabus_file'] as String?,
         certificateImage = json['certificate_image'],
         certificateText = json['certificate_text'],
         zoomLink = json['zoom_link'],
@@ -150,7 +161,11 @@ class Data {
         createdAt = json['created_at'] as String?,
         updatedAt = json['updated_at'] as String?,
         reviewCount = json['review_count'] as int?,
+        enrolledCount = json['enrolled_count'] as int?,
         reviewAvgRating = json['review_avg_rating'] as double?,
+        quizCount = json['quiz_count'] as int?,
+        classCount = json['class_count'] as int?,
+        syllabuslist = (json['syllabuslist'] as List?)?.map((dynamic e) => e as String).toList(),
         instructor = (json['instructor'] as Map<String,dynamic>?) != null ? Instructor.fromJson(json['instructor'] as Map<String,dynamic>) : null,
         modules = (json['modules'] as List?)?.map((dynamic e) => Modules.fromJson(e as Map<String,dynamic>)).toList(),
         faqs = (json['faqs'] as List?)?.map((dynamic e) => Faqs.fromJson(e as Map<String,dynamic>)).toList(),
@@ -178,6 +193,7 @@ class Data {
     'thumbnil_image' : thumbnilImage,
     'details' : details,
     'details_file' : detailsFile,
+    'syllabus_file' : syllabusFile,
     'certificate_image' : certificateImage,
     'certificate_text' : certificateText,
     'zoom_link' : zoomLink,
@@ -196,7 +212,11 @@ class Data {
     'created_at' : createdAt,
     'updated_at' : updatedAt,
     'review_count' : reviewCount,
+    'enrolled_count' : enrolledCount,
     'review_avg_rating' : reviewAvgRating,
+    'quiz_count' : quizCount,
+    'class_count' : classCount,
+    'syllabuslist' : syllabuslist,
     'instructor' : instructor?.toJson(),
     'modules' : modules?.map((e) => e.toJson()).toList(),
     'faqs' : faqs?.map((e) => e.toJson()).toList(),
