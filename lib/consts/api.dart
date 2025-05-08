@@ -15,5 +15,6 @@ class Api{
   static String trendingCourse='$baseUrl/api/trendingcourse';
   static String privacyTerms='$baseUrl/api/pages';
   static String profileUpdate='$baseUrl/api/update-profile';
+  static String courseEnroll='$baseUrl/api/course/enroll';
 
 }

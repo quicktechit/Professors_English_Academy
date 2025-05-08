@@ -117,7 +117,7 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
                             rating: '${data?.reviewAvgRating??0} (${data?.reviewCount})',
                             price: data?.buy=="Free"?"Free":'${data?.price}')
                         .onTap(() {
-                          Get.to(()=>QuickTechCustomCourseDetails());
+                          courseDetailsController.fetchCourseDetails(data!.id.toString());
                     }).animate().fadeIn(delay: (index*100).ms);
                   }).h(295),
             ),

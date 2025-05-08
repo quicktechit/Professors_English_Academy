@@ -114,7 +114,7 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                           children: [
                             // Display question number (e.g., Q1)
                             Text(
-                              'Q${question?.id}',
+                              'Q ${question?.question}',
                               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             Obx(

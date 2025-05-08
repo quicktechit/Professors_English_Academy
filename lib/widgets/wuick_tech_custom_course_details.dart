@@ -1,6 +1,7 @@
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/controller/quick_tech_course_details_controller.dart';
 import 'package:professors_english_academy/controller/quick_tech_pdf_controller.dart';
 import 'package:professors_english_academy/model/course_details_model.dart';
 import 'package:professors_english_academy/pages/videoplayer/quick_tech_youtube_video_player.dart';
@@ -177,10 +178,19 @@ Widget customReview(BuildContext context,List<Review>? review,avgReview) {
   ).pSymmetric(h: dynamicSize);
 }
 
-Widget customContent(
-    BuildContext context, List<String>? syllabus, List<Modules>? modules) {
+Widget customContent(BuildContext context,
+    List<String>? syllabus,
+    List<Modules>? modules,
+
+    String status,
+    String totalAmount,
+    String coursePrice,
+    String discountAmount,
+    int courseId,
+    bool alreadyEnrolled) {
   PdfController pdfController = Get.put(PdfController());
   final PracticeController practiceController = Get.put(PracticeController());
+  final CourseDetailsController courseDetailsController = Get.find();
   return Column(
       children: [
         ExpansionTile(
@@ -218,7 +228,7 @@ Widget customContent(
         ],
       ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
       10.heightBox,
-        Column(
+      Column(
         children: modules!.map((subject) {
           return ExpansionTile(
             childrenPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -259,11 +269,32 @@ Widget customContent(
                               ),
                             ],
                           ).onTap(() {
-                            Get.to(() => QuickTechYoutubeVideoPlayer(
-                                  url: "${item?.link}",
-                                ));
+                            if (status == "Free" || alreadyEnrolled == true) {
+                              if (alreadyEnrolled != true) {
+                                courseDetailsController.enrollInCourse(
+                                    totalAmount: totalAmount,
+                                    coursePrice: coursePrice,
+                                    discountAmount: discountAmount,
+                                    courseId: courseId,
+                                    paymentMethod: 'credit_card');
+                              }
+
+                              if ("${item?.link}" != "null") {
+                                Get.to(() => QuickTechYoutubeVideoPlayer(
+                                      url: "${item?.link}",
+                                    ));
+                              } else {
+                                Get.snackbar("Error", "Link is Null");
+                              }
+                            } else {
+                              Get.snackbar("Sorry", "Please Enroll First");
+                            }
                           }),
-                        );
+                        ).color(status == "Free"
+                            ? Colors.transparent
+                            : alreadyEnrolled == true
+                                ? Colors.transparent
+                                : Vx.red300);
                       }
                     },
                   ),
@@ -296,12 +327,28 @@ Widget customContent(
                               ),
                             ],
                           ).box.make().onTap(() {
-                            // practiceController.singleExam.value=item.questions!;
-                            // Get.to(() => QuickTechExamPage(
-                            //       pdfs: "${item?.pdf.toString()}",
-                            //     ));
+                            if (status == "Free" || alreadyEnrolled == true) {
+                              if (alreadyEnrolled != true) {
+                                courseDetailsController.enrollInCourse(
+                                    totalAmount: totalAmount,
+                                    coursePrice: coursePrice,
+                                    discountAmount: discountAmount,
+                                    courseId: courseId,
+                                    paymentMethod: 'credit_card');
+                              }
+                              practiceController.singleExam.value = item!;
+                              Get.to(() => QuickTechExamPage(
+                                    pdfs: item.pdf.toString(),
+                                  ));
+                            } else {
+                              Get.snackbar("Sorry", "Please Enroll First");
+                            }
                           }),
-                        );
+                        ).color(status == "Free"
+                            ? Colors.transparent
+                            : alreadyEnrolled == true
+                                ? Colors.transparent
+                                : Vx.red300);
                       }
                     },
                   ),

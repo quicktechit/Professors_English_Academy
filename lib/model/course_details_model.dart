@@ -1,3 +1,5 @@
+import 'package:professors_english_academy/model/practice_question_model.dart';
+
 class CourseDetailsModel {
   final String? message;
   final List<Data>? data;
@@ -63,6 +65,8 @@ class Data {
   final int? quizCount;
   final int? classCount;
   final List<String>? syllabuslist;
+  final bool? alreadyEnrolled;
+  final int? moduleCompleted;
   final Instructor? instructor;
   final List<Modules>? modules;
   final List<Faqs>? faqs;
@@ -114,6 +118,8 @@ class Data {
     this.quizCount,
     this.classCount,
     this.syllabuslist,
+    this.alreadyEnrolled,
+    this.moduleCompleted,
     this.instructor,
     this.modules,
     this.faqs,
@@ -166,6 +172,8 @@ class Data {
         quizCount = json['quiz_count'] as int?,
         classCount = json['class_count'] as int?,
         syllabuslist = (json['syllabuslist'] as List?)?.map((dynamic e) => e as String).toList(),
+        alreadyEnrolled = json['already_enrolled'] as bool?,
+        moduleCompleted = json['module_completed'] as int?,
         instructor = (json['instructor'] as Map<String,dynamic>?) != null ? Instructor.fromJson(json['instructor'] as Map<String,dynamic>) : null,
         modules = (json['modules'] as List?)?.map((dynamic e) => Modules.fromJson(e as Map<String,dynamic>)).toList(),
         faqs = (json['faqs'] as List?)?.map((dynamic e) => Faqs.fromJson(e as Map<String,dynamic>)).toList(),
@@ -217,6 +225,8 @@ class Data {
     'quiz_count' : quizCount,
     'class_count' : classCount,
     'syllabuslist' : syllabuslist,
+    'already_enrolled' : alreadyEnrolled,
+    'module_completed' : moduleCompleted,
     'instructor' : instructor?.toJson(),
     'modules' : modules?.map((e) => e.toJson()).toList(),
     'faqs' : faqs?.map((e) => e.toJson()).toList(),
@@ -316,6 +326,7 @@ class Modules {
   final int? status;
   final String? createdAt;
   final String? updatedAt;
+  final bool? completed;
   final List<Lessons>? lessons;
 
   Modules({
@@ -327,6 +338,7 @@ class Modules {
     this.status,
     this.createdAt,
     this.updatedAt,
+    this.completed,
     this.lessons,
   });
 
@@ -339,6 +351,7 @@ class Modules {
         status = json['status'] as int?,
         createdAt = json['created_at'] as String?,
         updatedAt = json['updated_at'] as String?,
+        completed = json['completed'] as bool?,
         lessons = (json['lessons'] as List?)?.map((dynamic e) => Lessons.fromJson(e as Map<String,dynamic>)).toList();
 
   Map<String, dynamic> toJson() => {
@@ -350,6 +363,7 @@ class Modules {
     'status' : status,
     'created_at' : createdAt,
     'updated_at' : updatedAt,
+    'completed' : completed,
     'lessons' : lessons?.map((e) => e.toJson()).toList()
   };
 }
@@ -364,7 +378,7 @@ class Lessons {
   final String? createdAt;
   final String? updatedAt;
   final List<Videos>? videos;
-  final List<Quizzes>? quizzes;
+  final List<QuestionData>? quizzes;
 
   Lessons({
     this.id,
@@ -389,7 +403,7 @@ class Lessons {
         createdAt = json['created_at'] as String?,
         updatedAt = json['updated_at'] as String?,
         videos = (json['videos'] as List?)?.map((dynamic e) => Videos.fromJson(e as Map<String,dynamic>)).toList(),
-        quizzes = (json['quizzes'] as List?)?.map((dynamic e) => Quizzes.fromJson(e as Map<String,dynamic>)).toList();
+        quizzes = (json['quizzes'] as List?)?.map((dynamic e) => QuestionData.fromJson(e as Map<String,dynamic>)).toList();
 
   Map<String, dynamic> toJson() => {
     'id' : id,

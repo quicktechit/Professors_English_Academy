@@ -1,5 +1,6 @@
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/controller/quick_tech_course_details_controller.dart';
+import 'package:professors_english_academy/controller/quick_tech_profile_controller.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 
 import '../../widgets/wuick_tech_custom_course_details.dart';
@@ -16,7 +17,7 @@ class _QuickTechCustomCourseDetailsState
     extends State<QuickTechCustomCourseDetails> {
   final CourseDetailsController courseDetailsController =
       Get.put(CourseDetailsController());
-
+  final ProfileController profileController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,11 +143,26 @@ class _QuickTechCustomCourseDetailsState
                     ],
                   ).h(110),
                 10.heightBox,
-                data?.buy!="Free"?
+                data?.alreadyEnrolled == true
+                    ? "Enrolled".text.xl2.semiBold.makeCentered()
+                    : data?.buy!="Free"?
                 customButton(
                     title: "Enroll Now",
-                    onPressed: () {},txtColor: white,
-                    color: mainColor).w(context.screenWidth-50).h(40).centered():"Free".text.xl2.semiBold.makeCentered(),
+                                onPressed: () {
+                                  courseDetailsController.enrollInCourse(
+                                      totalAmount: "${data?.price.toString()}",
+                                      coursePrice: "${data?.price.toString()}",
+                                      discountAmount:
+                                          "${data?.discountPrice.toString()}",
+                                      courseId: data!.id!,
+                                      paymentMethod: 'credit_card');
+                                },
+                                txtColor: white,
+                                color: mainColor)
+                            .w(context.screenWidth - 50)
+                            .h(40)
+                            .centered()
+                        : "Free".text.xl2.semiBold.makeCentered(),
                 20.heightBox,
                   ListView(
                     scrollDirection: Axis.horizontal,
@@ -283,10 +299,24 @@ class _QuickTechCustomCourseDetailsState
                       : courseDetailsController.selectedIndex.value == 1
                       ? customRoutine(context,"${data?.detailsFile}").animate().fadeIn(delay: 80.ms)
                       : courseDetailsController.selectedIndex.value == 2
-                      ? customContent(context,data?.syllabuslist,data?.modules).animate().fadeIn(delay: 80.ms)
-                      : courseDetailsController.selectedIndex.value == 3
-                      ? customReview(context,data?.review,data?.reviewAvgRating).animate().fadeIn(delay: 80.ms)
-                      : courseDetailsController.selectedIndex.value ==
+                            ? customContent(
+                                    context,
+                                    data?.syllabuslist,
+                                    data?.modules,
+                                    "${data?.buy}",
+                                    "${data?.price.toString()}",
+                                    "${data?.price.toString()}",
+                                    "${data?.discountPrice.toString()}",
+                                    data!.id!,
+                                    data.alreadyEnrolled!)
+                                .animate()
+                                .fadeIn(delay: 80.ms)
+                            : courseDetailsController.selectedIndex.value == 3
+                                ? customReview(context, data?.review,
+                                        data?.reviewAvgRating)
+                                    .animate()
+                                    .fadeIn(delay: 80.ms)
+                                : courseDetailsController.selectedIndex.value ==
                       4
                                     ? customFaq(context, data?.faqs)
                                         .animate()

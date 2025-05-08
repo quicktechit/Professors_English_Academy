@@ -17,7 +17,7 @@ class _QuickTechYoutubeVideoPlayer extends State<QuickTechYoutubeVideoPlayer> {
     super.initState();
     String? videoId = YoutubePlayer.convertUrlToId(widget.url);
     _controller = YoutubePlayerController(
-      initialVideoId: YoutubePlayer.convertUrlToId(videoId!) ?? '',
+      initialVideoId: YoutubePlayer.convertUrlToId(videoId ?? '') ?? '',
       flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
