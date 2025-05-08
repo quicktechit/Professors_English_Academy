@@ -1,6 +1,7 @@
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/controller/quick_tech_subcategory_controller.dart';
 
+import '../../controller/quick_tech_course_details_controller.dart';
 import '../../widgets/quick_tech_custom_course_list.dart';
 import '../course_details/quick_tech_custom_course_details.dart';
 
@@ -16,6 +17,7 @@ class QuickTechCategoryCourseListPage extends StatefulWidget {
 class _QuickTechCategoryCourseListPageState extends State<QuickTechCategoryCourseListPage> {
   final SubCategoryController subCategoryController =
       Get.put(SubCategoryController());
+  final CourseDetailsController courseDetailsController=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +49,7 @@ class _QuickTechCategoryCourseListPageState extends State<QuickTechCategoryCours
                   rating: '${data.reviewAvgRating ?? 0} (${data.reviewCount})',
                   price: data.buy=="Free"?"Free":'${data.price}')
                   .onTap(() {
-                Get.to(() => QuickTechCustomCourseDetails());
+                courseDetailsController.fetchCourseDetails(data.id.toString());
               })
                   .animate()
                   .fadeIn(delay: (index * 150).ms);

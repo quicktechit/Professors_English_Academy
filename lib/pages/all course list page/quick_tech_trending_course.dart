@@ -1,4 +1,5 @@
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/controller/quick_tech_course_details_controller.dart';
 import 'package:professors_english_academy/pages/course_details/quick_tech_custom_course_details.dart';
 
 import '../../controller/quick_tech_home_controller.dart';
@@ -13,6 +14,7 @@ class QuickTechTrendingCourse extends StatefulWidget {
 
 class _QuickTechTrendingCourseState extends State<QuickTechTrendingCourse> {
   final HomeController homeController = Get.find();
+  final CourseDetailsController courseDetailsController=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +43,7 @@ class _QuickTechTrendingCourseState extends State<QuickTechTrendingCourse> {
                                 '${data?.reviewAvgRating ?? 0} (${data?.reviewCount})',
                             price: data?.buy=="Free"?"Free":'${data?.price}')
                         .onTap(() {
-                          Get.to(() => QuickTechCustomCourseDetails());
+                      courseDetailsController.fetchCourseDetails(data!.id.toString());
                         }).animate().fadeIn(delay: (index*150).ms);
             }),
           )
