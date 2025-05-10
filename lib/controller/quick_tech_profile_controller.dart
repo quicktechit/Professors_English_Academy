@@ -10,13 +10,16 @@ import 'package:professors_english_academy/model/privicyterms_model.dart';
 import 'package:professors_english_academy/model/profile_model.dart';
 import 'package:professors_english_academy/pages/auth_page/quick_tech_phone_number_input.dart';
 
+import '../model/quiz_result_model.dart';
+
 class ProfileController extends GetxController {
   var profile = ProfileModel().obs;
   var privacyTerms = PrivacyTermsModel().obs;
   final box = GetStorage();
   final ImagePicker _picker = ImagePicker();
   var profileImageUrl = ''.obs;
-
+  var quizResultModel = QuizResultModel().obs;
+  var isLoading = true.obs;
   var name = TextEditingController();
   var email = TextEditingController();
   var institution = TextEditingController();
@@ -25,7 +28,6 @@ class ProfileController extends GetxController {
   Future<void> getProfile() async {
     final url = Uri.parse(Api.getProfile);
     if (box.read("token").toString() != "null") {
-
       try {
         LoaderService.to.showLoader();
 
@@ -56,6 +58,35 @@ class ProfileController extends GetxController {
       }
     } else {
       VxToast.show(Get.context!, msg: "Token Is Empty");
+    }
+  }
+
+  Future<void> getMyQuiz() async {
+    try {
+      LoaderService.to.showLoader();
+
+      final headers = {
+        'Authorization': 'Bearer ${box.read("token")}',
+      };
+
+      final response = await http.get(
+        Uri.parse(Api.myQuiz),
+        headers: headers,
+      );
+      if (response.statusCode == 200) {
+        LoaderService.to.hideLoader();
+        quizResultModel.value =
+            QuizResultModel.fromJson(json.decode(response.body));
+      } else {
+        LoaderService.to.hideLoader();
+        throw Exception('Failed to load quiz data');
+      }
+    } catch (e) {
+      LoaderService.to.hideLoader();
+      print('Error: $e');
+    } finally {
+      isLoading.value = false;
+      LoaderService.to.hideLoader();
     }
   }
 
@@ -127,26 +158,25 @@ class ProfileController extends GetxController {
 
   Future<void> getTermsPrivacy() async {
     final url = Uri.parse(Api.privacyTerms);
-      try {
-        LoaderService.to.showLoader();
+    try {
+      LoaderService.to.showLoader();
 
-        final response = await http.get(url);
+      final response = await http.get(url);
 
-        if (response.statusCode == 200) {
-          LoaderService.to.hideLoader();
-          final data = json.decode(response.body);
-          privacyTerms.value = PrivacyTermsModel.fromJson(data);
-          log('Profile Data fetched successfully: $data');
-        } else {
-          LoaderService.to.hideLoader();
-          log('Failed to load Profile data. Status code: ${response.statusCode}');
-        }
-        privacyTerms.refresh();
-      } catch (e) {
+      if (response.statusCode == 200) {
         LoaderService.to.hideLoader();
-        log('Error occurred Profile get : $e');
+        final data = json.decode(response.body);
+        privacyTerms.value = PrivacyTermsModel.fromJson(data);
+        log('Profile Data fetched successfully: $data');
+      } else {
+        LoaderService.to.hideLoader();
+        log('Failed to load Profile data. Status code: ${response.statusCode}');
       }
-
+      privacyTerms.refresh();
+    } catch (e) {
+      LoaderService.to.hideLoader();
+      log('Error occurred Profile get : $e');
+    }
   }
 
   logOut() async {

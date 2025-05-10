@@ -1,14 +1,14 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:professors_english_academy/controller/quick_tech_profile_controller.dart';
 import 'package:professors_english_academy/pages/help%20&%20support/quick_tech_help_&_support_page.dart';
-import 'package:professors_english_academy/pages/my%20course/quick_tech_my_course.dart';
 import 'package:professors_english_academy/pages/privacy%20&%20terms/quick_tech_terms_page.dart';
 import 'package:professors_english_academy/pages/profile%20page/quick_tech_editProfile_dialog.dart';
 
 import '../../consts/consts.dart';
 import '../../controller/quick_tech_my_course_controller.dart';
+import '../my dashboard/quick_tech_my_course.dart';
+import '../my dashboard/quick_tech_my_quizes.dart';
 import '../privacy & terms/quick_tech_privacy_page.dart';
 
 class QuickTechProfileScreen extends StatefulWidget {
@@ -29,6 +29,8 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       profileController.getProfile();
       profileController.getTermsPrivacy();
+      profileController.getMyQuiz();
+
     });
   }
 
@@ -41,10 +43,14 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
         title: "Profile".text.semiBold.make(),
         actions: [
           Obx(
-          ()=> Icon(
-              !themeController.isDarkMode.value ? Icons.nightlight_outlined : Icons.sunny,
+            () => Icon(
+              !themeController.isDarkMode.value
+                  ? Icons.nightlight_outlined
+                  : Icons.sunny,
               //Icons.sunny,
-              color:  !themeController.isDarkMode.value ? Colors.black : Colors.white,
+              color: !themeController.isDarkMode.value
+                  ? Colors.black
+                  : Colors.white,
               //color: Colors.redAccent,
             ).onTap(() {
               themeController.toggleTheme();
@@ -195,6 +201,35 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        "My Quiz's".text.semiBold.color(mainColor).make(),
+                        Icon(
+                          CupertinoIcons.square_grid_2x2,
+                          color: secondColor,
+                        )
+                      ],
+                    )
+                        .pSymmetric(h: 5, v: 5)
+                        .animate()
+                        .fadeIn(delay: (260).ms)
+                        .box
+                        .make()
+                        .onTap(() {
+                      Get.to(() =>QuickTechMyQuizes());
+                    }),
+                    Divider(
+                      thickness: 1.2,
+                    ).animate().fadeIn(delay: (260).ms),
+                    10.heightBox,
+                    Divider(
+                            thickness: 1.2,
+                            height: 1,
+                            color: gry.withOpacity(0.4))
+                        .animate()
+                        .fadeIn(delay: (150).ms),
+                    10.heightBox,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         "My Courses".text.semiBold.color(mainColor).make(),
                         Icon(
                           CupertinoIcons.square_grid_2x2,
@@ -208,7 +243,11 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
                         .box
                         .make()
                         .onTap(() {
-                      Get.to(() => QuickTechMyCourse());
+                      Get.to(() => QuickTechMyCourse(
+                            enrollCourse: profileController
+                                    .profile.value.enrolledCourses ??
+                                [],
+                          ));
                     }),
                     Divider(
                       thickness: 1.2,
@@ -257,8 +296,7 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
                         .make()
                         .onTap(() {
                       Get.to(() => QuickTechTermsPage(
-                            data: profileController.privacyTerms.value.data![1]
-                          ));
+                          data: profileController.privacyTerms.value.data![1]));
                     }),
                     Divider(
                       thickness: 1.2,

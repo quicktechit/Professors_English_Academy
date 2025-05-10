@@ -2,22 +2,29 @@ import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_button.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_reating_submit.dart';
 
-Widget myCourse({required BuildContext context}) {
+Widget myCourse({
+  required BuildContext context,
+  required String id,
+  required String title,
+  required String image,
+  required String complete,
+}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Image.asset(
-        "assets/images/1-6-02.png",
-        width: 110,
+      Image.network(
+        Api.imageUrl + image,
+        width: 100,
+        fit: BoxFit.cover,
       ),
       10.widthBox,
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          "Demo Course Title".text.semiBold.xl.make().w(180),
+          title.text.semiBold.lg.make().w(context.screenWidth * 0.6),
           5.heightBox,
-          "10% complete".text.semiBold.make(),
+          "$complete % Complete".text.semiBold.make(),
           10.heightBox,
           Row(
             children: [
@@ -33,10 +40,7 @@ Widget myCourse({required BuildContext context}) {
               customButton(
                       title: "Rate this Course",
                       onPressed: () {
-
-                        Get.bottomSheet(
-
-                            customRatingSubmitBottomShit());
+                        Get.bottomSheet(customRatingSubmitBottomShit(id));
                       },
                       color: orange,
                       txtColor: white)

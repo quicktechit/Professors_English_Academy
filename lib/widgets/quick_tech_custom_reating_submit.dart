@@ -4,16 +4,14 @@ import 'package:professors_english_academy/widgets/quicktech_custom_text_field.d
 
 import '../consts/consts.dart';
 
-Widget customRatingSubmitBottomShit() {
+Widget customRatingSubmitBottomShit(id) {
   MyCourseController myCourseController = Get.find();
   return Column(
     children: [
       10.heightBox,
-
       Text('How would you rate This Course?', style: TextStyle(fontSize: 18)),
       20.heightBox,
-      Obx(() =>
-          RatingBar.builder(
+      Obx(() => RatingBar.builder(
             initialRating: myCourseController.rating.value,
             minRating: 0.5,
             direction: Axis.horizontal,
@@ -29,12 +27,21 @@ Widget customRatingSubmitBottomShit() {
       15.heightBox,
       "Note".text.make().box.alignCenterLeft.make().pSymmetric(h: 15),
       10.heightBox,
-      customTextField(hint: "note", isSuffix: false, isVisible: true).pSymmetric(h: 15),
-
+      customTextField(
+        hint: "note",
+        controller: myCourseController.note,
+        isSuffix: false,
+        isVisible: true,
+      ).pSymmetric(h: 15),
       20.heightBox,
-      customButton(title: "Submit", onPressed: () {
-        myCourseController.submitRating();
-      }, color: mainColor, txtColor: white).w(150)
+      customButton(
+              title: "Submit",
+              onPressed: () {
+                myCourseController.submitReview(id: id);
+              },
+              color: mainColor,
+              txtColor: white)
+          .w(150)
     ],
   )
       .box
@@ -42,6 +49,6 @@ Widget customRatingSubmitBottomShit() {
       .width(Get.width)
       .p4
       .customRounded(BorderRadius.only(
-      topLeft: Radius.circular(12), topRight: Radius.circular(12)))
+          topLeft: Radius.circular(12), topRight: Radius.circular(12)))
       .make();
 }

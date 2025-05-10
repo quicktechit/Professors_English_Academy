@@ -1,3 +1,5 @@
+import 'package:professors_english_academy/controller/quick_tech_leader_board_controller.dart';
+
 import '../../consts/consts.dart';
 
 class QuickTechLeaderBoard extends StatefulWidget {
@@ -8,6 +10,19 @@ class QuickTechLeaderBoard extends StatefulWidget {
 }
 
 class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
+  LeaderBoardController leaderBoardController =
+      Get.put(LeaderBoardController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      leaderBoardController.fetchData();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,238 +33,368 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
       ),
       body: Column(
         children: [
-          ClipPath(
-            clipper: TriangleClipper(),
-            child: Container(
-              color: mainColor,
-              height: 300,
-              width: Get.width,
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Positioned(
-                      child: Column(
-                    children: [
-                      Image.asset(
-                        "assets/images/crown.png",
-                        height: 30,
-                      ),
-                      SizedBox(
-                        width: 110,
-                        height: 125,
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
+          Obx(
+          ()=> ClipPath(
+              clipper: TriangleClipper(),
+              child: Container(
+                color: mainColor,
+                height: 300,
+                width: Get.width,
+                child: Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    // Check if the leaderboard data has at least 3 students
+                    if (leaderBoardController
+                        .leaderBoardData.value.isNotEmpty) ...[
+                      // Leaderboard for Top 3
+                      Positioned(
+                        child: Column(
                           children: [
-                            Positioned(
-                              bottom: 15,
-                              child: CircleAvatar(
-                                radius: 50,
-                                backgroundColor: Colors.white,
-                                child: Image.asset(
-                                  "assets/images/man.png",
-                                ),
-                              )
-                                  .clipOval()
-                                  .box
-                                  .roundedFull
-                                  .padding(const EdgeInsets.all(5))
-                                  .color(Colors.yellow)
-                                  .make(),
+                            Image.asset(
+                              "assets/images/crown.png",
+                              height: 30,
                             ),
-                            Positioned(
-                                child: "3"
+                            SizedBox(
+                              width: 110,
+                              height: 125,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Positioned(
+                                    bottom: 15,
+                                    child: CircleAvatar(
+                                      radius: 50,
+                                      backgroundColor: Colors.white,
+                                      child: leaderBoardController.leaderBoardData
+                                                  .value[0].student ==
+                                              null
+                                          ? Image.asset("assets/images/man.png")
+                                          : Image.network(
+                                              Api.imageUrl +
+                                                  (leaderBoardController
+                                                          .leaderBoardData
+                                                          .value[0]
+                                                          .student
+                                                          ?.image ??
+                                                      ''),
+                                            ),
+                                    )
+                                        .clipOval()
+                                        .box
+                                        .roundedFull
+                                        .padding(const EdgeInsets.all(5))
+                                        .color(Colors.yellow)
+                                        .make(),
+                                  ),
+                                  Positioned(
+                                      child: "1"
+                                          .text
+                                          .black
+                                          .semiBold
+                                          .size(16)
+                                          .make()
+                                          .box
+                                          .roundedFull
+                                          .padding(const EdgeInsets.all(5))
+                                          .color(Colors.yellow)
+                                          .make())
+                                ],
+                              ),
+                            ),
+                            leaderBoardController
+                                        .leaderBoardData.value[0].student?.name !=
+                                    null
+                                ? "${leaderBoardController.leaderBoardData.value[0].student?.name}"
                                     .text
-                                    .black
                                     .semiBold
-                                    .size(16)
+                                    .textStyle(GoogleFonts.kufam())
+                                    .semiBold
+                                    .white
                                     .make()
-                                    .box
-                                    .roundedFull
-                                    .padding(const EdgeInsets.all(5))
-                                    .color(Colors.yellow)
-                                    .make())
+                                : "UserName"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .semiBold
+                                    .white
+                                    .make(),
+                            leaderBoardController.leaderBoardData.value[0]
+                                        .totalRightAnswers !=
+                                    null
+                                ? "${leaderBoardController.leaderBoardData.value[0].totalRightAnswers} / ${leaderBoardController.leaderBoardData.value[0].totalQuestions}"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .white
+                                    .semiBold
+                                    .make()
+                                : "Score"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .white
+                                    .semiBold
+                                    .make(),
                           ],
                         ),
                       ),
-                      "UserName"
-                          .text
-                          .semiBold
-                          .textStyle(GoogleFonts.kufam())
-                          .semiBold
-                          .white
-                          .make(),
-                      "90"
-                          .text
-                          .semiBold
-                          .textStyle(GoogleFonts.kufam())
-                          .white
-                          .semiBold
-                          .make(),
-                    ],
-                  )).animate().fade(duration: 800.ms),
-                  Positioned(
-                      right: 20,
-                      bottom: 70,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: 110,
-                            height: 125,
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Positioned(
-                                  bottom: 15,
-                                  child: CircleAvatar(
-                                    radius: 40,
-                                    backgroundColor: Colors.white,
-                                    child: Image.asset(
-                                      "assets/images/man.png",
-                                    ),
-                                  )
-                                      .clipOval()
-                                      .box
-                                      .roundedFull
-                                      .padding(const EdgeInsets.all(5))
-                                      .color(deepGreen)
-                                      .make(),
-                                ),
-                                Positioned(
-                                    child: "2"
-                                        .text
-                                        .white
-                                        .semiBold
-                                        .size(16)
-                                        .make()
+                      Positioned(
+                        right: 20,
+                        bottom: 70,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: 110,
+                              height: 125,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Positioned(
+                                    bottom: 15,
+                                    child: CircleAvatar(
+                                      radius: 40,
+                                      backgroundColor: Colors.white,
+                                      child: leaderBoardController.leaderBoardData
+                                                  .value[0].student ==
+                                              null
+                                          ? Image.asset("assets/images/man.png")
+                                          : Image.network(
+                                              Api.imageUrl +
+                                                    (  leaderBoardController
+                                                          .leaderBoardData
+                                                          .value[1]
+                                                          .student
+                                                          ?.image ??
+                                                  ''),
+                                            ),
+                                    )
+                                        .clipOval()
                                         .box
                                         .roundedFull
                                         .padding(const EdgeInsets.all(5))
                                         .color(deepGreen)
-                                        .make())
-                              ],
+                                        .make(),
+                                  ),
+                                  Positioned(
+                                      child: "2"
+                                          .text
+                                          .white
+                                          .semiBold
+                                          .size(16)
+                                          .make()
+                                          .box
+                                          .roundedFull
+                                          .padding(const EdgeInsets.all(5))
+                                          .color(deepGreen)
+                                          .make())
+                                ],
+                              ),
                             ),
-                          ),
-                          "UserName"
-                              .text
-                              .semiBold
-                              .textStyle(GoogleFonts.kufam())
-                              .semiBold
-                              .white
-                              .make(),
-                          "7/10"
-                              .text
-                              .semiBold
-                              .textStyle(GoogleFonts.kufam())
-                              .white
-                              .semiBold
-                              .make(),
-                        ],
-                      )).animate().fade(duration: 1100.ms),
-                  Positioned(
-                      left: 20,
-                      bottom: 70,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: 110,
-                            height: 125,
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Positioned(
-                                  bottom: 15,
-                                  child: CircleAvatar(
-                                    radius: 40,
-                                    backgroundColor: Colors.white,
-                                    child: Image.asset(
-                                      "assets/images/man.png",
-                                    ),
-                                  )
-                                      .clipOval()
-                                      .box
-                                      .roundedFull
-                                      .padding(const EdgeInsets.all(5))
-                                      .color(deepGreen)
-                                      .make(),
-                                ),
-                                Positioned(
-                                    child: "3"
-                                        .text
-                                        .white
-                                        .semiBold
-                                        .size(16)
-                                        .make()
+                            leaderBoardController
+                                        .leaderBoardData.value[1].student?.name !=
+                                    null
+                                ? "${leaderBoardController.leaderBoardData.value[1].student?.name}"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .semiBold
+                                    .white
+                                    .make()
+                                : "UserName"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .semiBold
+                                    .white
+                                    .make(),
+                            leaderBoardController.leaderBoardData.value[1]
+                                        .totalRightAnswers !=
+                                    null
+                                ? "${leaderBoardController.leaderBoardData.value[1].totalRightAnswers} / ${leaderBoardController.leaderBoardData.value[1].totalQuestions}"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .white
+                                    .semiBold
+                                    .make()
+                                : "Score"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .white
+                                    .semiBold
+                                    .make(),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        left: 20,
+                        bottom: 70,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: 110,
+                              height: 125,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Positioned(
+                                    bottom: 15,
+                                    child: CircleAvatar(
+                                      radius: 40,
+                                      backgroundColor: Colors.white,
+                                      child: leaderBoardController.leaderBoardData
+                                                  .value[0].student ==
+                                              null
+                                          ? Image.asset("assets/images/man.png")
+                                          : Image.network(
+                                              Api.imageUrl +
+                                                   (   leaderBoardController
+                                                          .leaderBoardData
+                                                          .value[2]
+                                                          .student
+                                                          ?.image ??
+                                                  ''),
+                                            ),
+                                    )
+                                        .clipOval()
                                         .box
                                         .roundedFull
                                         .padding(const EdgeInsets.all(5))
                                         .color(deepGreen)
-                                        .make())
-                              ],
+                                        .make(),
+                                  ),
+                                  Positioned(
+                                      child: "3"
+                                          .text
+                                          .white
+                                          .semiBold
+                                          .size(16)
+                                          .make()
+                                          .box
+                                          .roundedFull
+                                          .padding(const EdgeInsets.all(5))
+                                          .color(deepGreen)
+                                          .make())
+                                ],
+                              ),
                             ),
-                          ),
-                          "UserName"
-                              .text
-                              .semiBold
-                              .textStyle(GoogleFonts.kufam())
-                              .semiBold
-                              .white
-                              .make(),
-                          "7/10"
-                              .text
-                              .semiBold
-                              .textStyle(GoogleFonts.kufam())
-                              .white
-                              .semiBold
-                              .make(),
-                        ],
-                      )).animate().fade(duration: 1400.ms),
-                ],
+                            leaderBoardController
+                                        .leaderBoardData.value[2].student?.name !=
+                                    null
+                                ? "${leaderBoardController.leaderBoardData.value[2].student?.name}"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .semiBold
+                                    .white
+                                    .make()
+                                : "UserName"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .semiBold
+                                    .white
+                                    .make(),
+                            leaderBoardController.leaderBoardData.value[2]
+                                        .totalRightAnswers !=
+                                    null
+                                ? "${leaderBoardController.leaderBoardData.value[2].totalRightAnswers} / ${leaderBoardController.leaderBoardData.value[2].totalQuestions}"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .white
+                                    .semiBold
+                                    .make()
+                                : "Score"
+                                    .text
+                                    .semiBold
+                                    .textStyle(GoogleFonts.kufam())
+                                    .white
+                                    .semiBold
+                                    .make(),
+                          ],
+                        ),
+                      ),
+                    ] else
+                      // Display a loading indicator if the list is empty
+                      Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
           Expanded(
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 6,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      '${index + 4}'
-                          .text
-                          .textStyle(GoogleFonts.kufam())
-                          .size(20)
-                          .make(),
-                      10.widthBox,
-                      CircleAvatar(
-                        radius: 23,
-                        child: Image.asset("assets/images/man.png"),
-                      ).clipOval(),
-                      const Spacer(),
-                      "50"
-                          .text
-                          .textStyle(GoogleFonts.kufam())
-                          .size(16)
-                          .make(),
-                    ],
-                  )
-                      .box
-                      .rounded
-                      .white
-                      .margin(const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10))
-                      .padding(const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10))
-                      .make()
-                      .animate()
-                      .fadeIn(duration: 300.ms)
-                      .move(
-                          begin: const Offset(0, 300),
-                          end: const Offset(0, 0),
-                          delay: (150 * index).ms,
-                          duration: 500.ms);
-                }),
+            child: Obx(
+              () {
+                var leaderboardData =
+                    leaderBoardController.leaderBoardData.value;
+
+                // Skip the first 3 ranks
+                var studentsFromRank4 = leaderboardData.skip(3).toList();
+
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: studentsFromRank4.length,
+                  itemBuilder: (context, index) {
+                    var student = studentsFromRank4[index];
+                    String studentImage = student.student?.image ??
+                        'assets/images/default_image.png';
+
+                    return Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        '${index + 4}'
+                            .text
+                            .textStyle(GoogleFonts.kufam())
+                            .size(20)
+                            .make(),
+                        10.widthBox,
+                        CircleAvatar(
+                          radius: 23,
+                          child: student.student?.image != null
+                              ? Image.network(
+                                  Api.imageUrl + student.student!.image!,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(studentImage, fit: BoxFit.cover),
+                        ).clipOval(),
+                        5.widthBox,
+                        "${student.student?.name}"
+                            .text
+                            .textStyle(GoogleFonts.kufam())
+                            .size(17)
+                            .make()
+                            .w(context.screenWidth * 0.4),
+                        const Spacer(),
+                        "${student.totalRightAnswers ?? 0}/${student.totalQuestions ?? 0}"
+                            .text
+                            .textStyle(GoogleFonts.kufam())
+                            .size(16)
+                            .make(),
+                      ],
+                    )
+                        .box
+                        .rounded
+                        .white
+                        .margin(const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10))
+                        .padding(const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10))
+                        .make()
+                        .animate()
+                        .fadeIn(duration: 300.ms)
+                        .move(
+                            begin: const Offset(0, 300),
+                            end: const Offset(0, 0),
+                            delay: (150 * index).ms,
+                            duration: 500.ms);
+                  },
+                );
+              },
+            ),
           )
         ],
       ),

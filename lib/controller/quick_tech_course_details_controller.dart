@@ -98,4 +98,5 @@ class CourseDetailsController extends GetxController{
   }
 
 
+
 }

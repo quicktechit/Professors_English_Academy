@@ -16,5 +16,8 @@ class Api{
   static String privacyTerms='$baseUrl/api/pages';
   static String profileUpdate='$baseUrl/api/update-profile';
   static String courseEnroll='$baseUrl/api/course/enroll';
+  static String courseReview='$baseUrl/api/courses/reviews/';
+  static String leaderBoard='$baseUrl/api/top-students';
+  static String myQuiz='$baseUrl/api/practice-score';
 
 }

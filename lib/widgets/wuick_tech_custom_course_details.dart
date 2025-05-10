@@ -45,7 +45,6 @@ Widget customRoutine(BuildContext context, pdfLink) {
               txtColor: white)
           .w(context.screenWidth)
           .pSymmetric(h: dynamicSize),
-
       30.heightBox,
       customContractUS(context)
     ],
@@ -108,8 +107,7 @@ Widget customFaq(BuildContext context, List<Faqs>? faq) {
   );
 }
 
-Widget customReview(BuildContext context,List<Review>? review,avgReview) {
-
+Widget customReview(BuildContext context, List<Review>? review, avgReview) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -135,7 +133,7 @@ Widget customReview(BuildContext context,List<Review>? review,avgReview) {
         shrinkWrap: true,
         itemCount: review?.length,
         itemBuilder: (context, index) {
-          var data=review?[index];
+          var data = review?[index];
           return Card(
             color: Colors.white,
             elevation: 5,
@@ -146,7 +144,7 @@ Widget customReview(BuildContext context,List<Review>? review,avgReview) {
                 children: [
                   Row(
                     children: [
-                      "${ data?.student?.name}".text.black.xl.semiBold.make(),
+                      "${data?.student?.name}".text.black.xl.semiBold.make(),
                       Spacer(),
                       Icon(Icons.star, size: 19, color: Colors.amber),
                       8.heightBox,
@@ -178,10 +176,10 @@ Widget customReview(BuildContext context,List<Review>? review,avgReview) {
   ).pSymmetric(h: dynamicSize);
 }
 
-Widget customContent(BuildContext context,
+Widget customContent(
+    BuildContext context,
     List<String>? syllabus,
     List<Modules>? modules,
-
     String status,
     String totalAmount,
     String coursePrice,
@@ -192,15 +190,15 @@ Widget customContent(BuildContext context,
   final PracticeController practiceController = Get.put(PracticeController());
   final CourseDetailsController courseDetailsController = Get.find();
   return Column(
-      children: [
-        ExpansionTile(
-          iconColor: Colors.black,
-          title: "Syllabus".text.semiBold.black.make(),
-          children: [
-            ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+    children: [
+      ExpansionTile(
+        iconColor: Colors.black,
+        title: "Syllabus".text.semiBold.black.make(),
+        children: [
+          ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
             itemCount: syllabus?.length,
             itemBuilder: (context, index) {
               return Row(
@@ -230,6 +228,7 @@ Widget customContent(BuildContext context,
       10.heightBox,
       Column(
         children: modules!.map((subject) {
+          var moduleData = subject;
           return ExpansionTile(
             childrenPadding: EdgeInsets.symmetric(horizontal: 10),
             title: subject.name!.text.semiBold.black.make(),
@@ -269,27 +268,32 @@ Widget customContent(BuildContext context,
                               ),
                             ],
                           ).onTap(() {
-                            if (status == "Free" || alreadyEnrolled == true) {
-                              if (alreadyEnrolled != true) {
-                                courseDetailsController.enrollInCourse(
-                                    totalAmount: totalAmount,
-                                    coursePrice: coursePrice,
-                                    discountAmount: discountAmount,
-                                    courseId: courseId,
-                                    paymentMethod: 'credit_card');
-                              }
+                            if (status != "Free" && !alreadyEnrolled) {
+                              Get.snackbar("Sorry", "Please Enroll First");
+                              return;
+                            }
 
-                              if ("${item?.link}" != "null") {
-                                Get.to(() => QuickTechYoutubeVideoPlayer(
-                                      url: "${item?.link}",
-                                    ));
+                            if (!alreadyEnrolled) {
+                              courseDetailsController.enrollInCourse(
+                                totalAmount: totalAmount,
+                                coursePrice: coursePrice,
+                                discountAmount: discountAmount,
+                                courseId: courseId,
+                                paymentMethod: 'credit_card',
+                              );
+                            }
+
+                            if (moduleData.completed==true) {
+                              if (item?.link != null && item?.link != "null") {
+                                Get.to(() => QuickTechYoutubeVideoPlayer(url: item?.link));
                               } else {
                                 Get.snackbar("Error", "Link is Null");
                               }
                             } else {
-                              Get.snackbar("Sorry", "Please Enroll First");
+                              Get.snackbar("Warning", "Complete the previous Module First");
                             }
-                          }),
+                          })
+
                         ).color(status == "Free"
                             ? Colors.transparent
                             : alreadyEnrolled == true
@@ -353,13 +357,12 @@ Widget customContent(BuildContext context,
                     },
                   ),
                 ],
-                );
-              }).toList(),
-            );
-          }).toList(),
-        ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
-        20.heightBox,
-      ],
-    ).pSymmetric(h: dynamicSize);
-
+              );
+            }).toList(),
+          );
+        }).toList(),
+      ).box.roundedSM.white.shadowSm.clip(Clip.antiAlias).make(),
+      20.heightBox,
+    ],
+  ).pSymmetric(h: dynamicSize);
 }
