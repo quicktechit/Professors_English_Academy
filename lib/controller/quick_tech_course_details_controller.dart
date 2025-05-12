@@ -54,6 +54,7 @@ class CourseDetailsController extends GetxController{
     required String discountAmount,
     required int courseId,
     required String paymentMethod,
+    required bool isFree,
     String note = 'demo',
   }) async {
     var url = Uri.parse(Api.courseEnroll);
@@ -83,7 +84,9 @@ class CourseDetailsController extends GetxController{
         String responseBody = await response.stream.bytesToString();
         print('Success: $responseBody');
         Get.snackbar("Success", "Enroll Success");
-        Get.to(() => QuickTechDashboard());
+        if(!isFree) {
+          Get.to(() => QuickTechDashboard());
+        }
       }else if(response.statusCode == 409){
         Get.snackbar("Warning", "Already Enroll In this Course");
       }

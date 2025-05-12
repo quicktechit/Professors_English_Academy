@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -51,7 +52,6 @@ class PdfController extends GetxController{
       }
 
       final response = await http.get(Uri.parse(Api.imageUrl+url));
-
       if (response.statusCode == 200) {
         final fileName = '$name-${DateTime.now().millisecondsSinceEpoch}.pdf';
         final file = File('${downloadsDir?.path}/$fileName');
@@ -59,6 +59,8 @@ class PdfController extends GetxController{
         Get.snackbar('Success', 'PDF downloaded to: ${file.path}');
       } else {
         Get.snackbar('Error', 'Failed to download file: ${response.statusCode}');
+        log(response.statusCode.toString());
+        log(response.body);
       }
     } catch (e) {
       Get.snackbar('Error', 'Error during download: $e');

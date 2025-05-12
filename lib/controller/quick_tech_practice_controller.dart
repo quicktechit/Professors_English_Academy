@@ -75,7 +75,7 @@ class PracticeController extends GetxController {
   Future<bool> submitAnswers(String id) async {
     final url = Uri.parse("${Api.submitAnswer}$id");
     LoaderService.to.showLoader();
-
+log(url.toString(),name: 'Url');
     try {
       final body = jsonEncode(getAnswersForSubmission());
       log('Submitting answers: $body');
@@ -84,10 +84,11 @@ class PracticeController extends GetxController {
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${box.read("token")})',
+          'Authorization': 'Bearer ${box.read("token")}',
         },
         body: body,
       );
+      log(box.read("token"));
       log(response.statusCode.toString());
       LoaderService.to.hideLoader();
       if (response.statusCode == 200) {

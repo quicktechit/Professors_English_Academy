@@ -6,6 +6,7 @@ import 'package:professors_english_academy/pages/home/quick_tech_dashboard.dart'
 import 'package:professors_english_academy/pages/splash_page/quick_tech_splash_page_2nd.dart';
 
 import '../../controller/quick_tech_home_controller.dart';
+import '../../controller/quick_tech_profile_controller.dart';
 
 class QuickTechSplashPageOne extends StatefulWidget {
   const QuickTechSplashPageOne({super.key});
@@ -18,6 +19,7 @@ class _QuickTechSplashPageOneState extends State<QuickTechSplashPageOne> {
   final box = GetStorage();
 
   final HomeController homeController = Get.put(HomeController());
+  final ProfileController profileController = Get.put(ProfileController());
 
   @override
   void initState() {
@@ -34,7 +36,9 @@ class _QuickTechSplashPageOneState extends State<QuickTechSplashPageOne> {
       await homeController.fetchCategory();
       if (box.read("token").toString() != 'null') {
         log(box.read("token").toString());
-        Get.offAll(() => QuickTechDashboard());
+        profileController.getProfile().then((v) {
+          Get.offAll(() => QuickTechDashboard());
+        });
       } else {
         Get.offAll(() => const QuickTechSplashPage2nd(),
             transition: Transition.fadeIn, duration: 500.ms);

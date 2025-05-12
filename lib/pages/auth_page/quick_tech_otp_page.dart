@@ -27,7 +27,7 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: dynamicSize),
         height: context.screenHeight,

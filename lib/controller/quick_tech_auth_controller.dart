@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:professors_english_academy/consts/consts.dart';
+import 'package:professors_english_academy/controller/quick_tech_profile_controller.dart';
 import 'package:professors_english_academy/pages/auth_page/quick_tech_complete_register.dart';
 import 'package:professors_english_academy/pages/auth_page/quick_tech_login_page.dart';
 import 'package:professors_english_academy/pages/home/quick_tech_dashboard.dart';
@@ -161,10 +162,12 @@ class AuthController extends GetxController {
 
     if (response.statusCode == 200) {
       LoaderService.to.hideLoader();
-      print('Login successful');
-      print('Response: ${response.body}');
       var data=jsonDecode(response.body);
       box.write("token", data["token"].toString());
+      print('Login successful');
+      print('Response: ${response.body}');
+      Get.find<ProfileController>().getProfile();
+
       log(box.read("token"));
       Get.offAll(() => QuickTechDashboard());
     } else {

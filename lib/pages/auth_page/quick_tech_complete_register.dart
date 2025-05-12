@@ -61,7 +61,7 @@ class _QuickTechCompleteRegisterState extends State<QuickTechCompleteRegister> {
             customTextField(
                 hint: "Number",controller: registerController.phone,
                 isSuffix: false,
-                isVisible: true,
+                isVisible: true,keyboard: TextInputType.number,
                 icon: Icons.phone).animate().fadeIn().move(
                 begin: const Offset(0, 300),
                 end: const Offset(0, 0),

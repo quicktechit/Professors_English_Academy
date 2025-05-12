@@ -51,18 +51,13 @@ class _QuickTechResultScreenState extends State<QuickTechResultScreen> {
               .roundedFull
               .makeCentered(),
           10.heightBox,
-          "Congratulation"
+          "Your Quiz Submit Success"
               .text
-              .color(mainColor)
+              .color(mainColor).semiBold
               .textStyle(GoogleFonts.kufam())
               .size(22)
               .make(),
-          "Great job, Rasheeq Ishmum! You Did It"
-              .text
-              .color(gry)
-              .textStyle(GoogleFonts.kufam())
-              .size(18)
-              .make(),
+
           20.heightBox,
           customButton(
                   title: 'Share',

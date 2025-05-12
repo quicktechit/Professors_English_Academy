@@ -122,7 +122,7 @@ Widget customCourseListHistory(
       ).pSymmetric(h: 10),
       3.heightBox,
     ],
-  ).card.color(Colors.white).elevation(5).make().h(275);
+  ).card.color(Colors.white).elevation(5).make().h(290);
 }
 
 Widget customCourseListHistory2(

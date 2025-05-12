@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:professors_english_academy/consts/consts.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class QuickTechYoutubeVideoPlayer extends StatefulWidget {
@@ -38,7 +39,7 @@ class _QuickTechYoutubeVideoPlayer extends State<QuickTechYoutubeVideoPlayer> {
       body: YoutubePlayer(
         controller: _controller,
         showVideoProgressIndicator: true,
-      ),
+      ).centered(),
     );
   }
 }

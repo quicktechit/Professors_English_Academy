@@ -38,6 +38,10 @@ Widget customRoutine(BuildContext context, pdfLink) {
       customButton(
               title: "Download Full Routine ⬇",
               onPressed: () {
+                if(pdfLink=="null"){
+                  return Get.snackbar("Error", "link is null");
+                }
+
                 pdfController.downloadToDownloadsFolder(
                     context, pdfLink, "Routine");
               },
@@ -233,11 +237,22 @@ Widget customContent(
             childrenPadding: EdgeInsets.symmetric(horizontal: 10),
             title: subject.name!.text.semiBold.black.make(),
             subtitle: 'Tap to see papers'.text.semiBold.black.make(),
+            backgroundColor: status == "Free"
+                ? Colors.transparent
+                : alreadyEnrolled == true
+                ? Colors.transparent
+                : Vx.red200,
             children: subject.lessons!.map((lessons) {
               return ExpansionTile(
                 childrenPadding: EdgeInsets.symmetric(horizontal: 10),
                 title: '${lessons.name}'.text.semiBold.black.make(),
                 subtitle: 'Tap to see sections'.text.semiBold.black.make(),
+
+                backgroundColor: status == "Free"
+                    ? Colors.transparent
+                    : alreadyEnrolled == true
+                    ? Colors.transparent
+                    : Vx.red100,
                 children: [
                   ListView.builder(
                     shrinkWrap: true,
@@ -249,7 +264,7 @@ Widget customContent(
                       } else {
                         final item = lessons.videos?[index];
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(2.0),
                           child: Row(
                             children: [
                               // Image
@@ -262,10 +277,14 @@ Widget customContent(
                                   )),
                               SizedBox(width: 16),
                               // Title
-                              Expanded(
-                                child:
-                                    "${item?.name}".text.semiBold.black.make(),
-                              ),
+                              "${item?.name}".text.semiBold.black.make().w(context.screenWidth*0.45),
+                              SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: Icon(
+                                    Icons.play_circle_outlined,
+                                    color: Colors.red,
+                                  )),
                             ],
                           ).onTap(() {
                             if (status != "Free" && !alreadyEnrolled) {
@@ -279,7 +298,7 @@ Widget customContent(
                                 coursePrice: coursePrice,
                                 discountAmount: discountAmount,
                                 courseId: courseId,
-                                paymentMethod: 'credit_card',
+                                paymentMethod: 'credit_card', isFree: true,
                               );
                             }
 
@@ -294,11 +313,7 @@ Widget customContent(
                             }
                           })
 
-                        ).color(status == "Free"
-                            ? Colors.transparent
-                            : alreadyEnrolled == true
-                                ? Colors.transparent
-                                : Vx.red300);
+                        );
                       }
                     },
                   ),
@@ -312,7 +327,7 @@ Widget customContent(
                       } else {
                         final item = lessons.quizzes?[index];
                         return Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(2.0),
                           child: Row(
                             children: [
                               // Image
@@ -338,7 +353,7 @@ Widget customContent(
                                     coursePrice: coursePrice,
                                     discountAmount: discountAmount,
                                     courseId: courseId,
-                                    paymentMethod: 'credit_card');
+                                    paymentMethod: 'credit_card', isFree: true);
                               }
                               practiceController.singleExam.value = item!;
                               Get.to(() => QuickTechExamPage(
@@ -348,11 +363,7 @@ Widget customContent(
                               Get.snackbar("Sorry", "Please Enroll First");
                             }
                           }),
-                        ).color(status == "Free"
-                            ? Colors.transparent
-                            : alreadyEnrolled == true
-                                ? Colors.transparent
-                                : Vx.red300);
+                        );
                       }
                     },
                   ),
