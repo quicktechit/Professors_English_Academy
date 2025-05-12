@@ -48,6 +48,7 @@ class ProfileController extends GetxController {
           name.text = profile.value.user!.name ?? "";
           email.text = profile.value.user!.email ?? '';
           institution.text = profile.value.user!.institution ?? '';
+          profileImageUrl.value=profile.value.user?.image;
         } else {
           LoaderService.to.hideLoader();
           log('Failed to load Profile data. Status code: ${response.statusCode}');
@@ -96,10 +97,12 @@ class ProfileController extends GetxController {
     var request = http.MultipartRequest('POST', uri)
       ..fields.addAll({
         'name': name.text,
+        // 'phone': phone.text,
+        // 'email': email.text,
         'institution': institution.text,
       })
       ..headers.addAll({
-        'Authorization': "${box.read("token")}",
+        'Authorization': 'Bearer ${box.read("token")}',
         'Accept': 'application/json',
       });
 
@@ -134,7 +137,7 @@ class ProfileController extends GetxController {
 
     var request = http.MultipartRequest('POST', uri)
       ..headers.addAll({
-        'Authorization': "${box.read("token")}",
+        'Authorization': 'Bearer ${box.read("token")}',
         'Accept': 'application/json',
       })
       ..files.add(await http.MultipartFile.fromPath('image', imageFile.path));
@@ -150,6 +153,8 @@ class ProfileController extends GetxController {
         // profileImageUrl.value = newImageUrlFromResponse;
       } else {
         Get.snackbar("Error", "Image upload failed: ${response.statusCode}");
+        log("${response.statusCode}");
+
       }
     } catch (e) {
       Get.snackbar("Exception", e.toString());

@@ -347,7 +347,7 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         '${index + 4}'
-                            .text
+                            .text.black
                             .textStyle(GoogleFonts.kufam())
                             .size(20)
                             .make(),
@@ -363,14 +363,14 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                         ).clipOval(),
                         5.widthBox,
                         "${student.student?.name}"
-                            .text
+                            .text.black
                             .textStyle(GoogleFonts.kufam())
                             .size(17)
                             .make()
                             .w(context.screenWidth * 0.4),
                         const Spacer(),
                         "${student.totalRightAnswers ?? 0}/${student.totalQuestions ?? 0}"
-                            .text
+                            .text.black
                             .textStyle(GoogleFonts.kufam())
                             .size(16)
                             .make(),

@@ -5,7 +5,7 @@ Widget customQuestionList(BuildContext context,name,time,question) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      "$name".text.semiBold.xl.make(),
+      "$name".text.semiBold.black.xl.make(),
       10.heightBox,
       Row(
         mainAxisSize: MainAxisSize.min,
@@ -16,9 +16,9 @@ Widget customQuestionList(BuildContext context,name,time,question) {
             size: 19,
           ),
           5.widthBox,
-          "$time Minute".text.semiBold.make(),
+          "$time Minute".text.black.semiBold.make(),
           12.widthBox,
-          "||".text.xl2.gray400.make(),
+          "||".text.xl2.black.gray400.make(),
           12.widthBox,
           Icon(
             CupertinoIcons.t_bubble,
@@ -26,7 +26,7 @@ Widget customQuestionList(BuildContext context,name,time,question) {
             size: 19,
           ),
           5.widthBox,
-          "$question Question".text.semiBold.make(),
+          "$question Question".text.black.semiBold.make(),
         ],
       )
     ],

@@ -23,7 +23,7 @@ Widget customContractUS(BuildContext context) {
                 color: Colors.white,
               ),
               15.widthBox,
-              "01641634899".text.semiBold.white.make()
+              "+8801712655666".text.semiBold.white.make()
             ],
           )
               .box
@@ -33,6 +33,11 @@ Widget customContractUS(BuildContext context) {
               .clip(Clip.antiAlias)
               .color(mainColor)
               .make()
+              .onTap(() async {
+            final Uri uri = Uri(scheme: 'tel', path: '+8801712655666');
+
+            await launchUrl(uri, mode: LaunchMode.externalApplication);
+          })
         ],
       ),
       Image.asset(

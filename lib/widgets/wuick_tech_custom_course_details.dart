@@ -217,9 +217,8 @@ Widget customContent(
                       )),
                   16.widthBox, // Space between image and title
                   // Title
-                  Expanded(
-                      child:
-                          "Syllabus ${index + 1}".text.semiBold.black.make()),
+                  "Syllabus ${index + 1}".text.semiBold.black.make(), Spacer(),
+                  "(Download)".text.semiBold.green600.make()
                 ],
               ).box.make().onTap(() {
                 pdfController.downloadToDownloadsFolder(
@@ -300,20 +299,21 @@ Widget customContent(
                                 courseId: courseId,
                                 paymentMethod: 'credit_card', isFree: true,
                               );
-                            }
-
-                            if (moduleData.completed==true) {
-                              if (item?.link != null && item?.link != "null") {
-                                Get.to(() => QuickTechYoutubeVideoPlayer(url: item?.link));
                               } else {
-                                Get.snackbar("Error", "Link is Null");
+                                if (moduleData.completed == true) {
+                                  if (item?.link != null &&
+                                      item?.link != "null") {
+                                    Get.to(() => QuickTechYoutubeVideoPlayer(
+                                        url: item?.link));
+                                  } else {
+                                    Get.snackbar("Error", "Link is Null");
+                                  }
+                                } else {
+                                  Get.snackbar("Warning",
+                                      "Complete the previous Module First");
+                                }
                               }
-                            } else {
-                              Get.snackbar("Warning", "Complete the previous Module First");
-                            }
-                          })
-
-                        );
+                            }));
                       }
                     },
                   ),
@@ -354,11 +354,12 @@ Widget customContent(
                                     discountAmount: discountAmount,
                                     courseId: courseId,
                                     paymentMethod: 'credit_card', isFree: true);
+                              } else {
+                                practiceController.singleExam.value = item!;
+                                Get.to(() => QuickTechExamPage(
+                                      pdfs: item.pdf.toString(),
+                                    ));
                               }
-                              practiceController.singleExam.value = item!;
-                              Get.to(() => QuickTechExamPage(
-                                    pdfs: item.pdf.toString(),
-                                  ));
                             } else {
                               Get.snackbar("Sorry", "Please Enroll First");
                             }

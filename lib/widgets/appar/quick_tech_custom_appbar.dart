@@ -51,18 +51,18 @@ Widget customAppbar(BuildContext context) {
           ),
         ],
       ).box.make().onTap((){
-        dashboardController.currentIndex.value=3;
+        dashboardController.currentIndex.value=4;
       }),
     ),
-    actions: [
-      Icon(
-        Icons.notifications_active_outlined,
-        color: mainColor,
-        size: 30,
-      ).onTap((){
-        Get.to(()=>QuickTechNotificationPage());
-      }),
-      5.widthBox,
-    ],
+    // actions: [
+    //   Icon(
+    //     Icons.notifications_active_outlined,
+    //     color: mainColor,
+    //     size: 30,
+    //   ).onTap((){
+    //     Get.to(()=>QuickTechNotificationPage());
+    //   }),
+    //   5.widthBox,
+    // ],
   );
 }

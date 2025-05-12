@@ -39,9 +39,8 @@ class AuthController extends GetxController {
       if (user != null) {
         name.text = user.displayName ?? '';
         email.text = user.email ?? '';
-
-        Get.offAll(
-            () => QuickTechCompleteRegister(phone: user.phoneNumber ?? ''));
+        phone.text = user.phoneNumber ?? '';
+        await googleLogin();
       }
     } catch (e) {
       Get.snackbar('Error', e.toString());
@@ -175,6 +174,50 @@ class AuthController extends GetxController {
       print('Login failed with status: ${response.statusCode}');
       print('Error: ${response.body}');
       Get.snackbar("Error", response.body);
+    }
+  }
+
+  Future<void> googleLogin() async {
+    final url = Uri.parse(Api.googleLogin);
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    final body = jsonEncode({
+      'email': email.text,
+    });
+
+    try {
+      LoaderService.to.showLoader();
+      final request = http.Request('POST', url)
+        ..headers.addAll(headers)
+        ..body = body;
+
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        LoaderService.to.hideLoader();
+        final responseBody = await response.stream.bytesToString();
+        print('Success: $responseBody');
+        final Map<String, dynamic> jsonResponse = jsonDecode(responseBody);
+
+        final String? token = jsonResponse['token'];
+        box.write("token", token.toString()).then((v) {
+          Get.find<ProfileController>().getProfile();
+
+          Get.offAll(() => QuickTechDashboard());
+        });
+      } else {
+        LoaderService.to.hideLoader();
+        print('Failed: ${response.reasonPhrase}');
+
+        Get.offAll(() => QuickTechCompleteRegister(
+              phone: phone.text,
+            ));
+      }
+    } catch (e) {       LoaderService.to.hideLoader();
+      print('Error: $e');
     }
   }
 }

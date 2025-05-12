@@ -19,5 +19,6 @@ class Api{
   static String courseReview='$baseUrl/api/courses/reviews/';
   static String leaderBoard='$baseUrl/api/top-students';
   static String myQuiz='$baseUrl/api/practice-score';
+  static String googleLogin='$baseUrl/api/googlelogin';
 
 }

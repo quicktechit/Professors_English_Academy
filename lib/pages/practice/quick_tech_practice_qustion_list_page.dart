@@ -32,6 +32,9 @@ class _QuickTechPracticeQuestionListPageState
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context ,index){
                 var item = practiceController.question.value.data?[index];
+                if(item?.id==null){
+                  return "Empty File".text.semiBold.make();
+                }
                 return customQuestionList(context, item?.name, item?.timer,
                         item?.questions?.length.toString())
                     .onTap(() {

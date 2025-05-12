@@ -70,7 +70,7 @@ class _QuickTechPracticePageState extends State<QuickTechPracticePage> {
                             practiceController
                                 .fetchPracticeSubQuestion(item.id.toString())
                                 .then((v) {
-                              Get.to(() => QuickTechPracticeQuestionListPage(subjectName: "{data.name.toString()}",));
+                              Get.to(() => QuickTechPracticeQuestionListPage(subjectName: "${data?.name.toString()}",));
                             });
                           }).animate().fadeIn(delay: (gridIndex*150).ms);
                     },

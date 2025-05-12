@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:professors_english_academy/controller/quick_tech_profile_controller.dart';
-import 'package:professors_english_academy/pages/help%20&%20support/quick_tech_help_&_support_page.dart';
 import 'package:professors_english_academy/pages/privacy%20&%20terms/quick_tech_terms_page.dart';
 import 'package:professors_english_academy/pages/profile%20page/quick_tech_editProfile_dialog.dart';
 
@@ -83,11 +82,13 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
                         radius: 50,
                         backgroundColor: Colors.red,
                         child: ClipOval(
-                          child: profileController
-                              .profileImageUrl.value.isNotEmpty
+                              child: profileController
+                                      .profileImageUrl.value.isNotEmpty
                               ? Image.network(
-                              profileController.profileImageUrl.value,
-                              fit: BoxFit.cover,
+                                      Api.imageUrl +
+                                          profileController
+                                              .profileImageUrl.value,
+                                      fit: BoxFit.cover,
                               height: 95,
                               width: 95)
                               : Image.asset("assets/images/man.png"),
@@ -138,7 +139,7 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
                       Spacer(),
                       "${data.user?.name}"
                           .text
-                          .black
+                          .semiBold
                           .overflow(TextOverflow.ellipsis)
                           .size(13)
                           .make()
@@ -156,7 +157,7 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
                       Spacer(),
                       "${data.user?.phone}"
                           .text
-                          .black
+                          .semiBold
                           .overflow(TextOverflow.ellipsis)
                           .size(13)
                           .make()
@@ -179,7 +180,7 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
                       Spacer(),
                       "${data.user?.institution}"
                           .text
-                          .black
+                          .semiBold
                           .overflow(TextOverflow.ellipsis)
                           .size(13)
                           .make()
@@ -280,27 +281,27 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
                     Get.to(() => QuickTechTermsPage(
                         data: profileController.privacyTerms.value.data![1]));
                   }),
-                  Divider(
-                    thickness: 1.2,
-                  ).animate().fadeIn(delay: (270).ms),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      "Help".text.semiBold.color(mainColor).make(),
-                      Icon(
-                        Icons.help_center_outlined,
-                        color: secondColor,
-                      )
-                    ],
-                  )
-                      .pSymmetric(h: 5, v: 5)
-                      .animate()
-                      .fadeIn(delay: (280).ms)
-                      .box
-                      .make()
-                      .onTap(() {
-                    Get.to(() => QuickTechHelpAndSupportPage());
-                  }),
+                  // Divider(
+                  //   thickness: 1.2,
+                  // ).animate().fadeIn(delay: (270).ms),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     "Help".text.semiBold.color(mainColor).make(),
+                  //     Icon(
+                  //       Icons.help_center_outlined,
+                  //       color: secondColor,
+                  //     )
+                  //   ],
+                  // )
+                  //     .pSymmetric(h: 5, v: 5)
+                  //     .animate()
+                  //     .fadeIn(delay: (280).ms)
+                  //     .box
+                  //     .make()
+                  //     .onTap(() {
+                  //   Get.to(() => QuickTechHelpAndSupportPage());
+                  // }),
                   Divider(
                     thickness: 1.2,
                   ).animate().fadeIn(delay: (280).ms),
