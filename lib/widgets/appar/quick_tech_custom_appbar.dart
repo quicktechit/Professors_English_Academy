@@ -2,12 +2,11 @@ import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/controller/quick_tech_profile_controller.dart';
 
 import '../../controller/quick_tech_dashboard_controller.dart';
-import '../../pages/notification/quick_tech_notification_page.dart';
 
 Widget customAppbar(BuildContext context) {
   final DashboardController dashboardController = Get.find();
   final ProfileController profileController = Get.find();
-
+  final ThemeController themeController = Get.find();
   return AppBar(
     automaticallyImplyLeading: false,
     title: Obx(
@@ -54,15 +53,29 @@ Widget customAppbar(BuildContext context) {
         dashboardController.currentIndex.value=4;
       }),
     ),
-    // actions: [
-    //   Icon(
-    //     Icons.notifications_active_outlined,
-    //     color: mainColor,
-    //     size: 30,
-    //   ).onTap((){
-    //     Get.to(()=>QuickTechNotificationPage());
-    //   }),
-    //   5.widthBox,
-    // ],
+    actions: [
+      Obx(
+        () => Icon(
+          !themeController.isDarkMode.value
+              ? Icons.nightlight_outlined
+              : Icons.sunny,
+          //Icons.sunny,
+          color:
+              !themeController.isDarkMode.value ? Colors.black : Colors.white,
+          //color: Colors.redAccent,
+        ).onTap(() {
+          themeController.toggleTheme();
+          Get.appUpdate();
+        }),
+      ),
+      // Icon(
+      //     Icons.notifications_active_outlined,
+      //     color: mainColor,
+      //     size: 30,
+      //   ).onTap((){
+      //     Get.to(()=>QuickTechNotificationPage());
+      //   }),
+      10.widthBox,
+    ],
   );
 }

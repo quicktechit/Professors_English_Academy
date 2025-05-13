@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:professors_english_academy/model/pactrice_category_model.dart';
 import 'package:professors_english_academy/pages/Practice/quick_tech_practice_qustion_list_page.dart';
 
@@ -42,6 +44,7 @@ class _QuickTechSinglePracticeCategory extends State<QuickTechSinglePracticeCate
               var item=widget.subcategories[gridIndex];
               return customCard(context,"${item.image}","${item.quizCount}",)
                   .onTap((){
+                    log(item.id.toString());
                 practiceController.fetchPracticeSubQuestion(item.id.toString()).then((v) {
                   Get.to(() => QuickTechPracticeQuestionListPage(subjectName: item.name.toString(),));
                 });

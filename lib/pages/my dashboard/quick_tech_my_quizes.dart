@@ -28,8 +28,12 @@ class QuickTechMyQuizes extends StatelessWidget {
               children: [
                 // Overall Performance Summary
                 overallPerformanceSummary(data),
-                SizedBox(height: 20),
-                // Quiz List (Cards)
+                10.heightBox,
+                Divider(
+
+                ),
+                10.heightBox,
+
                 Expanded(
                   child: ListView.builder(
                     itemCount: data.quizScores!.length,

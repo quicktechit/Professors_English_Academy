@@ -1,6 +1,5 @@
 import 'package:professors_english_academy/consts/consts.dart';
 import 'package:professors_english_academy/controller/quick_tech_course_details_controller.dart';
-import 'package:professors_english_academy/pages/course_details/quick_tech_custom_course_details.dart';
 
 import '../../controller/quick_tech_home_controller.dart';
 import '../../widgets/quick_tech_custom_course_list.dart';

@@ -58,15 +58,6 @@ class _QuickTechResultScreenState extends State<QuickTechResultScreen> {
               .size(22)
               .make(),
 
-          20.heightBox,
-          customButton(
-                  title: 'Share',
-                  onPressed: () {},
-                  color: mainColor,
-                  txtColor: white)
-              .box
-              .width(context.screenWidth / 1.2)
-              .make(),
           15.heightBox,
           customButton(
                   title: 'Return',

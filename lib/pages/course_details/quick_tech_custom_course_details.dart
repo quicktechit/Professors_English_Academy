@@ -318,7 +318,7 @@ class _QuickTechCustomCourseDetailsState
                                   .fadeIn(delay: 80.ms)
                               : courseDetailsController.selectedIndex.value == 3
                                   ? customReview(context, data?.review,
-                                          data?.reviewAvgRating)
+                                          data?.reviewAvgRating ?? "0.0")
                                       .animate()
                                       .fadeIn(delay: 80.ms)
                                   : courseDetailsController.selectedIndex.value ==

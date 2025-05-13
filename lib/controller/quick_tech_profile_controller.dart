@@ -28,8 +28,9 @@ class ProfileController extends GetxController {
   Future<void> getProfile() async {
     final url = Uri.parse(Api.getProfile);
     if (box.read("token").toString() != "null") {
+      // LoaderService.to.showLoader();
       try {
-        LoaderService.to.showLoader();
+
 
         final response = await http.get(
           url,
@@ -113,6 +114,7 @@ class ProfileController extends GetxController {
         final responseBody = await response.stream.bytesToString();
         Get.snackbar("Success", "Profile Update Success");
         print('Success: $responseBody');
+        await getProfile();
       } else {
         print('Error ${response.statusCode}: ${response.reasonPhrase}');
       }
@@ -138,7 +140,6 @@ class ProfileController extends GetxController {
     var request = http.MultipartRequest('POST', uri)
       ..headers.addAll({
         'Authorization': 'Bearer ${box.read("token")}',
-        'Accept': 'application/json',
       })
       ..files.add(await http.MultipartFile.fromPath('image', imageFile.path));
 
@@ -151,6 +152,7 @@ class ProfileController extends GetxController {
         print('Image Upload Response: $responseBody');
         // Update image URL if needed
         // profileImageUrl.value = newImageUrlFromResponse;
+        await getProfile();
       } else {
         Get.snackbar("Error", "Image upload failed: ${response.statusCode}");
         log("${response.statusCode}");

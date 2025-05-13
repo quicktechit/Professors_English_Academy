@@ -33,7 +33,6 @@ class PracticeController extends GetxController {
         LoaderService.to.hideLoader();
         final data = json.decode(response.body);
         question.value = PracticeQuestionModel.fromJson(data);
-
         log('Data fetched successfully: $data');
       } else {
         LoaderService.to.hideLoader();
@@ -43,6 +42,8 @@ class PracticeController extends GetxController {
     } catch (e) {
       LoaderService.to.hideLoader();
       log('Error occurred: $e');
+    }finally{
+      LoaderService.to.hideLoader();
     }
   }
 

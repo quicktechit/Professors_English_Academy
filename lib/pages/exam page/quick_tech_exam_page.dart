@@ -64,12 +64,14 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: "Exam Paper".text.make(),
+          title: "Exam Paper".text.xl.make(),
           actions: [
-            "Remain Time: ".text.sm.make(),
-            Obx(() {
-              return examController.formattedTime.text.sm.semiBold.make();
-            }),
+           Row(children: [
+             "Remain Time: ".text.sm.make(),
+             Obx(() {
+               return examController.formattedTime.text.sm.semiBold.make();
+             }),
+           ],).box.p4.roundedSM.purple200.make(),
             5.widthBox
           ],
         ),
@@ -118,32 +120,44 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             Obx(
-                                  () => GridView.count(
-                                crossAxisCount: 2,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                childAspectRatio: 3.0,
-                                mainAxisSpacing: 8.0,
-                                crossAxisSpacing: 8.0,
-                                children: List.generate(options.length, (optionIndex) {
-                                  final option = options[optionIndex];
-                                  final optionLabel = String.fromCharCode(65 + optionIndex);
-                                  final selectedOption = practiceController.selectedAnswers[question?.id]?.value['option'] ?? '';
+                                  () => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  GridView.count(
+                                    crossAxisCount: 2,
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    childAspectRatio: 3.0,
+                                    mainAxisSpacing: 8.0,
+                                    crossAxisSpacing: 8.0,
+                                    children: List.generate(options.length, (optionIndex) {
+                                      final option = options[optionIndex];
+                                      final optionLabel = String.fromCharCode(65 + optionIndex);
+                                      final selectedOption = practiceController.selectedAnswers[question?.id]?.value['option'] ?? '';
 
-                                  return RadioListTile<String>(
-                                    title: Text('$optionLabel. ${option.option ?? ''}'),
-                                    value: option.option ?? '',
-                                    groupValue: selectedOption,
-                                    onChanged: (value) {
-                                      if (value != null && option.id != null) {
-                                        practiceController.updateAnswer(question!.id!, value, option.id!);
-                                      }
-                                    },
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                  );
-                                }),
+                                      return RadioListTile<String>(
+                                        title: Text('$optionLabel. ${option.option ?? ''}'),
+                                        value: option.option ?? '',
+                                        groupValue: selectedOption,
+                                        onChanged: (value) {
+                                          if (value != null && option.id != null) {
+                                            practiceController.updateAnswer(question!.id!, value, option.id!);
+                                          }
+                                        },
+                                        contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                      );
+                                    }),
+                                  ),
+                                  10.heightBox,
+                                  const Divider(
+                                    indent: 30,endIndent: 30,
+                                    thickness: 0.8,
+                                    color: Colors.black45, // You can change the color if needed
+                                  ),
+                                ],
                               ),
                             ),
+
                           ],
                         ),
                       );
@@ -151,7 +165,7 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                   );
                 })
                     .box
-                    .color(gry.withOpacity(0.3))
+                    .color(gry.withOpacity(0.1))
                     .rounded
                     .clip(Clip.antiAlias)
                     .padding(EdgeInsets.symmetric(horizontal: 3,vertical: 5))

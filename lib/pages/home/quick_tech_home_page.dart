@@ -3,7 +3,6 @@ import 'package:professors_english_academy/controller/quick_tech_home_controller
 import 'package:professors_english_academy/controller/quick_tech_profile_controller.dart';
 import 'package:professors_english_academy/pages/all%20course%20list%20page/quick_tech_trending_course.dart';
 import 'package:professors_english_academy/pages/category/quick_tech_single_subject_category.dart';
-import 'package:professors_english_academy/pages/course_details/quick_tech_custom_course_details.dart';
 import 'package:professors_english_academy/widgets/appar/quick_tech_custom_appbar.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_course_list.dart';
 import 'package:professors_english_academy/widgets/quick_tech_custom_row_design.dart';

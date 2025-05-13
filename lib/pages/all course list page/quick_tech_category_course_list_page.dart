@@ -3,7 +3,6 @@ import 'package:professors_english_academy/controller/quick_tech_subcategory_con
 
 import '../../controller/quick_tech_course_details_controller.dart';
 import '../../widgets/quick_tech_custom_course_list.dart';
-import '../course_details/quick_tech_custom_course_details.dart';
 
 class QuickTechCategoryCourseListPage extends StatefulWidget {
   final String subjectName;

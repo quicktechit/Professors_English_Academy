@@ -18,15 +18,18 @@ class SubCategoryController extends GetxController{
         LoaderService.to.hideLoader();
         final data = json.decode(response.body);
         subCategory.value = SubCategoryModel.fromJson(data);
-        subCategory.refresh();
+
         log('Data fetched successfully: ');
       } else {
         LoaderService.to.hideLoader();
         log('Failed to load data. Status code: ${response.statusCode}');
       }
+      subCategory.refresh();
     } catch (e) {
       LoaderService.to.hideLoader();
       log('Error occurred: $e');
+    }finally {
+      LoaderService.to.hideLoader(); // <- Always hide
     }
   }
 }

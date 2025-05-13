@@ -10,6 +10,7 @@ Widget overallPerformanceSummary(  ResultData data){
   }
   return Card(
     elevation: 4,
+    color: Vx.red200,
     child: Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -19,9 +20,9 @@ Widget overallPerformanceSummary(  ResultData data){
             "Total Attempts: ${data.attemptCount}",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          Text("Total Questions Answered: ${data.totalQuestions}"),
-          Text("Correct Answers: ${data.rightAnswerCount}"),
-          Text("Wrong Answers: ${data.wrongAnswerCount}"),
+          // Text("Total Questions Answered: ${data.totalQuestions}"),
+          // Text("Correct Answers: ${data.rightAnswerCount}"),
+          // Text("Wrong Answers: ${data.wrongAnswerCount}"),
           Text("Quiz Accuracy: ${accuracy.toStringAsFixed(2)}%"),
           SizedBox(height: 10),
           LinearProgressIndicator(
@@ -31,6 +32,7 @@ Widget overallPerformanceSummary(  ResultData data){
             backgroundColor: Colors.grey.shade300,
             color: Colors.green,
           ),
+
         ],
       ),
     ),
@@ -39,6 +41,7 @@ Widget overallPerformanceSummary(  ResultData data){
 
 Widget quizCard(BuildContext context,QuizScores quiz){
   return Card(
+    color: Vx.purple100,
     elevation: 4,
     margin: EdgeInsets.symmetric(vertical: 8),
     child: Padding(
@@ -53,14 +56,14 @@ Widget quizCard(BuildContext context,QuizScores quiz){
           Text(
               "Correct Answers: ${quiz.rightanswer ?? 0}/${quiz.totalquestion ?? 0}"),
           Text(
-              "Score: ${((quiz.rightanswer! / quiz.totalquestion!) * 100).toStringAsFixed(2)}%"),
-          TextButton(
-            onPressed: () {
-              // Show detailed results when clicked
-            Get.bottomSheet(quizDetailsBottomSheet(quiz.correctAnswers!),backgroundColor: Colors.white);
-            },
-            child: Text("View Answer"),
-          ),
+              "Score: ${((quiz.rightanswer! / (quiz.totalquestion==0?1:quiz.totalquestion)!) * 100).toStringAsFixed(2)}%"),
+          // TextButton(
+          //   onPressed: () {
+          //     // Show detailed results when clicked
+          //   Get.bottomSheet(quizDetailsBottomSheet(quiz.correctAnswers!),backgroundColor: Colors.white);
+          //   },
+          //   child: Text("View Answer"),
+          // ),
         ],
       ),
     ),

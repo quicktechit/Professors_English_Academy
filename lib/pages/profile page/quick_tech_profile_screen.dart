@@ -27,8 +27,8 @@ class _QuickTechProfileScreen extends State<QuickTechProfileScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      profileController.getProfile();
       profileController.getTermsPrivacy();
+      profileController.getProfile();
       profileController.getMyQuiz();
 
     });
