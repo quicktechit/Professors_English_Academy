@@ -2,7 +2,7 @@ class ResultModel {
   final String? formattedScore;
   final int? score;
   final int? totalPoints;
-  final int? percentage;
+  final String? percentage;
 
   ResultModel({
     this.formattedScore,
@@ -15,7 +15,7 @@ class ResultModel {
       : formattedScore = json['formattedScore'] as String?,
         score = json['score'] as int?,
         totalPoints = json['totalPoints'] as int?,
-        percentage = json['percentage'] as int?;
+        percentage = json['percentage'].toString();
 
   Map<String, dynamic> toJson() => {
     'formattedScore' : formattedScore,

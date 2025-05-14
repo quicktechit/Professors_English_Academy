@@ -82,11 +82,11 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
               Obx(() {
                 if (pdfController.isLoading.value) {
                   return const Center(child: CircularProgressIndicator())
-                      .h(context.screenHeight / 1.9);
+                      .h(context.screenHeight / 1.93);
                 }
                 if (pdfController.filePath.value.isEmpty) {
                   return const Center(child: Text('Failed to load PDF.'))
-                      .h(context.screenHeight / 1.9);
+                      .h(context.screenHeight / 1.93);
                 }
                 return PDFView(
                   filePath: pdfController.filePath.value,
@@ -97,7 +97,7 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                   onError: (error) => print(error.toString()),
                   onPageChanged: (page, total) =>
                       print('Page changed: $page/$total'),
-                ).h(context.screenHeight / 1.9);
+                ).h(context.screenHeight / 1.93);
               }),
               Flexible(
                 child: Obx(() {
@@ -136,7 +136,7 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                                       final selectedOption = practiceController.selectedAnswers[question?.id]?.value['option'] ?? '';
 
                                       return RadioListTile<String>(
-                                        title: Text('$optionLabel. ${option.option ?? ''}'),
+                                        title: Text(option.option ?? ''),
                                         value: option.option ?? '',
                                         groupValue: selectedOption,
                                         onChanged: (value) {
@@ -171,7 +171,7 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                     .padding(EdgeInsets.symmetric(horizontal: 3,vertical: 5))
                     .make(),
               ),
-              15.heightBox,
+              5.heightBox,
               customButton(
                       title: "Submit",
                       onPressed: () {
@@ -193,7 +193,8 @@ class _QuickTechExamPageState extends State<QuickTechExamPage> {
                       },
                       color: mainColor,
                       txtColor: white)
-                  .w(context.screenWidth)
+                  .w(context.screenWidth),
+              10.heightBox,
             ],
           ).pSymmetric(h: dynamicSize),
         ),
