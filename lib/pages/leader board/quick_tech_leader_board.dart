@@ -329,70 +329,75 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
           Expanded(
             child: Obx(
               () {
-                var leaderboardData =
-                    leaderBoardController.leaderBoardData.value;
+                if (leaderBoardController.leaderBoardData.value.isEmpty) {
+                  return Lottie.asset("assets/icons/empty.json").centered();
+                } else {
+                  var leaderboardData =
+                      leaderBoardController.leaderBoardData.value;
 
-                // Skip the first 3 ranks
-                var studentsFromRank4 = leaderboardData.skip(3).toList();
+                  // Skip the first 3 ranks
+                  var studentsFromRank4 = leaderboardData.skip(3).toList();
 
-                return ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: studentsFromRank4.length,
-                  itemBuilder: (context, index) {
-                    var student = studentsFromRank4[index];
-                    String studentImage = student.student?.image ??
-                        'assets/images/default_image.png';
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: studentsFromRank4.length,
+                    itemBuilder: (context, index) {
+                      var student = studentsFromRank4[index];
 
-                    return Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        '${index + 4}'
-                            .text.black
-                            .textStyle(GoogleFonts.kufam())
-                            .size(20)
-                            .make(),
-                        10.widthBox,
-                        CircleAvatar(
-                          radius: 23,
-                          child: student.student?.image != null
-                              ? Image.network(
-                                  Api.imageUrl + student.student!.image!,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(studentImage, fit: BoxFit.cover),
-                        ).clipOval(),
-                        5.widthBox,
-                        "${student.student?.name}"
-                            .text.black
-                            .textStyle(GoogleFonts.kufam())
-                            .size(17)
-                            .make()
-                            .w(context.screenWidth * 0.4),
-                        const Spacer(),
-                        "${student.totalRightAnswers ?? 0}/${student.totalQuestions ?? 0}"
-                            .text.black
-                            .textStyle(GoogleFonts.kufam())
-                            .size(16)
-                            .make(),
-                      ],
-                    )
-                        .box
-                        .rounded
-                        .white
-                        .margin(const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10))
-                        .padding(const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10))
-                        .make()
-                        .animate()
-                        .fadeIn(duration: 300.ms)
-                        .move(
-                            begin: const Offset(0, 300),
-                            end: const Offset(0, 0),
-                            delay: (150 * index).ms,
-                            duration: 500.ms);
-                  },
-                );
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          '${index + 4}'
+                              .text
+                              .black
+                              .textStyle(GoogleFonts.kufam())
+                              .size(20)
+                              .make(),
+                          10.widthBox,
+                          CircleAvatar(
+                            radius: 23,
+                            child: student.student?.image != null
+                                ? Image.network(
+                                    Api.imageUrl + student.student!.image!,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset('assets/images/default_image.png', fit: BoxFit.cover),
+                          ).clipOval(),
+                          5.widthBox,
+                          "${student.student?.name}"
+                              .text
+                              .black
+                              .textStyle(GoogleFonts.kufam())
+                              .size(17)
+                              .make()
+                              .w(context.screenWidth * 0.4),
+                          const Spacer(),
+                          "${student.totalRightAnswers ?? 0}/${student.totalQuestions ?? 0}"
+                              .text
+                              .black
+                              .textStyle(GoogleFonts.kufam())
+                              .size(16)
+                              .make(),
+                        ],
+                      )
+                          .box
+                          .rounded
+                          .white
+                          .margin(const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10))
+                          .padding(const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10))
+                          .make()
+                          .animate()
+                          .fadeIn(duration: 300.ms)
+                          .move(
+                              begin: const Offset(0, 150),
+                              end: const Offset(0, 0),
+                              delay: (80 * index).ms,
+                              duration: 400.ms);
+                    },
+                  );
+                }
               },
             ),
           )

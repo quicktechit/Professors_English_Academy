@@ -27,9 +27,7 @@ class _QuickTechCategoryCourseListPageState extends State<QuickTechCategoryCours
         var dataList = subCategoryController.subCategory.value.data;
 
         if (dataList == null || dataList.isEmpty) {
-          return Center(
-            child: "NO Course Found".text.semiBold.black.make(),
-          );
+          return Lottie.asset("assets/icons/empty.json").centered();
         } else {
           return ListView.builder(
             padding: EdgeInsets.symmetric(horizontal: 10),

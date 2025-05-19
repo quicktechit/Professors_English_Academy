@@ -105,73 +105,85 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
               }).animate().fadeIn(delay: 70.ms),
               10.heightBox,
               Obx(
-                  ()=> ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: homeController.trending.value.data!.length >= 4
-                        ? 4
-                        : homeController.trending.value.data?.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      var data = homeController.trending.value.data?[index];
-                      if(homeController.trending.value.data!.isEmpty){
-                        return CircularProgressIndicator();
-                      }
+                  (){
+                    if(homeController.trending.value.data==null){
+                      return "NO Course Found".text.semiBold.makeCentered();
+                    }else{
+                    return  ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: homeController.trending.value.data!.length >= 4
+                              ? 4
+                              : homeController.trending.value.data?.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            var data = homeController.trending.value.data?[index];
+                            if(homeController.trending.value.data!.isEmpty){
+                              return CircularProgressIndicator();
+                            }
 
-                      return customCourseList(
-                              context: context,
-                              image: "${data?.thumbnilImage}",
-                              title: '${data?.name}',
-                              student: '${data?.enrolledCount}',
-                              exam: '${data?.quizCount}',
-                              clas: '${data?.classCount}',
-                              rating: '${data?.reviewAvgRating??0} (${data?.reviewCount})',
-                              price: data?.buy=="Free"?"Free":'${data?.price}')
-                          .onTap(() {
-                            courseDetailsController.fetchCourseDetails(data!.id.toString());
-                      }).animate().fadeIn(delay: (index*100).ms);
-                    }).h(295),
+                            return customCourseList(
+                                context: context,
+                                image: "${data?.thumbnilImage}",
+                                title: '${data?.name}',
+                                student: '${data?.enrolledCount}',
+                                exam: '${data?.quizCount}',
+                                clas: '${data?.classCount}',
+                                rating: '${data?.reviewAvgRating??0} (${data?.reviewCount})',
+                                price: data?.buy=="Free"?"Free":'${data?.price}')
+                                .onTap(() {
+                              courseDetailsController.fetchCourseDetails(data!.id.toString());
+                            }).animate().fadeIn(delay: (index*100).ms);
+                          }).h(295);
+                    }
+                  }
               ),
               20.heightBox,
               customRow(context, "Categories", "See All", () {
                 dashboardController.currentIndex.value = 1;
               }).animate().fadeIn(delay: 120.ms),
               Obx(
-                  ()=> GridView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  physics: NeverScrollableScrollPhysics(),
-                  // Disable GridView scrolling
-                  shrinkWrap: true,
-                  // Fit content
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // 2 columns
-                    crossAxisSpacing: 10.0,
-                    mainAxisSpacing: 10.0,
-                    childAspectRatio: 1.0, // Square items
-                  ),
-                  itemCount: homeController.category.value.data!.length >= 4
-                      ? 4
-                      : homeController.category.value.data?.length,
-                  // 4 items per grid
-                  itemBuilder: (context, gridIndex) {
-                    var item = homeController.category.value.data?[gridIndex];
-                    return customCard(context, "${item?.image}",
-                            "${item?.subcategories?.length}")
-                        .onTap(() {
-                          Get.to(() => QuickTechSingleSubjectCategory(
-                                subjectName: "${item?.name}",
-                                subcategories: item?.subcategories?.toList() ?? [],
-                              ));
-                        })
-                        .animate()
-                        .fadeIn(delay: (gridIndex * 100).ms);
-                  },
-                )
-                    .box
-                    .padding(EdgeInsets.symmetric(horizontal: 5,vertical: 10))
-                    .purple100
-                    .margin(EdgeInsets.symmetric(vertical: 10))
-                    .rounded
-                    .make(),
+                  (){
+                    if(homeController.category.value.data==null){
+                      return "NO Categories Found".text.semiBold.makeCentered();
+                    }else{
+                      return  GridView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        physics: NeverScrollableScrollPhysics(),
+                        // Disable GridView scrolling
+                        shrinkWrap: true,
+                        // Fit content
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // 2 columns
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                          childAspectRatio: 1.0, // Square items
+                        ),
+                        itemCount: homeController.category.value.data!.length >= 4
+                            ? 4
+                            : homeController.category.value.data?.length,
+                        // 4 items per grid
+                        itemBuilder: (context, gridIndex) {
+                          var item = homeController.category.value.data?[gridIndex];
+                          return customCard(context, "${item?.image}",
+                              "${item?.subcategories?.length}")
+                              .onTap(() {
+                            Get.to(() => QuickTechSingleSubjectCategory(
+                              subjectName: "${item?.name}",
+                              subcategories: item?.subcategories?.toList() ?? [],
+                            ));
+                          })
+                              .animate()
+                              .fadeIn(delay: (gridIndex * 100).ms);
+                        },
+                      )
+                          .box
+                          .padding(EdgeInsets.symmetric(horizontal: 5,vertical: 10))
+                          .purple100
+                          .margin(EdgeInsets.symmetric(vertical: 10))
+                          .rounded
+                          .make();
+                    }
+                  }
               ),
               20.heightBox,
               customRow(context, "Practice", "See All", () {
@@ -179,41 +191,47 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
               }),
               10.heightBox,
               Obx(
-                  ()=> GridView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  physics: NeverScrollableScrollPhysics(),
-                  // Disable GridView scrolling
-                  shrinkWrap: true,
-                  // Fit content
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // 2 columns
-                    crossAxisSpacing: 10.0,
-                    mainAxisSpacing: 10.0,
-                    childAspectRatio: 1.0, // Square items
-                  ),
-                  itemCount: homeController.practice.value.data!.length >= 4
-                      ? 4
-                      : homeController.practice.value.data?.length,
-                  // 4 items per grid
-                  itemBuilder: (context, gridIndex) {
-                    var item = homeController.practice.value.data?[gridIndex];
-                    return customCard(context, "${item?.image}",
-                            "${item?.subcategories?.length}")
-                        .onTap(() {
-                          Get.to(() => QuickTechSinglePracticeCategory(
-                                subjectName: "${item?.name}",
-                                subcategories: item?.subcategories?.toList() ?? [],
-                              ));
-                        })
-                        .animate()
-                        .fadeIn(delay: (gridIndex * 150).ms);
-                  },
-                ) .box
-                    .padding(EdgeInsets.symmetric(horizontal: 5,vertical: 10))
-                    .cyan100
-                    .margin(EdgeInsets.symmetric(vertical: 10))
-                    .rounded
-                    .make(),
+                  (){
+                    if(homeController.practice.value.data==null){
+                      return "No Practice Found".text.semiBold.makeCentered();
+                    }else{
+                     return GridView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        physics: NeverScrollableScrollPhysics(),
+                        // Disable GridView scrolling
+                        shrinkWrap: true,
+                        // Fit content
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // 2 columns
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                          childAspectRatio: 1.0, // Square items
+                        ),
+                        itemCount: homeController.practice.value.data!.length >= 4
+                            ? 4
+                            : homeController.practice.value.data?.length,
+                        // 4 items per grid
+                        itemBuilder: (context, gridIndex) {
+                          var item = homeController.practice.value.data?[gridIndex];
+                          return customCard(context, "${item?.image}",
+                              "${item?.subcategories?.length}")
+                              .onTap(() {
+                            Get.to(() => QuickTechSinglePracticeCategory(
+                              subjectName: "${item?.name}",
+                              subcategories: item?.subcategories?.toList() ?? [],
+                            ));
+                          })
+                              .animate()
+                              .fadeIn(delay: (gridIndex * 150).ms);
+                        },
+                      ) .box
+                          .padding(EdgeInsets.symmetric(horizontal: 5,vertical: 10))
+                          .cyan100
+                          .margin(EdgeInsets.symmetric(vertical: 10))
+                          .rounded
+                          .make();
+                    }
+                  }
               ),
               10.heightBox,
             ],

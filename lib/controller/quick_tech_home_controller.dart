@@ -35,7 +35,7 @@ class HomeController extends GetxController{
       practice.refresh();
     } catch (e) {
       // LoaderService.to.hideLoader();
-      print('Error occurred: $e');
+      print('Error occurred practice: $e');
     }
   }
 
@@ -59,7 +59,7 @@ class HomeController extends GetxController{
       category.refresh();
     } catch (e) {
       // LoaderService.to.hideLoader();
-      print('Error occurred: $e');
+      print('Error occurred category: $e');
     }
   }
 
@@ -81,7 +81,7 @@ class HomeController extends GetxController{
       slider.refresh();
     } catch (e) {
       // LoaderService.to.hideLoader();
-      print('Error occurred: $e');
+      print('Error occurred:Slider $e');
     }
   }
 
@@ -104,7 +104,7 @@ class HomeController extends GetxController{
       trending.refresh();
     } catch (e) {
       // LoaderService.to.hideLoader();
-      print('Error occurred: $e');
+      print('Error occurred trending: $e');
     }
   }
 }

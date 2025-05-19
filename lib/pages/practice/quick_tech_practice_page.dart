@@ -34,79 +34,87 @@ class _QuickTechPracticePageState extends State<QuickTechPracticePage> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: dynamicSize),
           children: [
-            ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: homeController.practice.value.data!.length >= 4
-                  ? 4
-                  : homeController.practice.value.data?.length,
-              itemBuilder: (context, index) {
-                var item = homeController.practice.value.data?[index];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    10.heightBox,
-                    customRow(context, "${item?.name}", "See All", () {
-                      Get.to(() => QuickTechSinglePracticeCategory(
-                            subjectName: "${item?.name}",
+            Obx(() {
+              if (homeController.practice.value.data == null) {
+                return Lottie.asset("assets/icons/empty.json").centered();
+              } else {
+                return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: homeController.practice.value.data!.length >= 4
+                      ? 4
+                      : homeController.practice.value.data?.length,
+                  itemBuilder: (context, index) {
+                    var item = homeController.practice.value.data?[index];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        10.heightBox,
+                        customRow(context, "${item?.name}", "See All", () {
+                          Get.to(() => QuickTechSinglePracticeCategory(
+                                subjectName: "${item?.name}",
                             subcategories: item?.subcategories?.toList() ?? [],
                           ));
-                    }).p8(),
-                    15.heightBox,
-                    // GridView inside Column
-                    GridView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      physics: NeverScrollableScrollPhysics(),
-                      // Disable GridView scrolling
-                      shrinkWrap: true,
-                      // Fit content
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // 2 columns
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                        childAspectRatio: 1.0, // Square items
-                      ),
-                      itemCount: item!.subcategories!.length >= 4
-                          ? 4
-                          : item.subcategories?.length,
-                      // 4 items per grid
-                      itemBuilder: (context, gridIndex) {
-                        var data = item.subcategories?[gridIndex];
-                        return customCard(context, "${data?.image}",
-                                "${data?.quizCount.toString()}")
-                            .onTap(() {
-                              log(data!.id.toString());
+                        }).p8(),
+                        15.heightBox,
+                        // GridView inside Column
+                        GridView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          physics: NeverScrollableScrollPhysics(),
+                          // Disable GridView scrolling
+                          shrinkWrap: true,
+                          // Fit content
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // 2 columns
+                            crossAxisSpacing: 10.0,
+                            mainAxisSpacing: 10.0,
+                            childAspectRatio: 1.0, // Square items
+                          ),
+                          itemCount: item!.subcategories!.length >= 4
+                              ? 4
+                              : item.subcategories?.length,
+                          // 4 items per grid
+                          itemBuilder: (context, gridIndex) {
+                            var data = item.subcategories?[gridIndex];
+                            return customCard(context, "${data?.image}",
+                                    "${data?.quizCount.toString()}")
+                                .onTap(() {
+                                  log(data!.id.toString());
                               practiceController
                                   .fetchPracticeSubQuestion(data.id.toString())
                                   .then((v) {
                                 Get.to(() => QuickTechPracticeQuestionListPage(
-                                      subjectName: data.name.toString(),
-                                    ));
-                              });
+                                              subjectName: data.name.toString(),
+                                            ));
+                                  });
                             })
-                            .animate()
-                            .fadeIn(delay: (gridIndex * 150).ms);
-                      },
-                    ),
-                    10.heightBox,
-                  ],
-                )
-                    .box
-                    .padding(EdgeInsets.symmetric(horizontal: 5))
-                    .color(Colors.primaries[index * 2 % Colors.primaries.length]
-                        .shade100)
-                    .margin(EdgeInsets.symmetric(vertical: 10))
-                    .rounded
-                    .make()
-                    .animate()
-                    .fadeIn()
-                    .move(
-                        begin: const Offset(0, 200),
+                                .animate()
+                                .fadeIn(delay: (gridIndex * 150).ms);
+                          },
+                        ),
+                        10.heightBox,
+                      ],
+                    )
+                        .box
+                        .padding(EdgeInsets.symmetric(horizontal: 5))
+                        .color(Colors
+                            .primaries[index * 2 % Colors.primaries.length]
+                            .shade100)
+                        .margin(EdgeInsets.symmetric(vertical: 10))
+                        .rounded
+                        .make()
+                        .animate()
+                        .fadeIn()
+                        .move(
+                            begin: const Offset(0, 200),
                         end: const Offset(0, 0),
                         delay: 100.ms,
                         duration: 380.ms);
-              },
-            ),
+                  },
+                );
+              }
+            }),
           ],
         ),
       ),

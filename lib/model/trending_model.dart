@@ -59,7 +59,7 @@ class Data {
   final String? updatedAt;
   final int? reviewCount;
   final int? enrolledCount;
-  final double? reviewAvgRating;
+  final String? reviewAvgRating;
   final int? quizCount;
   final int? classCount;
 
@@ -152,7 +152,7 @@ class Data {
         updatedAt = json['updated_at'] as String?,
         reviewCount = json['review_count'] as int?,
         enrolledCount = json['enrolled_count'] as int?,
-        reviewAvgRating = json['review_avg_rating'] as double?,
+        reviewAvgRating = json['review_avg_rating'].toString(),
         quizCount = json['quiz_count'] as int?,
         classCount = json['class_count'] as int?;
 

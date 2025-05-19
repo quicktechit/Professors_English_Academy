@@ -23,15 +23,19 @@ class _QuickTechTrendingCourseState extends State<QuickTechTrendingCourse> {
 
       ),
       body: Obx(
-          ()=> Column(children: [
-          Flexible(
-            child: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              shrinkWrap: true,
-                  itemCount: homeController.trending.value.data?.length,
-                  itemBuilder: (context, index) {
-                    var data = homeController.trending.value.data?[index];
-                    return customCourseListHistory(
+          (){
+            if(homeController.trending.value.data==null){
+              return  Lottie.asset("assets/icons/empty.json").centered();
+            }else{
+             return Column(children: [
+                Flexible(
+                  child: ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      shrinkWrap: true,
+                      itemCount: homeController.trending.value.data?.length,
+                      itemBuilder: (context, index) {
+                        var data = homeController.trending.value.data?[index];
+                        return customCourseListHistory(
                             context: context,
                             image: '${data?.thumbnilImage}',
                             title: '${data?.name}',
@@ -39,14 +43,16 @@ class _QuickTechTrendingCourseState extends State<QuickTechTrendingCourse> {
                             exam: '${data?.quizCount}',
                             clas: '${data?.classCount}',
                             rating:
-                                '${data?.reviewAvgRating ?? 0} (${data?.reviewCount})',
+                            '${data?.reviewAvgRating ?? 0} (${data?.reviewCount})',
                             price: data?.buy=="Free"?"Free":'${data?.price}')
-                        .onTap(() {
-                      courseDetailsController.fetchCourseDetails(data!.id.toString());
+                            .onTap(() {
+                          courseDetailsController.fetchCourseDetails(data!.id.toString());
                         }).animate().fadeIn(delay: (index*150).ms);
-            }),
-          )
-        ],),
+                      }),
+                )
+              ],);
+            }
+          }
       ),
     );
   }

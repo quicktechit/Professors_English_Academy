@@ -40,7 +40,7 @@ class Student {
   final String? phone;
   final String? email;
   final dynamic address;
-  final dynamic image;
+  final String? image;
   final String? password;
   final String? verifyToken;
   final dynamic passresetToken;

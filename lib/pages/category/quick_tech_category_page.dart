@@ -35,78 +35,86 @@ class _QuickTechCategoryPageState extends State<QuickTechCategoryPage> {
         },
         child: ListView(
           children: [
-            ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: dynamicSize),
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: homeController.category.value.data!.length >= 4
-                  ? 4
-                  : homeController.category.value.data?.length,
-              itemBuilder: (context, index) {
-                var item = homeController.category.value.data?[index];
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    10.heightBox,
-                    customRow(context, "${item?.name}", "See All", () {
-                      Get.to(() => QuickTechSingleSubjectCategory(
+            Obx(
+            () {
+              if(homeController.category.value.data==null){
+                return Lottie.asset("assets/icons/empty.json");
+              }else{
+                return    ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: dynamicSize),
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: homeController.category.value.data!.length >= 4
+                      ? 4
+                      : homeController.category.value.data?.length,
+                  itemBuilder: (context, index) {
+                    var item = homeController.category.value.data?[index];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        10.heightBox,
+                        customRow(context, "${item?.name}", "See All", () {
+                          Get.to(() => QuickTechSingleSubjectCategory(
                             subjectName: "${item?.name}",
                             subcategories: item?.subcategories?.toList() ?? [],
                           ));
-                    }).p8(),
-                    15.heightBox,
-                    // GridView inside Column
-                    GridView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      physics: NeverScrollableScrollPhysics(),
-                      // Disable GridView scrolling
-                      shrinkWrap: true,
-                      // Fit content
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // 2 columns
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                        childAspectRatio: 1.0, // Square items
-                      ),
-                      itemCount: item!.subcategories!.length >= 4
-                          ? 4
-                          : item.subcategories?.length,
-                      itemBuilder: (context, gridIndex) {
-                        var data = item.subcategories?[gridIndex];
-                        return customCard(context, "${data?.image}",
+                        }).p8(),
+                        15.heightBox,
+                        // GridView inside Column
+                        GridView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          physics: NeverScrollableScrollPhysics(),
+                          // Disable GridView scrolling
+                          shrinkWrap: true,
+                          // Fit content
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // 2 columns
+                            crossAxisSpacing: 10.0,
+                            mainAxisSpacing: 10.0,
+                            childAspectRatio: 1.0, // Square items
+                          ),
+                          itemCount: item!.subcategories!.length >= 4
+                              ? 4
+                              : item.subcategories?.length,
+                          itemBuilder: (context, gridIndex) {
+                            var data = item.subcategories?[gridIndex];
+                            return customCard(context, "${data?.image}",
                                 "${data?.coursesCount.toString()}")
-                            .onTap(() {
+                                .onTap(() {
                               log("${data?.id.toString()}");
                               subCategoryController
                                   .fetchSubCategory("${data?.id.toString()}")
                                   .then((V) {
                                 Get.to(() => QuickTechCategoryCourseListPage(
-                                      subjectName: "${data?.name.toString()}",
-                                    ));
+                                  subjectName: "${data?.name.toString()}",
+                                ));
                               });
                             })
-                            .animate()
-                            .fadeIn(delay: (gridIndex * 150).ms);
-                      },
-                    ),
-                    10.heightBox,
-                  ],
-                )
-                    .box
-                    .padding(EdgeInsets.symmetric(horizontal: 5))
-                    .color(Colors.primaries[index * 2 % Colors.primaries.length]
+                                .animate()
+                                .fadeIn(delay: (gridIndex * 150).ms);
+                          },
+                        ),
+                        10.heightBox,
+                      ],
+                    )
+                        .box
+                        .padding(EdgeInsets.symmetric(horizontal: 5))
+                        .color(Colors.primaries[index * 2 % Colors.primaries.length]
                         .shade100)
-                    .margin(EdgeInsets.symmetric(vertical: 10))
-                    .rounded
-                    .make()
-                    .animate()
-                    .fadeIn()
-                    .move(
+                        .margin(EdgeInsets.symmetric(vertical: 10))
+                        .rounded
+                        .make()
+                        .animate()
+                        .fadeIn()
+                        .move(
                         begin: const Offset(0, 200),
                         end: const Offset(0, 0),
                         delay: 100.ms,
                         duration: 380.ms);
-              },
+                  },
+                );
+              }
+            }
             ),
           ],
         ),

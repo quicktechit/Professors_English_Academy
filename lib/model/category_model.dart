@@ -159,7 +159,7 @@ class Courses {
   final String? createdAt;
   final String? updatedAt;
   final int? reviewCount;
-  final double? reviewAvgRating;
+  final String? reviewAvgRating;
 
   Courses({
     this.id,
@@ -244,7 +244,7 @@ class Courses {
         createdAt = json['created_at'] as String?,
         updatedAt = json['updated_at'] as String?,
         reviewCount = json['review_count'] as int?,
-        reviewAvgRating = json['review_avg_rating'] as double?;
+        reviewAvgRating = json['review_avg_rating'].toString();
 
   Map<String, dynamic> toJson() => {
     'id' : id,
