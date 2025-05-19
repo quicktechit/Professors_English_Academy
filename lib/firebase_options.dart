@@ -48,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDbsrHPVV2kjC5Fn9SHGezHrcjyjHUxINE',
-    appId: '1:836450241905:web:3a94c78efb849ff9e4bad0',
+    appId: '1:836450241905:web:06d0c8728c0816b0e4bad0',
     messagingSenderId: '836450241905',
     projectId: 'professors-english-academy',
     authDomain: 'professors-english-academy.firebaseapp.com',
@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAG7yBuSHAAPnDgCRirB7QXjvFxAYLkOEg',
-    appId: '1:836450241905:android:48719bb2e333c7a6e4bad0',
+    appId: '1:836450241905:android:7fb63825613fc631e4bad0',
     messagingSenderId: '836450241905',
     projectId: 'professors-english-academy',
     storageBucket: 'professors-english-academy.firebasestorage.app',
@@ -65,7 +65,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAdZW_KN1JgRA_7kd_38OIB0UyOmtdvgGA',
-    appId: '1:836450241905:ios:314aed59ba5a9d9ae4bad0',
+    appId: '1:836450241905:ios:d8ce98478fd10ebce4bad0',
     messagingSenderId: '836450241905',
     projectId: 'professors-english-academy',
     storageBucket: 'professors-english-academy.firebasestorage.app',

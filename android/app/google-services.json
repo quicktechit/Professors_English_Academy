@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:836450241905:android:48719bb2e333c7a6e4bad0",
+        "mobilesdk_app_id": "1:836450241905:android:7fb63825613fc631e4bad0",
         "android_client_info": {
-          "package_name": "com.example.professors_english_academy"
+          "package_name": "com.quicktechIt.professors_english_academy"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "836450241905-5mhc91sostbmlt5rqu8pn0eti0gmug36.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.professors_english_academy",
-            "certificate_hash": "48274c3b6d90091fcf1427514a42aebfd91f0573"
-          }
-        },
         {
           "client_id": "836450241905-5co209lirs4tg68sppogh268cfhmr1eu.apps.googleusercontent.com",
           "client_type": 3
