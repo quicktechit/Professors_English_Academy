@@ -12,7 +12,7 @@ Widget customCourseList({required BuildContext context,
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Image.network(Api.imageUrl+image, fit: BoxFit.cover, width: 235,height: 155
+      Image.network(Api.imageUrl+image, fit: BoxFit.fill, width: 235,height: 155
         ,),
       3.heightBox,
       title
@@ -33,7 +33,7 @@ Widget customCourseList({required BuildContext context,
           Spacer(),
 
           "Student ".text.semiBold.lg.gray400.make(),
-          "50".text.semiBold.lg.color(mainColor).make(),
+          student.text.semiBold.lg.color(mainColor).make(),
         ],
       ).pSymmetric(h: 10),
       3.heightBox,
@@ -77,7 +77,7 @@ Widget customCourseListHistory(
     children: [
       Image.network(
         Api.imageUrl + image,
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
       ).w(context.screenWidth).h(150),
       3.heightBox,
       title.text.black

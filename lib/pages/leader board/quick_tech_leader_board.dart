@@ -342,7 +342,7 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
 
                   return ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    itemCount: studentsFromRank4.length,
+                    itemCount: studentsFromRank4.length>=50?50:studentsFromRank4.length,
                     itemBuilder: (context, index) {
                       var student = studentsFromRank4[index];
                       return Row(
@@ -392,7 +392,7 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                           .animate()
                           .fadeIn(duration: 300.ms)
                           .move(
-                              begin: const Offset(0, 150),
+                              begin: const Offset(0, 130),
                               end: const Offset(0, 0),
                               delay: (80 * index).ms,
                               duration: 400.ms);
