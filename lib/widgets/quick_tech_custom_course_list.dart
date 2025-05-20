@@ -12,7 +12,8 @@ Widget customCourseList({required BuildContext context,
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Image.network(Api.imageUrl+image, fit: BoxFit.cover, width: 235,height: 155,),
+      Image.network(Api.imageUrl+image, fit: BoxFit.cover, width: 235,height: 155
+        ,),
       3.heightBox,
       title
           .text.black
