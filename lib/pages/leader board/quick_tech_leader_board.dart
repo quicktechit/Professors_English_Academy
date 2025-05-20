@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:professors_english_academy/controller/quick_tech_leader_board_controller.dart';
 
 import '../../consts/consts.dart';
@@ -343,7 +345,6 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                     itemCount: studentsFromRank4.length,
                     itemBuilder: (context, index) {
                       var student = studentsFromRank4[index];
-
                       return Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -384,9 +385,9 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                           .rounded
                           .white
                           .margin(const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10))
+                              horizontal: 10, vertical: 10))
                           .padding(const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10))
+                              horizontal: 10, vertical: 10))
                           .make()
                           .animate()
                           .fadeIn(duration: 300.ms)

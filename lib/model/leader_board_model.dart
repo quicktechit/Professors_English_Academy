@@ -85,7 +85,7 @@ class Student {
         phone = json['phone'] as String?,
         email = json['email'] as String?,
         address = json['address'],
-        image = json['image'],
+        image = json['image'] as String,
         password = json['password'] as String?,
         verifyToken = json['verifyToken'] as String?,
         passresetToken = json['passresetToken'],
