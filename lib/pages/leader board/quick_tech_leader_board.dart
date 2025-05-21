@@ -68,9 +68,9 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                       radius: 50,
                                       backgroundColor: Colors.white,
                                       child: leaderBoardController.leaderBoardData
-                                                  .value[0].student ==
-                                              null
-                                          ? Image.asset("assets/images/man.png")
+                                                  .value[0].student?.image ==
+                                              "null"
+                                          ? Image.asset("assets/images/Final-01.png")
                                           : Image.network(
                                               Api.imageUrl +
                                                   (leaderBoardController
@@ -157,9 +157,9 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                       radius: 40,
                                       backgroundColor: Colors.white,
                                       child: leaderBoardController.leaderBoardData
-                                                  .value[0].student ==
-                                              null
-                                          ? Image.asset("assets/images/man.png")
+                                                  .value[1].student?.image ==
+                                              "null"
+                                          ? Image.asset("assets/images/Final-01.png")
                                           : Image.network(
                                               Api.imageUrl +
                                                     (  leaderBoardController
@@ -246,9 +246,9 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                       radius: 40,
                                       backgroundColor: Colors.white,
                                       child: leaderBoardController.leaderBoardData
-                                                  .value[0].student ==
-                                              null
-                                          ? Image.asset("assets/images/man.png")
+                                                  .value[2].student?.image ==
+                                              "null"
+                                          ? Image.asset("assets/images/Final-01.png")
                                           : Image.network(
                                               Api.imageUrl +
                                                    (   leaderBoardController
@@ -357,12 +357,12 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                           10.widthBox,
                           CircleAvatar(
                             radius: 23,
-                            child: student.student?.image != null
+                            child: student.student?.image != "null"
                                 ? Image.network(
-                                    Api.imageUrl + student.student!.image!,
+                                    Api.imageUrl + student.student?.image,
                                     fit: BoxFit.cover,
                                   )
-                                : Image.asset('assets/images/default_image.png', fit: BoxFit.cover),
+                                : Image.asset('assets/images/Final-01.png', fit: BoxFit.cover),
                           ).clipOval(),
                           5.widthBox,
                           "${student.student?.name}"

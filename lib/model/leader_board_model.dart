@@ -40,7 +40,7 @@ class Student {
   final String? phone;
   final String? email;
   final dynamic address;
-  final String? image;
+  final dynamic image;
   final String? password;
   final String? verifyToken;
   final dynamic passresetToken;
@@ -85,7 +85,7 @@ class Student {
         phone = json['phone'] as String?,
         email = json['email'] as String?,
         address = json['address'],
-        image = json['image'] as String,
+        image = json['image'].toString(),
         password = json['password'] as String?,
         verifyToken = json['verifyToken'] as String?,
         passresetToken = json['passresetToken'],
