@@ -1,14 +1,17 @@
 
+import 'dart:developer';
+
 import '../../consts/consts.dart';
 import '../../controller/quick_tech_otp_controller.dart';
 import '../../widgets/quick_tech_custom_button.dart';
 
 class QuickTechOtpPage extends StatefulWidget {
+  final bool isRegister;
   final String number;
 
   const QuickTechOtpPage({
     super.key,
-    required this.number,
+    required this.number, required this.isRegister,
   });
 
   @override
@@ -22,6 +25,7 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    log(widget.isRegister.toString());
   }
 
   @override
@@ -137,7 +141,7 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
                   30.heightBox,
                   customButton(
                           onPressed: () {
-                            otpController.verifyOtp();
+                            otpController.verifyOtp(isRegister: widget.isRegister);
                           },
                           title: 'Submit OTP',
                           color: mainColor,
@@ -147,7 +151,7 @@ class _QuickTechOtpPageState extends State<QuickTechOtpPage> {
                   if (otpController.remainingTime.value == 00)
                     customButton(
                             onPressed: () {
-                              otpController.verifyOtp();
+                              otpController.sendOtp();
                             },
                             title: 'Resend OTP',
                             color: white,

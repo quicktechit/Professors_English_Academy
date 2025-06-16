@@ -111,8 +111,8 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                     .semiBold
                                     .textStyle(GoogleFonts.kufam())
                                     .semiBold
-                                    .white
-                                    .make()
+                                    .white.maxLines(1)
+                                    .make().w(context.screenWidth/2)
                                 : "UserName"
                                     .text
                                     .semiBold
@@ -138,10 +138,10 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                     .semiBold
                                     .make(),
                           ],
-                        ),
+                        ).w(context.screenWidth/3),
                       ),
                       Positioned(
-                        right: 20,
+                        right: 5,
                         bottom: 70,
                         child: Column(
                           children: [
@@ -200,8 +200,8 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                     .semiBold
                                     .textStyle(GoogleFonts.kufam())
                                     .semiBold
-                                    .white
-                                    .make()
+                                    .white.maxLines(1)
+                                    .makeCentered()
                                 : "UserName"
                                     .text
                                     .semiBold
@@ -218,7 +218,7 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                     .textStyle(GoogleFonts.kufam())
                                     .white
                                     .semiBold
-                                    .make()
+                                    .makeCentered()
                                 : "Score"
                                     .text
                                     .semiBold
@@ -227,10 +227,10 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                     .semiBold
                                     .make(),
                           ],
-                        ),
+                        ).w(context.screenWidth/3),
                       ),
                       Positioned(
-                        left: 20,
+                        left: 5,
                         bottom: 70,
                         child: Column(
                           children: [
@@ -289,8 +289,8 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                     .semiBold
                                     .textStyle(GoogleFonts.kufam())
                                     .semiBold
-                                    .white
-                                    .make()
+                                    .white.maxLines(1)
+                                    .makeCentered()
                                 : "UserName"
                                     .text
                                     .semiBold
@@ -307,7 +307,7 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                     .textStyle(GoogleFonts.kufam())
                                     .white
                                     .semiBold
-                                    .make()
+                                    .makeCentered()
                                 : "Score"
                                     .text
                                     .semiBold
@@ -316,7 +316,7 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
                                     .semiBold
                                     .make(),
                           ],
-                        ),
+                        ).w(context.screenWidth/3),
                       ),
                     ] else
                       // Display a loading indicator if the list is empty
@@ -342,7 +342,7 @@ class _QuickTechLeaderBoardState extends State<QuickTechLeaderBoard> {
 
                   return ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    itemCount: studentsFromRank4.length>=50?50:studentsFromRank4.length,
+                    itemCount: studentsFromRank4.length>=47?47:studentsFromRank4.length,
                     itemBuilder: (context, index) {
                       var student = studentsFromRank4[index];
                       return Row(

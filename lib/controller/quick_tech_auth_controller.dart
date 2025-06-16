@@ -220,4 +220,34 @@ class AuthController extends GetxController {
       print('Error: $e');
     }
   }
+
+  Future<void> resetPassword({required phone}) async {
+    final url = Uri.parse(Api.forgetPassword);
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+    log(url.toString());
+    final body = jsonEncode({
+      'phone': phone,
+      'password': password.text,
+      'password_confirmation': confirmPassword.text,
+    });
+    log(body);
+    LoaderService.to.showLoader();
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      LoaderService.to.hideLoader();
+      if (response.statusCode == 200) {
+        print('Password reset successful: ${response.body}');
+        Get.snackbar("Password Change Success", "");
+        Get.offAll(()=>QuickTechLoginPage());
+      } else {
+        Get.snackbar("Something Went Wrong", "");
+        print('Failed: ${response.statusCode} - ${response.reasonPhrase}');
+        print('Details: ${response.body}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+    }
+  }
 }

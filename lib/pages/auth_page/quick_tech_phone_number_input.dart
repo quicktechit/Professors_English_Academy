@@ -50,7 +50,7 @@ class _QuickTechPhoneNumberInputState extends State<QuickTechPhoneNumberInput> {
                       title: "Go Next",
                       onPressed: () {
                         if(otpController.phone.text.isNotEmpty){
-                          Get.to(QuickTechOtpPage(number: otpController.phone.text));
+                          Get.to(QuickTechOtpPage(number: otpController.phone.text, isRegister: true,));
                           otpController.sendOtp();
                         }else{
                           Get.snackbar("Warning", "Phone number required");

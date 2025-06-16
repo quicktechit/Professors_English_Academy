@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:http/http.dart'as http;
 import 'package:professors_english_academy/pages/auth_page/quick_tech_complete_register.dart';
+import 'package:professors_english_academy/pages/auth_page/quick_tech_forget_password.dart';
+
 import '../consts/consts.dart';
 
 
 class OtpController extends GetxController {
 
   final phone=TextEditingController();
-var otps;
+  var otps;
   var otp = ['','','','','',''].obs;  var remainingTime = 60.obs; // Time remaining in seconds
   Timer? _timer;
   @override
@@ -21,7 +24,7 @@ var otps;
   @override
   void onClose() {
     super.onClose();
-    stopTimer(); // Stop the timer when the controller is disposed
+    stopTimer();
   }
 
 
@@ -29,11 +32,17 @@ var otps;
     otp[index] = value;
   }
 
-  void verifyOtp() {
+  void verifyOtp({required bool isRegister}) {
     String enteredOtp = otp.join();
     print("Entered OTP: $enteredOtp");
     if (enteredOtp == otps.toString()) {
-      Get.to(QuickTechCompleteRegister(phone: phone.text,));
+      if(isRegister==true){
+        Get.to(()=>QuickTechCompleteRegister(phone: phone.text,));
+      }else{
+        Get.to(()=>ForgetPasswordScreen(phone: phone.text,));
+      }
+
+
     } else {
      Get.snackbar("Error", "OTP Did not match");
     }
@@ -44,7 +53,7 @@ var otps;
       if (remainingTime.value > 0) {
         remainingTime.value--;
       } else {
-        stopTimer(); // Stop the timer when it reaches 0
+        stopTimer();
       }
     });
   }
@@ -69,9 +78,10 @@ log(uri.toString());
        log(otps.toString());
       if (response.statusCode == 200) {
         print('Response: ${response.body}');
-        Get.snackbar("Otp is", otps.toString(),duration: 30.seconds);
+        // Get.snackbar("Otp is", otps.toString(),duration: 30.seconds);
       } else {
         print('Failed with status: ${response.statusCode}');
+
       }
     } catch (e) {
       print('Error occurred: $e');
