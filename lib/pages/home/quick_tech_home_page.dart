@@ -51,6 +51,46 @@ class _QuickTechHomePageState extends State<QuickTechHomePage> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: customAppbar(context)),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Column(
+        children: [
+          FloatingActionButton(
+            onPressed: () async {
+              final String facebookUrl = 'https://www.facebook.com/share/1Ap9NRcdUF/';
+              final Uri url = Uri.parse(facebookUrl);
+
+              if (!await launchUrl(
+              url,
+              mode: LaunchMode.externalApplication, // Opens in app or browser
+              )) {
+              throw Exception('Could not launch $facebookUrl');
+              }
+            },
+            child: Image.asset(
+              'assets/icons/facebook.png',
+              scale: 16,
+            ),
+          ),
+          10.heightBox,
+          FloatingActionButton(
+            onPressed: () async {
+              final String youtubeUrl = 'https://youtube.com/@professorsenglishacademy';
+              final Uri url = Uri.parse(youtubeUrl);
+
+              if (!await launchUrl(
+              url,
+              mode: LaunchMode.externalApplication, // Opens in YouTube app or browser
+              )) {
+              throw Exception('Could not launch $youtubeUrl');
+              }
+            },
+            child: Image.asset(
+              'assets/icons/youtube.png',
+              scale: 16,
+            ),
+          )
+        ],
+      ).h(context.screenHeight / 6),
       body: RefreshIndicator(
         onRefresh: () async {
           await homeController.getSlider();
